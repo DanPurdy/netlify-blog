@@ -1,6 +1,6 @@
 backend:
-  name: netlify-blog
-  reop: DanPurdy/netlify-blog
+  name: github
+  repo: DanPurdy/netlify-blog
 
 media_folder: static/assets
 public_folder: assets

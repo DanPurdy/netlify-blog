@@ -9,7 +9,7 @@ public_folder: assets
 collections:
   - name: pages
     label: Pages
-    files: 
+    files:
       - name: personal_details
         label: Personal Details
         file: content/personal_details.md
@@ -23,11 +23,24 @@ collections:
     create: true
     fields:
       - { name: id, label: ID }
-      - { name: startDate, label: Start Date, widget: datetime, timeFormat: false, dateFormat: MMM YYYY }
-      - { name: endDate, label: End Date, widget: datetime, timeFormat: false, dateFormat: MMM YYYY }
+      - {
+          name: startDate,
+          label: Start Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: MMM YYYY,
+        }
+      - {
+          name: endDate,
+          label: End Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: MMM YYYY,
+        }
       - { name: isCurrent, label: isCurrent, widget: boolean, required: false }
       - { name: title, label: Title }
-      - { name: position, label: Position }
+      - { name: position, label: Position, widget: list }
+      - { name: previousPosition, label: Previous Positions, widget: list }
       - { name: body, label: Body, widget: markdown }
   - name: projects
     label: Projects
@@ -49,7 +62,13 @@ collections:
     create: true
     fields:
       - { name: path, label: Path }
-      - { name: date, label: Date, widget: datetime, timeFormat: false, dateFormat: DD/MM/YYYY }
+      - {
+          name: date,
+          label: Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: DD/MM/YYYY,
+        }
       - { name: title, label: Title }
       - { name: description, label: Description }
       - { name: body, label: Body, widget: markdown }

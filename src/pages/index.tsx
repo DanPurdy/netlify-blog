@@ -1,39 +1,45 @@
-import React, { FC } from "react"
+import React, { FC, ReactElement } from "react"
+import { RouteComponentProps } from "@reach/router"
 import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Button from "../components/button"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-const IndexPage: FC = (props) => {
+import ExperienceSection from "../components/ExperienceSection"
+
+import { IExperienceType, IPersonalType } from "../types/content"
+
+interface IndexProps extends RouteComponentProps {
+  data: {
+    experience: IExperienceType
+    personal: IPersonalType
+    projects: {}
+    site: {}
+  }
+}
+
+const IndexPage: FC<IndexProps> = ({ data, location }) => {
   const siteTitle = "Gatsby Starter Personal Website"
 
-  const {experience, personal, projects, site} = props.data;
+  const { experience, personal, projects, site } = data
+  const {
+    node: {
+      childMdx: {
+        body,
+        frontmatter: { title, subtitle },
+      },
+    },
+  } = personal.edges[0]
 
   return (
-    <Layout location={props.location} title={siteTitle}>
-      <SEO
-        title="Home"
-        keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-      />
-      <img style={{ margin: 0 }} src="./GatsbyScene.svg" alt="Gatsby Scene" />
-      <h1>
-        Hey people{" "}
-        <span role="img" aria-label="wave emoji">
-          👋
-        </span>
-      </h1>
-      <MDXRenderer>{experience.edges[0].node.body}</MDXRenderer>
-      <p>Welcome to your new Gatsby website. You are on your home page.</p>
-      <p>
-        This starter comes out of the box with styled components and Gatsby's
-        default starter blog running on Netlify CMS.
-      </p>
-      <p>Now go build something great!</p>
-      <Link to="/blog/">
-        <Button marginTop="35px">Go to Blog</Button>
-      </Link>
+    <Layout location={location} title={siteTitle}>
+      <SEO title="Home" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
+      <h1>{title}</h1>
+      <h2>{subtitle}</h2>
+      <MDXRenderer>{body}</MDXRenderer>
+
+      <ExperienceSection experience={experience} />
     </Layout>
   )
 }
@@ -47,15 +53,17 @@ export const pageQuery = graphql`
         title
       }
     }
-    personal: allFile(
-      filter: { name: {eq:"personal_details"}}
-    ) {
+    personal: allFile(filter: { name: { eq: "personal_details" } }) {
       edges {
         node {
           id
           name
           childMdx {
             body
+            frontmatter {
+              title
+              subtitle
+            }
           }
         }
       }

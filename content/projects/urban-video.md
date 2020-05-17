@@ -1,5 +1,5 @@
 ---
 title: Urban video
-company: Urban
+company: urban
 ---
 Something about the video site

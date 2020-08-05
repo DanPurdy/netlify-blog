@@ -7,6 +7,7 @@ import SEO from "../components/seo"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import ExperienceSection from "../components/ExperienceSection"
+import HomeSection from "../components/HomeSection"
 
 import { IExperienceType, IPersonalType } from "../types/content"
 
@@ -23,24 +24,15 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
   const siteTitle = "Gatsby Starter Personal Website"
 
   const { experience, personal, projects, site } = data
-  const {
-    node: {
-      childMdx: {
-        body,
-        frontmatter: { title, subtitle },
-      },
-    },
-  } = personal.edges[0]
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <>
       <SEO title="Home" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
-      <h1>{title}</h1>
-      <h2>{subtitle}</h2>
-      <MDXRenderer>{body}</MDXRenderer>
-
-      <ExperienceSection experience={experience} />
-    </Layout>
+      <Layout location={location} title={siteTitle}>
+        <HomeSection data={personal} />
+        <ExperienceSection experience={experience} />
+      </Layout>
+    </>
   )
 }
 

@@ -11,18 +11,24 @@ interface ILayoutProps extends RouteComponentProps {
 
 const Layout: FC<ILayoutProps> = ({ location, title, children }) => {
   return (
-    <Wrapper>
+    <main>
       <GlobalStyle />
-      <main>{children}</main>
+      {React.Children.map(children, (child, index) => (
+        <PageWrap>
+          {child}
+        </PageWrap>
+      ))}
       <Footer />
-    </Wrapper>
+    </main>
   );
 };
 
-const Wrapper = styled.div`
-  min-height: 100vh;
+const PageWrap = styled.div`
+  height: 100vh;
   max-width: 1440px;
   min-width: 320px;
+  margin: 0 auto;
+  padding: 80px;
 `;
 
 const Footer = styled.footer`

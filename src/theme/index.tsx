@@ -1,8 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const colors = {
-  portfolioBackground: '#23a2fd',
+  portfolioBackground: '#081635',
   primaryFontColor: '#FFFFFF',
+  underlineColor: 'rgb(239, 82, 138)',
 };
 
 export const fonts = {
@@ -20,6 +21,22 @@ export const main = {
 export const GlobalStyle = createGlobalStyle`
   *, :after, :before {
     box-sizing: border-box;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${colors.portfolioBackground} ${colors.underlineColor};
+  }
+
+  /* Works on Chrome/Edge/Safari */
+  *::-webkit-scrollbar {
+    width: 1rem;
+  }
+  *::-webkit-scrollbar-track {
+    background: ${colors.portfolioBackground};
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: ${colors.underlineColor};
   }
 
   html {

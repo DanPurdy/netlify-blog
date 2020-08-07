@@ -5,22 +5,49 @@ import styled from 'styled-components';
 import { IPersonalType } from '../../types/content';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Image from "gatsby-image"
+import { colors } from '../../theme';
 
 const SectionContainer = styled.section`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
 
-const MainImageContainer = styled.div`
-  flex: 1 0 25%;
-  padding: 0 2rem;
 `;
 
 const ContentSection = styled.div`
-  flex: 1 0 75%;
   padding: 0 2rem;
 `;
+
+const FrontPageHeader = styled.header`
+  margin: 3rem 0 10rem;
+  text-align: center;
+
+`;
+
+const IntroContent = styled.div`
+  display: flex;
+  max-width:1000px;
+  margin: 0 auto;
+`
+
+const ImageContainer = styled.div`
+  flex: 1 0 33%;
+  padding: 0 2rem;
+`
+
+const MainTitle = styled.h1`
+  margin: 2rem 0 1rem;
+  font-size: 11rem;
+  font-family: sans-serif;
+  letter-spacing: -8px;
+`
+
+const SubTitle = styled.h2`
+  margin: 1rem 0;
+  color: ${colors.underlineColor};
+
+  //TEMP
+  font-size: 5rem;
+  font-family: sans-serif;
+  letter-spacing: -2px;
+`
 
 interface IExperienceProps {
   data: IPersonalType;
@@ -31,9 +58,9 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
 
   const imageData = useStaticQuery(graphql`
     query HomeImageQuery {
-      pixelDan: file(absolutePath: { regex: "/me_pixel_no_bg.png/" }) {
+      portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 792) {
+          fluid(maxHeight: 478) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -41,22 +68,27 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
     }
   `)
 
+
   return (
     <SectionContainer>
-      <MainImageContainer>
-        <Image
-          alt={title}
-          fluid={imageData.pixelDan.childImageSharp.fluid}
-          imgStyle={{ objectFit: 'contain' }}
-          style={{maxHeight: '600px'}}
-        />
-      </MainImageContainer>
       <ContentSection>
-        <header>
-          <h1>{title}</h1>
-          <h2>{subtitle}</h2>
-        </header>
-        <div><MDXRenderer>{body}</MDXRenderer></div>
+        <FrontPageHeader>
+          <MainTitle>{title}</MainTitle>
+          <SubTitle>{subtitle}</SubTitle>
+        </FrontPageHeader>
+        <IntroContent>
+          <ImageContainer>
+          <Image
+            alt={title}
+            fluid={imageData.portrait.childImageSharp.fluid}
+            imgStyle={{ objectFit: 'contain' }}
+            style={{maxHeight: '200px', 'min-width': '100%'}}
+          />
+          </ImageContainer>
+          <div>
+          <MDXRenderer>{body}</MDXRenderer>
+          </div>
+        </IntroContent>
       </ContentSection>
     </SectionContainer>
   );

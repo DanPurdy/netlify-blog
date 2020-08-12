@@ -7,8 +7,8 @@ export const colors = {
 };
 
 export const fonts = {
-  // heading: 'Berlingske Serif',
-  // default: 'Campton-Book',
+  heading: 'Lato',
+  default: 'Noto Sans JP',
   // defaultMedium: 'Campton-Medium',
   // defaultBold: 'Campton-Bold',
   // defaultSemibold: 'Campton-SemiBold',
@@ -46,7 +46,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    /* font-family: "${fonts.default}"; */
+    font-family: ${fonts.default}, sans-serif;
     font-size: 1.4rem;
     font-weight: 300;
     padding: 0;
@@ -66,7 +66,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3 {
-    /* font-family: "${fonts.heading}"; */
+    font-family: ${fonts.heading}, sans-serif;
     font-weight: 700;
   }
 

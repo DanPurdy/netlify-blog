@@ -7,9 +7,9 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Image from "gatsby-image"
 import { colors } from '../../theme';
 
-const SectionContainer = styled.section`
+import SocialLinks from '../SocialLinks';
 
-`;
+const SectionContainer = styled.section``;
 
 const ContentSection = styled.div`
   padding: 0 2rem;
@@ -23,7 +23,7 @@ const FrontPageHeader = styled.header`
 
 const IntroContent = styled.div`
   display: flex;
-  max-width:1000px;
+  max-width: 1000px;
   margin: 0 auto;
 `
 
@@ -35,18 +35,20 @@ const ImageContainer = styled.div`
 const MainTitle = styled.h1`
   margin: 2rem 0 1rem;
   font-size: 11rem;
-  font-family: sans-serif;
   letter-spacing: -8px;
 `
 
 const SubTitle = styled.h2`
   margin: 1rem 0;
   color: ${colors.underlineColor};
-
-  //TEMP
   font-size: 5rem;
-  font-family: sans-serif;
   letter-spacing: -2px;
+`
+
+const MainText = styled.div`
+  letter-spacing: -1px;
+  font-size: 2.2rem;
+  color: #FFFFFF;
 `
 
 interface IExperienceProps {
@@ -82,12 +84,13 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
             alt={title}
             fluid={imageData.portrait.childImageSharp.fluid}
             imgStyle={{ objectFit: 'contain' }}
-            style={{maxHeight: '200px', 'min-width': '100%'}}
+            style={{maxHeight: '200px', minWidth: '100%'}}
           />
           </ImageContainer>
-          <div>
-          <MDXRenderer>{body}</MDXRenderer>
-          </div>
+          <MainText>
+            <MDXRenderer>{body}</MDXRenderer>
+            <SocialLinks />
+          </MainText>
         </IntroContent>
       </ContentSection>
     </SectionContainer>

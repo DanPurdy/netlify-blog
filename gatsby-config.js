@@ -82,6 +82,29 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+        options: {
+          fonts: [
+            {
+              family: `Lato`,
+              variants: [`700`]
+            },
+            {
+              family: `Noto Sans JP`,
+              variants: [`400`]
+            }
+          ],
+        },
+    },
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /content\/assets\/svg/
+        }
+      }
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // edit below

@@ -8,6 +8,7 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import ExperienceSection from '../components/ExperienceSection';
 import HomeSection from '../components/HomeSection';
+import OpenSourceSection from '../components/OpenSourceSection';
 
 import { IExperienceType, IPersonalType } from '../types/content';
 
@@ -31,6 +32,7 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
       <Layout location={location} title={siteTitle}>
         <HomeSection data={personal} />
         <ExperienceSection experience={experience} />
+        <OpenSourceSection />
       </Layout>
     </>
   );

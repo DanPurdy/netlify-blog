@@ -5,6 +5,7 @@ export interface IExperienceType {
       frontmatter: {
         startDate: string;
         endDate: string;
+        id: string;
         isCurrent: boolean;
         title: string;
         position: string[];

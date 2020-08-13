@@ -70,7 +70,7 @@ const ExperienceSection: FC<IExperienceProps> = ({ experience }) => {
 
       <ExperienceItems>
         {experience.edges.map(({ node }) => (
-          <Item>
+          <Item key={node.frontmatter.id}>
             <InfoSection>
               <ItemTitle>{node.frontmatter.title}</ItemTitle>
               <SubSectionTitle>Employed</SubSectionTitle>
@@ -79,13 +79,17 @@ const ExperienceSection: FC<IExperienceProps> = ({ experience }) => {
               <SubSectionTitle>Current Position</SubSectionTitle>
               <ul>
                 {node.frontmatter.position.map(pos => (
-                  <li>{pos}</li>
+                  <li key={`${node.frontmatter.id}-${pos.replace(' ', '-')}`}>
+                    {pos}
+                  </li>
                 ))}
               </ul>
               <SubSectionTitle>Previous Positions</SubSectionTitle>
               <ul>
                 {node.frontmatter.previousPosition.map(pos => (
-                  <li>{pos}</li>
+                  <li key={`${node.frontmatter.id}-${pos.replace(' ', '-')}`}>
+                    {pos}
+                  </li>
                 ))}
               </ul>
             </InfoSection>

@@ -32,7 +32,7 @@ const SubSectionTitle = styled.h4`
   font-size: 1.6rem;
 `;
 
-const ExperienceSection: FC = () => {
+const OpenSourceSection: FC = () => {
   return (
     <ExperienceContainer>
       <ExperienceSectionHeader>
@@ -43,4 +43,4 @@ const ExperienceSection: FC = () => {
   );
 };
 
-export default ExperienceSection;
+export default OpenSourceSection;

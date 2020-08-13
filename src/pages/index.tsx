@@ -72,6 +72,7 @@ export const pageQuery = graphql`
           frontmatter {
             startDate(formatString: "MMM YYYY")
             endDate(formatString: "MMM YYYY")
+            id
             isCurrent
             title
             position

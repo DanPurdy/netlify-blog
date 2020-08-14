@@ -1,9 +1,10 @@
 ---
 id: urban
-startDate: 2016-11-18T01:06:13.890Z
-endDate: 2020-05-18T00:06:13.901Z
-isCurrent: true
+logo: assets/urban-logo1.svg
 title: Urban
+startDate: 2016-11-18T01:06:13.890Z
+isCurrent: true
+endDate: 2020-05-18T00:06:13.901Z
 position:
   - Lead Frontend Engineer
   - Stream Technical Lead

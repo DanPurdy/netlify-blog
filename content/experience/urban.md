@@ -1,6 +1,6 @@
 ---
 id: urban
-logo: assets/urban-logo1.svg
+logo: urban-logo-2020.svg
 title: Urban
 startDate: 2016-11-18T01:06:13.890Z
 isCurrent: true

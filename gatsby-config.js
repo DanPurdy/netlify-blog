@@ -55,7 +55,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: [".mdx", ".md"],
+        extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
@@ -83,26 +83,26 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,
-        options: {
-          fonts: [
-            {
-              family: `Lato`,
-              variants: [`700`]
-            },
-            {
-              family: `Noto Sans JP`,
-              variants: [`400`]
-            }
-          ],
-        },
+      options: {
+        fonts: [
+          {
+            family: `Lato`,
+            variants: [`700`],
+          },
+          {
+            family: `Noto Sans JP`,
+            variants: [`400`],
+          },
+        ],
+      },
     },
     {
       resolve: `gatsby-plugin-react-svg`,
       options: {
         rule: {
-          include: /content\/assets\/svg/
-        }
-      }
+          include: /content\/assets\/svg\/.*\.svg/,
+        },
+      },
     },
     {
       resolve: `gatsby-plugin-google-analytics`,
@@ -125,4 +125,4 @@ module.exports = {
       },
     },
   ],
-}
+};

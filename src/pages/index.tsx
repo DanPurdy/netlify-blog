@@ -74,9 +74,13 @@ export const pageQuery = graphql`
             endDate(formatString: "MMM YYYY")
             id
             isCurrent
+            logo {
+              publicURL
+            }
             title
             position
             previousPosition
+            url
           }
         }
       }

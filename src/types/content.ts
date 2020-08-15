@@ -7,9 +7,13 @@ export interface IExperienceType {
         endDate: string;
         id: string;
         isCurrent: boolean;
+        logo: {
+          publicURL: string;
+        };
         title: string;
         position: string[];
         previousPosition: string[];
+        url: string;
       };
     };
   }[];

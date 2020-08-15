@@ -20,29 +20,45 @@ collections:
   - name: experience
     label: Experience
     folder: content/experience
+    media_folder: ''
     create: true
     fields:
       - { name: id, label: ID }
       - { name: title, label: Title }
-      - { name: startDate, label: Start Date, widget: datetime, timeFormat: false, dateFormat: MMM YYYY }
+      - { name: url, label: URL }
+      - {
+          name: logo,
+          label: Logo,
+          widget: image,
+          media_library: { config: { multple: false } },
+        }
+      - {
+          name: startDate,
+          label: Start Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: MMM YYYY,
+        }
       - { name: isCurrent, label: isCurrent, widget: boolean, required: false }
-      - { name: endDate, label: End Date, widget: datetime, timeFormat: false, dateFormat: MMM YYYY}
-      - { name: position, label: Position, widget: list, field: { name: position_item, label: Position } }
-      - { name: previousPosition, label: Previous Positions, widget: list, field: { name: position_item, label: Position } }
-      - { name: body, label: Body, widget: markdown }
-  - name: projects
-    label: Projects
-    folder: content/projects
-    create: true
-    fields:
-      - { name: title, label: Title }
-      - label: Company
-        name: company
-        widget: relation
-        collection: experience
-        searchFields: [id]
-        valueField: id
-        displayFields: [title]
+      - {
+          name: endDate,
+          label: End Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: MMM YYYY,
+        }
+      - {
+          name: position,
+          label: Position,
+          widget: list,
+          field: { name: position_item, label: Position },
+        }
+      - {
+          name: previousPosition,
+          label: Previous Positions,
+          widget: list,
+          field: { name: position_item, label: Position },
+        }
       - { name: body, label: Body, widget: markdown }
   - name: blog
     label: Blog
@@ -50,7 +66,13 @@ collections:
     create: true
     fields:
       - { name: path, label: Path }
-      - { name: date, label: Date, widget: datetime, timeFormat: false, dateFormat: DD/MM/YYYY }
+      - {
+          name: date,
+          label: Date,
+          widget: datetime,
+          timeFormat: false,
+          dateFormat: DD/MM/YYYY,
+        }
       - { name: title, label: Title }
       - { name: description, label: Description }
       - { name: body, label: Body, widget: markdown }

@@ -1,7 +1,8 @@
 ---
 id: urban
-logo: urban-logo-2020.svg
 title: Urban
+url: https://urban.co
+logo: urban-logo-2020.svg
 startDate: 2016-11-18T01:06:13.890Z
 isCurrent: true
 endDate: 2020-05-18T00:06:13.901Z

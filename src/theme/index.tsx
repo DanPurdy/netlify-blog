@@ -4,6 +4,24 @@ export const colors = {
   portfolioBackground: '#081635',
   primaryFontColor: '#FFFFFF',
   underlineColor: 'rgb(239, 82, 138)',
+  white: '#ffffff',
+};
+
+export const breakpoints = {
+  /** 1080px */
+  wide: '1080px',
+  /** 768px */
+  palm: '768px',
+  /** 650px */
+  smallPalm: '650px',
+  /** 500px */
+  largeHand: '500px',
+  /** 400px */
+  mediumHand: '400px',
+  /** 350px */
+  smallHand: '350px',
+  /** 320px */
+  minScreenSize: '320px',
 };
 
 export const fonts = {

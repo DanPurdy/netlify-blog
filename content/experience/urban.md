@@ -12,4 +12,21 @@ position:
 previousPosition:
   - Fullstack Engineer
 ---
-URBAN EXPERIENCE Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla laoreet molestie nisl, tempor tristique mauris hendrerit fringilla. Pellentesque porttitor rhoncus justo eu luctus. Proin vulputate ullamcorper mattis. Cras lobortis arcu ut pharetra varius. Curabitur pulvinar maximus suscipit. Proin sit amet ex lacinia, hendrerit magna ut, dapibus erat. Vivamus vitae quam pretium sapien hendrerit iaculis. Nulla sed faucibus neque. Duis at imperdiet enim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas elit augue, gravida id ullamcorper vel, condimentum sed leo. Curabitur ullamcorper aliquam luctus.
+Urban is the UK's leading at home wellness platform, connecting wellness professionals and their customers via our bespoke web platform and apps.
+
+Currently, as the Lead Frontend Engineer at Urban, I'm responsible for developing, overseeing and guiding the team on the development of our 4 websites. Our main frontend stack consists of Node Express, React, NextJs, Typescript and MobX.
+
+Alongside my role as Lead Frontend, I also act as the team lead and technical lead for our B2B platform allowing companies to book, enrol and manage their employees access to bespoke in-office wellness treatments.
+
+As B2B team lead, I work across our Javascript based stack including our Node microservice backend while also officiating the usual Agile ceremonies, working closely with other stakeholders in the business to plan and architect solutions.
+
+Our key stack:
+* Node
+* MySQL (Postgres + Mongo - being phased out)
+* RabbitMQ
+* Typescript
+* Express
+* React
+* MobX
+* Next.js
+* Testcafe

@@ -21,3 +21,5 @@ Alongside my role as Lead Frontend, I also act as a team lead and technical lead
 As B2B team lead, I work across our Javascript based stack including our Node microservice backend while also officiating the usual Agile ceremonies, working closely with other stakeholders in the business to plan and architect solutions and features.
 
 The team lead position involves working closely alongside our CTO and other senior team members helping to ensure that the whole product team is working towards a similar goal while directing and advising on how features should be implemented and how as a team we can improve efficiently and scalably.
+
+Project list coming soon...

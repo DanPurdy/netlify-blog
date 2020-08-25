@@ -14,6 +14,18 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Dan Purdy`,
+        short_name: `Dan Purdy`,
+        start_url: `/`,
+        background_color: `#081635`,
+        theme_color: `#081635`,
+        display: `minimal-ui`,
+        icon: `content/assets/svg/favicon.svg`,
+      },
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-feed-mdx`,
@@ -109,18 +121,6 @@ module.exports = {
       options: {
         // edit below
         // trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Dan Purdy`,
-        short_name: `Dan Purdy`,
-        start_url: `/`,
-        background_color: `#081635`,
-        theme_color: `#081635`,
-        display: `minimal-ui`,
-        icon: `content/assets/svg/favicon.svg`,
       },
     },
   ],

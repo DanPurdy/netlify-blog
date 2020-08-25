@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { Link } from 'gatsby';
 import styled from 'styled-components';
 
 import { breakpoints, GlobalStyle } from '../theme';
@@ -35,7 +34,7 @@ const PageWrap = styled.div`
 
 const Footer = styled.footer`
   text-align: center;
-  margin: 24px;
+  margin: 2.4rem 0;
 `;
 
 export default Layout;

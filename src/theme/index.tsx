@@ -27,9 +27,6 @@ export const breakpoints = {
 export const fonts = {
   heading: 'Lato',
   default: 'Noto Sans JP',
-  // defaultMedium: 'Campton-Medium',
-  // defaultBold: 'Campton-Bold',
-  // defaultSemibold: 'Campton-SemiBold',
 };
 
 export const main = {
@@ -49,6 +46,10 @@ export const GlobalStyle = createGlobalStyle`
   /* Works on Chrome/Edge/Safari */
   *::-webkit-scrollbar {
     width: 1rem;
+
+    @media (max-width: ${breakpoints.smallHand}) {
+      display: none;
+    }
   }
   *::-webkit-scrollbar-track {
     background: ${colors.portfolioBackground};

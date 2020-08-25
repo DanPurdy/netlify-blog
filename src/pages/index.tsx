@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import { Link, graphql } from 'gatsby';
 
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import SEO from '../components/SEO';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import ExperienceSection from '../components/ExperienceSection';

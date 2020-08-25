@@ -5,6 +5,7 @@ import { breakpoints, colors } from '../theme';
 import TwitterIcon from '../../content/assets/svg/twitter.svg';
 import LinkedInIcon from '../../content/assets/svg/linked-in.svg';
 import GithubIcon from '../../content/assets/svg/github.svg';
+import CVIcon from '../../content/assets/svg/cv.svg';
 
 const Container = styled.section`
   display: flex;
@@ -25,6 +26,7 @@ const Link = styled.a`
   justify-content: center;
   align-items: center;
   margin-right: 2rem;
+  padding: 1rem;
 `;
 
 const SocialLinks: FC = () => {
@@ -32,6 +34,13 @@ const SocialLinks: FC = () => {
     <Container>
       <Link href="https://github.com/danpurdy" aria-label="Find me on Github">
         <GithubIcon />
+      </Link>
+      <Link
+        href="https://d2wgwec1ef3t7f.cloudfront.net/assets/Dan-Purdy-CV.pdf"
+        aria-label="Download my CV"
+        download
+      >
+        <CVIcon />
       </Link>
       <Link
         href="https://twitter.com/danpurdy0"

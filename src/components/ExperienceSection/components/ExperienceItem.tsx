@@ -39,12 +39,11 @@ const MainText = styled.div`
   color: ${colors.white};
 
   p {
-    margin: 0 0 1.5rem;
+    margin: 0 0 2.5rem;
   }
 
   @media (max-width: ${breakpoints.largeHand}) {
     font-size: 1.7rem;
-    line-height: 2.5rem;
   }
 `;
 

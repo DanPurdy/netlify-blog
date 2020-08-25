@@ -50,6 +50,8 @@ const IntroContent = styled.div`
 const ImageContainer = styled.div`
   flex: 1 1 33%;
   padding: 1rem 2rem 0;
+  display: flex;
+  justify-content: center;
 
   @media (max-width: ${breakpoints.palm}) {
     padding-top: 0;
@@ -144,7 +146,7 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
               alt={title}
               fluid={imageData.portrait.childImageSharp.fluid}
               imgStyle={{ objectFit: 'contain' }}
-              style={{ maxHeight: '200px', minWidth: '100%' }}
+              style={{ maxHeight: '200px', width: '100%', maxWidth: '200px' }}
             />
           </ImageContainer>
           <MainText>

@@ -14,7 +14,7 @@ const SectionContainer = styled.section``;
 const ContentSection = styled.div`
   padding: 0 2rem;
 
-  @media (max-width: ${breakpoints.smallPalm}) {
+  @media (max-width: ${breakpoints.largeHand}) {
     padding: 0;
   }
 `;

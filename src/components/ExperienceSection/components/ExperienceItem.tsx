@@ -43,8 +43,8 @@ const MainText = styled.div`
   }
 
   @media (max-width: ${breakpoints.largeHand}) {
-    font-size: 1.6rem;
-    line-height: 2.2rem;
+    font-size: 1.7rem;
+    line-height: 2.5rem;
   }
 `;
 

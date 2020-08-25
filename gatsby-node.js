@@ -9,6 +9,7 @@ exports.createPages = ({ graphql, actions }) => {
     `
       {
         allMdx(
+          filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
@@ -18,7 +19,7 @@ exports.createPages = ({ graphql, actions }) => {
                 slug
               }
               frontmatter {
-                title
+                title 
               }
             }
           }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="58px" height="31px" viewBox="0 0 58 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Lato-Black, Lato" font-size="40" font-weight="700" letter-spacing="-0.05">
+        <g id="Group" transform="translate(0.000000, -9.000000)" fill="#FFFFFF">
+            <text id="C">
+                <tspan x="0" y="39">C</tspan>
+            </text>
+            <text id="V">
+                <tspan x="28" y="40">V</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

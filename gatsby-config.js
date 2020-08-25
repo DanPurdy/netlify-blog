@@ -114,14 +114,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Dan Purdy`,
+        short_name: `Dan Purdy`,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: `#081635`,
+        theme_color: `#081635`,
         display: `minimal-ui`,
-        // edit below
-        // icon: `content/assets/gatsby-icon.png`, TODO ADD ICON BACK
+        icon: `content/assets/svg/favicon.svg`,
       },
     },
   ],

@@ -48,8 +48,10 @@ const IntroContent = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  flex: 1 0 33%;
+  flex: 1 1 33%;
   padding: 1rem 2rem 0;
+  display: flex;
+  justify-content: center;
 
   @media (max-width: ${breakpoints.palm}) {
     padding-top: 0;
@@ -97,6 +99,7 @@ const SubTitle = styled.h2`
 `;
 
 const MainText = styled.div`
+  flex: 2 2 66%;
   letter-spacing: -1px;
   font-size: 2.2rem;
   color: #ffffff;
@@ -122,8 +125,8 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
     query HomeImageQuery {
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 478) {
-            ...GatsbyImageSharpFluid
+          fluid(maxHeight: 200) {
+            ...GatsbyImageSharpFluid_noBase64
           }
         }
       }
@@ -141,9 +144,10 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
           <ImageContainer>
             <Image
               alt={title}
+              loading="eager"
               fluid={imageData.portrait.childImageSharp.fluid}
               imgStyle={{ objectFit: 'contain' }}
-              style={{ maxHeight: '200px', minWidth: '100%' }}
+              style={{ maxHeight: '200px', width: '100%', maxWidth: '200px' }}
             />
           </ImageContainer>
           <MainText>

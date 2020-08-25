@@ -27,6 +27,7 @@ const Link = styled.a`
   align-items: center;
   margin-right: 2rem;
   padding: 1rem;
+  text-decoration: none;
 `;
 
 const SocialLinks: FC = () => {

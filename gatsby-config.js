@@ -29,6 +29,7 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-feed-mdx`,
+    `gatsby-plugin-preload-link-crossorigin`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

@@ -48,7 +48,7 @@ const IntroContent = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  flex: 1 0 33%;
+  flex: 1 1 33%;
   padding: 1rem 2rem 0;
 
   @media (max-width: ${breakpoints.palm}) {
@@ -97,6 +97,7 @@ const SubTitle = styled.h2`
 `;
 
 const MainText = styled.div`
+  flex: 2 2 66%;
   letter-spacing: -1px;
   font-size: 2.2rem;
   color: #ffffff;

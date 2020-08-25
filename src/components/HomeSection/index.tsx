@@ -125,8 +125,8 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
     query HomeImageQuery {
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 478) {
-            ...GatsbyImageSharpFluid
+          fluid(maxHeight: 200) {
+            ...GatsbyImageSharpFluid_noBase64
           }
         }
       }
@@ -144,6 +144,7 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
           <ImageContainer>
             <Image
               alt={title}
+              loading="eager"
               fluid={imageData.portrait.childImageSharp.fluid}
               imgStyle={{ objectFit: 'contain' }}
               style={{ maxHeight: '200px', width: '100%', maxWidth: '200px' }}

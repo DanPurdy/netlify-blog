@@ -9,7 +9,7 @@ interface IExperienceItemLogo {
 
 const ItemLogoContainer = styled.div`
   width: 100%;
-  margin: 7rem 0;
+  margin: 0 0 7rem;
 `;
 
 const ItemLogo = styled.img`

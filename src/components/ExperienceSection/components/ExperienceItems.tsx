@@ -8,7 +8,7 @@ interface IExperienceItemProps {
 }
 
 const ExperienceItemsContainer = styled.div`
-  margin: 0 0 6rem;
+  margin: 10rem 0 6rem;
 `;
 
 const ExperienceItems: FC<IExperienceItemProps> = ({ experience }) => {

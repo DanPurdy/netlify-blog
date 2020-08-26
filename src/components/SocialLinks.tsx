@@ -33,25 +33,36 @@ const Link = styled.a`
 const SocialLinks: FC = () => {
   return (
     <Container>
-      <Link href="https://github.com/danpurdy" aria-label="Find me on Github">
+      <Link
+        href="https://github.com/danpurdy"
+        aria-label="Find me on Github"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <GithubIcon />
       </Link>
       <Link
         href="https://d2wgwec1ef3t7f.cloudfront.net/assets/Dan-Purdy-CV.pdf"
         aria-label="Download my CV"
         download
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <CVIcon />
       </Link>
       <Link
         href="https://twitter.com/danpurdy0"
         aria-label="Find me on Twitter"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <TwitterIcon />
       </Link>
       <Link
         href="https://www.linkedin.com/in/dan-purdy-developer"
         aria-label="Find me on LinkedIn"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <LinkedInIcon />
       </Link>

@@ -26,7 +26,18 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
 
   return (
     <>
-      <SEO title="Home" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
+      <SEO
+        title="Home"
+        keywords={[
+          `Dan Purdy`,
+          `Portfolio`,
+          `Fullstack Developer`,
+          `Senior Fullstack Engineer`,
+          `UK based developer`,
+          `Lead Frontend Developer`,
+          `Development blog`,
+        ]}
+      />
       <Layout location={location} title={siteTitle}>
         <HomeSection data={personal} />
         <ExperienceSection experience={experience} />

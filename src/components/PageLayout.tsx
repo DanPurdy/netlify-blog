@@ -21,11 +21,14 @@ const PageLayout: FC<ILayoutProps> = ({ location, title, children }) => {
 };
 
 const PageLayoutWrap = styled.div`
-  min-height: 100vh;
   max-width: 1440px;
   min-width: 320px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 4rem;
+
+  @media (max-width: ${breakpoints.palm}) {
+    padding: 0 2rem;
+  }
 `;
 
 const Footer = styled.footer`

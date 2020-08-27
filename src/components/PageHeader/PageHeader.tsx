@@ -12,10 +12,10 @@ const Header = styled.header`
 `;
 
 const ImageContainer = styled.div`
-  flex: 1 1 12rem;
-  max-width: 12rem;
+  flex: 1 1 10rem;
+  max-width: 10rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-right: 2rem;
 
   @media (max-width: ${breakpoints.palm}) {
@@ -164,6 +164,20 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
 
   const location = currentLocation?.toLowerCase();
 
+  let subTitleElem;
+
+  if (currentLocation && location === 'blog') {
+    subTitleElem = (
+      <SubTitle>
+        <Link to="/blog" style={{ textDecoration: 'none', color: 'inherit' }}>
+          {currentLocation}
+        </Link>
+      </SubTitle>
+    );
+  } else {
+    subTitleElem = <SubTitle>{currentLocation}</SubTitle>;
+  }
+
   return (
     <Header>
       <ImageContainer>
@@ -181,7 +195,7 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
         <Link to="/">
           <MainTitle>{title}</MainTitle>
         </Link>
-        {currentLocation && <SubTitle>{currentLocation}</SubTitle>}
+        {subTitleElem}
         {location !== 'blog' && (
           <MainNav>
             <Link to="/blog">Blog</Link>

@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const colors = {
   portfolioBackground: '#081635',
+  blogPostBackground: 'rgba(255, 255, 255, 0.08)',
   primaryFontColor: '#FFFFFF',
   secondaryColor: 'rgb(239, 82, 138)',
   white: '#ffffff',
@@ -101,11 +102,6 @@ export const GlobalStyle = createGlobalStyle`
   h3 {
     font-size: 3rem;
     line-height: 4.1rem;
-
-    @media (max-width: 768px) {
-      font-size: 1.8rem;
-      line-height: 2.5rem;
-    }
   }
 
   h4 {

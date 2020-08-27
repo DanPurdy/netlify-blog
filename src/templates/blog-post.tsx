@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import { Link, graphql, PageProps } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import Layout from '../components/layout';
+import PageHeader from '../components/PageHeader/PageHeader';
+import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
 
 interface IPostType {
@@ -43,12 +44,13 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
   const { previous, next } = pageContext;
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <PageLayout location={location} title={siteTitle}>
       <>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
+        <PageHeader currentLocation="Blog" />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
@@ -62,14 +64,7 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
           {post.frontmatter.date}
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
-        <hr
-          style={
-            {
-              // TODO remove rhythm
-              // marginBottom: rhythm(1),
-            }
-          }
-        />
+        <hr />
 
         <ul
           style={{
@@ -96,7 +91,7 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
           </li>
         </ul>
       </>
-    </Layout>
+    </PageLayout>
   );
 };
 

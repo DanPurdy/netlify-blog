@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const colors = {
   portfolioBackground: '#081635',
   primaryFontColor: '#FFFFFF',
-  underlineColor: 'rgb(239, 82, 138)',
+  secondaryColor: 'rgb(239, 82, 138)',
   white: '#ffffff',
 };
 
@@ -40,7 +40,7 @@ export const GlobalStyle = createGlobalStyle`
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${colors.portfolioBackground} ${colors.underlineColor};
+    scrollbar-color: ${colors.portfolioBackground} ${colors.secondaryColor};
   }
 
   /* Works on Chrome/Edge/Safari */
@@ -55,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
     background: ${colors.portfolioBackground};
   }
   *::-webkit-scrollbar-thumb {
-    background-color: ${colors.underlineColor};
+    background-color: ${colors.secondaryColor};
   }
 
   html {
@@ -92,10 +92,6 @@ export const GlobalStyle = createGlobalStyle`
   h1 {
     display: inline-block;
     font-size: 6.6rem;
-
-    @media(max-width: 400px) {
-      font-size: 3.0rem;
-    }
   }
 
   h2 {

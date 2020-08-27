@@ -1,26 +1,54 @@
-import React from 'react';
-import { Link, graphql } from 'gatsby';
+import React, { FC } from 'react';
+import { Link, graphql, PageProps } from 'gatsby';
 
-import Bio from '../components/bio';
-import Layout from '../components/layout';
+import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
 import Button from '../components/button';
+import { IExperienceNodeType } from '../types/content';
+import PageHeader from '../components/PageHeader/PageHeader';
+import styled from 'styled-components';
 
-class Blog extends React.Component {
-  render() {
-    const { data } = this.props;
-    const siteTitle = data.site.siteMetadata.title;
-    const posts = data.allMdx.edges;
+interface IBlogPageProps extends PageProps {
+  data: {
+    allMdx: {
+      edges: {
+        node: {
+          excerpt: string;
+          fields: {
+            slug: string;
+          };
+          frontmatter: {
+            date: string;
+            description: string;
+            title: string;
+          };
+        };
+      }[];
+    };
+    site: {
+      siteMetadata: {
+        title: string;
+      };
+    };
+  };
+}
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
+const BlogPostBox = styled.div``;
+
+const Blog: FC<IBlogPageProps> = ({ data, location }) => {
+  const siteTitle = data.site.siteMetadata.title;
+  const posts = data.allMdx.edges;
+
+  return (
+    <PageLayout location={location} title={siteTitle}>
+      <>
         <SEO title="All posts" />
-        <Bio />
+        <PageHeader currentLocation="Blog" />
         <div style={{ margin: '20px 0 40px' }}>
           {posts.map(({ node }) => {
             const title = node.frontmatter.title || node.fields.slug;
             return (
-              <div key={node.fields.slug}>
+              <BlogPostBox key={node.fields.slug}>
                 <h3
                   style={{
                     marginBottom: '8rem',
@@ -28,7 +56,7 @@ class Blog extends React.Component {
                 >
                   <Link
                     style={{ boxShadow: `none` }}
-                    to={`blog${node.fields.slug}`}
+                    to={`/blog${node.fields.slug}`}
                   >
                     {title}
                   </Link>
@@ -39,17 +67,14 @@ class Blog extends React.Component {
                     __html: node.frontmatter.description || node.excerpt,
                   }}
                 />
-              </div>
+              </BlogPostBox>
             );
           })}
         </div>
-        <Link to="/">
-          <Button marginTop="85px">Go Home</Button>
-        </Link>
-      </Layout>
-    );
-  }
-}
+      </>
+    </PageLayout>
+  );
+};
 
 export default Blog;
 

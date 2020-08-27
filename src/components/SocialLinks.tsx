@@ -21,7 +21,7 @@ const Link = styled.a`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  border: 2px solid ${colors.underlineColor};
+  border: 2px solid ${colors.secondaryColor};
   display: flex;
   justify-content: center;
   align-items: center;

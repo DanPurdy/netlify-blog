@@ -1,23 +1,56 @@
-import React from 'react';
-import { Link, graphql } from 'gatsby';
+import React, { FC } from 'react';
+import { Link, graphql, PageProps } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import Bio from '../components/bio';
-import Layout from '../components/layout';
+import PageHeader from '../components/PageHeader/PageHeader';
+import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.mdx;
-    const siteTitle = this.props.data.site.siteMetadata.title;
-    const { previous, next } = this.props.pageContext;
+interface IPostType {
+  body: string;
+  excerpt: string;
+  fields: {
+    slug: string;
+  };
+  frontmatter: {
+    title: string;
+    date: string;
+    description: string;
+  };
+}
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
+interface IBlogPostProps extends PageProps {
+  data: {
+    mdx: IPostType;
+    site: {
+      siteMetadata: {
+        title: string;
+      };
+    };
+  };
+  pageContext: {
+    previous: IPostType;
+    next: IPostType;
+  };
+}
+
+const BlogPostTemplate: FC<IBlogPostProps> = ({
+  data,
+  location,
+  pageContext,
+}) => {
+  const post = data.mdx;
+  const siteTitle = data.site.siteMetadata.title;
+  const { previous, next } = pageContext;
+
+  return (
+    <PageLayout location={location} title={siteTitle}>
+      <>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
+        <PageHeader currentLocation="Blog" />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
@@ -31,15 +64,7 @@ class BlogPostTemplate extends React.Component {
           {post.frontmatter.date}
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
-        <hr
-          style={
-            {
-              // TODO remove rhythm
-              // marginBottom: rhythm(1),
-            }
-          }
-        />
-        <Bio />
+        <hr />
 
         <ul
           style={{
@@ -65,10 +90,10 @@ class BlogPostTemplate extends React.Component {
             )}
           </li>
         </ul>
-      </Layout>
-    );
-  }
-}
+      </>
+    </PageLayout>
+  );
+};
 
 export default BlogPostTemplate;
 

@@ -85,7 +85,7 @@ const MainTitle = styled.h1`
 
 const SubTitle = styled.h2`
   margin: 1rem 0;
-  color: ${colors.underlineColor};
+  color: ${colors.secondaryColor};
   font-size: 5rem;
   letter-spacing: -2px;
 

@@ -19,14 +19,14 @@ const MainSectionHeader = styled.div<ISectionHeaderStyleProps>`
 const MainSectionTitle = styled.h2<ISectionHeaderStyleProps>`
   font-size: 4rem;
   line-height: 1;
-  color: ${colors.underlineColor};
+  color: ${colors.secondaryColor};
   margin: ${({ reverse }) => (reverse ? `0 0 0 2rem` : `0 2rem 0 0`)};
 `;
 
 const MainSectionLine = styled.div`
   flex: 1 1 auto;
   height: 3px;
-  border-bottom: 3px solid ${colors.underlineColor};
+  border-bottom: 3px solid ${colors.secondaryColor};
   margin-bottom: 0.4rem;
 `;
 

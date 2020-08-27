@@ -3,7 +3,7 @@ module.exports = {
     // edit below
     title: `Dan Purdy's personal portfolio`,
     author: `Dan Purdy`,
-    description: `Dan Purdy's portfolio and development blog focused on web development`,
+    description: `Dan Purdy's portfolio and development blog`,
     siteUrl: `https://dpurdy.me`,
     social: {
       twitter: `DanPurdy0`,

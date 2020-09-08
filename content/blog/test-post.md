@@ -8,7 +8,7 @@ description: This is a test post
 
 *some italic text*
 
-```
+```js
 import * as Sentry from '@sentry/browser'
 
 const test = () => {

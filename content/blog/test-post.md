@@ -34,9 +34,7 @@ export default test;
 
 ###### h6
 
-![Bill Murray with a goldfish in his mouth](assets/fillmuray600x300.jpg "Bill Murray")
-
-
+![Bill Murray with a goldfish in his mouth](fillmuray600x300.jpg "Bill Murray")
 
 1. maybe a ol
 2. maybe not?

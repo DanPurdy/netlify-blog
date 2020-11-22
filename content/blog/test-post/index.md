@@ -5,13 +5,13 @@ title: Logging and mocking HTTP requests with TestCafe
 description: "A look into how to intercept, log and mock http requests within
   your end to end tests using TestCafe. "
 ---
-Logging and mocking of HTTP requests are both essential tools when writing robust end to end tests or integration tests.
+Logging and mocking of HTTP requests are both essential and incredibly useful tools when writing robust end to end tests or integration tests.
 
-Logging is used to record the HTTP requests that your application may make while under test and also the responses those requests may receive from your backend systems.
+Logging is used to record the HTTP requests that your application may make during a test and also gives you easy access to validate the responses and data those requests may receive from your backend systems.
 
-Mocking is used to substitute parts of your infrastructure that you may not want your application to contact while under test or to perhaps prevent your systems entering an unexpected state while under test.
+Mocking is used to substitute parts of your infrastructure that you may not want your application to contact while under test or to perhaps prevent your systems entering an unexpected state while under test or the most relevant use case - testing error states when receiving errors from your backend. 
 
-I tend to attach request loggers to any calls that are directly involved in the current test i'm running. An example may be that you have a submit button on a form and you're looking to check that every single required input on your form when left empty prevents your form being submitted. Attaching a logger to log any requests to the endpoint that that form would hit if correctly submitted means i am able to verify that no calls were made when they shouldn't have, not relying on purely the state of the form for my test result.
+I tend to attach request loggers to any calls that are directly involved in the current test i'm running. An example may be that you have a submit button on a form and you're looking to check that if a form is invalid it is prevented from being submitted. Attaching a logger to log any requests to the endpoint that that form would hit if valid means i am able to verify that no calls were made when they shouldn't have, not relying on purely the state of the form for my test result.
 
 ### Request Logging
 
@@ -22,8 +22,10 @@ How do we setup a logger in TestCafe? It's actually extremely simple.
 
 import { RequestLogger } from 'testcafe';
 
+// Add a new regexp instance containing a unique part of the endpoint you want to log 
 const submitApplicationUrl = new RegExp('/submit-application');
 
+// Create a requestLogger for any POST requests and log the request and response details
 export const submitApplicationLogger = RequestLogger(
   { url: submitApplicationUrl, method: 'POST' },
   {
@@ -125,17 +127,20 @@ export const submitApplicationMockError = RequestMock()
   .respond({ success: false }, 500, { 'Access-Control-Allow-Origin': '*' });
 ```
 
-We've defined two mocks, one for a successful response and one for the error response we mentioned.
+We've defined two mocks, one for a successful response and one for the error response we mentioned. Notice the access-control-allow-origin header, You'll need to add this to all mocks to prevent any CORS issues as all your endpoints HTTPS endpoints - which they all should be!
 
 You can now attach these to your tests the same way as you would a logger.
 
 ```js
 test.requestHooks([submitApplicationMockSuccess])('test to do something' t => { 
-  ... 
+  // Guaranteed to receive a 200 response to any call to our mocked endpoint here
 }); 
 
 // Will attach the mock to each test
-fixture`My Fixture`.beforeEach(() => { ... }).requestHooks([submitApplicationMockSuccess])
+fixture`My Fixture`.beforeEach(() => { 
+  ... 
+}).requestHooks([submitApplicationMockSuccess])
+// Any call to our mocked endpoint in every test in our fixture will receive our mock response
 ```
 
 You can then combine with the request logger to ensure your request doesn't hit your backend, responds in a defined way and you can still test that your request included all the details you wanted as we showed with the request body example above. Perfect!
@@ -147,6 +152,8 @@ test.requestHooks([submitApplicationMockSuccess, submitApplicationLogger])('test
 ```
 
 And that's it the simple ability to validate both what your application is sending to your backend within the context of an e2e test and the ability to also bypass your backend for specified endpoints and mock the responses you want to test or should expect.
+
+In general I follow the rule of logging all requests in my tests to validate the data I'm sending is what I would expect and I keep mocking only for those cases that our actual backend cannot easily respond with. This means our e2e tests probably straddle both our front end application and our backend services - i'll leave you to decide whether you want that or not but it's nice to have an extra warning that something may be awry with our backend.
 
 
 

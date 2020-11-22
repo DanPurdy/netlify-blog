@@ -3,7 +3,7 @@ backend:
   repo: DanPurdy/netlify-blog
   branch: develop
 
-media_folder: static/assets
+media_folder: content/assets
 public_folder: assets
 
 collections:
@@ -60,10 +60,14 @@ collections:
           field: { name: position_item, label: Position },
         }
       - { name: body, label: Body, widget: markdown }
-  - name: blog
-    label: Blog
+  - name: posts
+    label: Posts
+    label_singular: 'Post'
     folder: content/blog
     create: true
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     fields:
       - { name: path, label: Path }
       - {

@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import { Link, graphql, PageProps } from 'gatsby';
 
-import PageLayout from '../components/PageLayout';
+import ThinLayout from '../components/ThinLayout';
 import SEO from '../components/SEO';
-import Button from '../components/button';
-import { IExperienceNodeType } from '../types/content';
 import PageHeader from '../components/PageHeader/PageHeader';
 import styled from 'styled-components';
 import { colors, breakpoints } from '../theme';
@@ -16,6 +14,9 @@ interface IBlogPageProps extends PageProps {
         node: {
           excerpt: string;
           fields: {
+            readingTime: {
+              text: string;
+            };
             slug: string;
           };
           frontmatter: {
@@ -35,48 +36,60 @@ interface IBlogPageProps extends PageProps {
 }
 
 const BlogContainer = styled.section<{ numItems: number }>`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 10rem 0;
-  justify-content: ${({ numItems }) =>
-    numItems > 2 ? 'center' : 'flex-start'};
+  margin: 5rem 0;
+
+  @media (max-width: ${breakpoints.palm}) {
+    margin-top: 6rem;
+  }
+
+  @media (max-width: ${breakpoints.largeHand}) {
+    margin-top: 4rem;
+  }
 `;
 
 const BlogPostBox = styled.div`
-  flex: 1 1 23%;
-  max-width: 23%;
-  min-width: 300px;
-  margin: 0 2rem 2rem 0;
-  border-radius: 4px;
-  background-color: ${colors.blogPostBackground};
+  margin: 0 0 2rem;
+  padding: 2rem;
+  border-bottom: 1px solid ${colors.fadedLine};
 
-  @media (max-width: ${breakpoints.smallPalm}) {
+  @media (max-width: ${breakpoints.palm}) {
     margin-right: 0;
-    flex-basis: 100%;
-    max-width: none;
-  }
-
-  a {
-    display: block;
-    padding: 2rem 3rem;
-    text-decoration: none;
   }
 `;
 
-const BlogBoxTitle = styled.h3`
-  margin: 2rem 0 1rem 0;
+const BlogLink = styled(props => <Link {...props} />)`
+  text-decoration: none;
+`;
+
+const BlogBoxHeading = styled.h3`
+  margin: 2rem 0 2rem 0;
+  font-size: 3.5rem;
+  line-height: 5rem;
+
+  @media (max-width: ${breakpoints.largeHand}) {
+    font-size: 3rem;
+    line-height: 4rem;
+  }
 `;
 
 const BlogBoxContent = styled.div`
   margin: 0 0 5rem 0;
-  border-top: 1px solid ${colors.secondaryColor};
-  padding-top: 3rem;
+  padding-top: 0.5rem;
+  font-size: 1.8rem;
 `;
 
-const BlogPostDate = styled.div`
-  text-align: right;
+const BlogPostMeta = styled.div`
+  margin: 2rem 0 1rem;
   font-size: 1.4rem;
+`;
+
+const BlogPostDate = styled.span`
+  text-align: left;
   color: ${colors.secondaryColor};
+`;
+
+const BlogPostReadTime = styled.span`
+  margin-left: 2rem;
 `;
 
 const Blog: FC<IBlogPageProps> = ({ data, location }) => {
@@ -84,7 +97,7 @@ const Blog: FC<IBlogPageProps> = ({ data, location }) => {
   const posts = data.allMdx.edges;
 
   return (
-    <PageLayout location={location} title={siteTitle}>
+    <ThinLayout location={location} title={siteTitle}>
       <>
         <SEO title="Blog" />
         <PageHeader currentLocation="Blog" />
@@ -94,17 +107,24 @@ const Blog: FC<IBlogPageProps> = ({ data, location }) => {
               const title = node.frontmatter.title || node.fields.slug;
               return (
                 <BlogPostBox key={node.fields.slug}>
-                  <Link to={`/blog${node.fields.slug}`}>
-                    <BlogBoxTitle>{title}</BlogBoxTitle>
-                    <BlogBoxContent>
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html: node.frontmatter.description || node.excerpt,
-                        }}
-                      />
-                    </BlogBoxContent>
+                  <BlogLink to={`/blog${node.fields.slug}`}>
+                    <BlogBoxHeading>{title}</BlogBoxHeading>
+                  </BlogLink>
+                  <BlogPostMeta>
                     <BlogPostDate>{node.frontmatter.date}</BlogPostDate>
-                  </Link>
+                    <BlogPostReadTime>
+                      {node.fields.readingTime.text}
+                    </BlogPostReadTime>
+                  </BlogPostMeta>
+                  {/*
+                  Can't decide whether to have or not...
+                  <BlogBoxContent>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: node.frontmatter.description || node.excerpt,
+                      }}
+                    />
+                  </BlogBoxContent> */}
                 </BlogPostBox>
               );
             })
@@ -113,7 +133,7 @@ const Blog: FC<IBlogPageProps> = ({ data, location }) => {
           )}
         </BlogContainer>
       </>
-    </PageLayout>
+    </ThinLayout>
   );
 };
 
@@ -134,6 +154,9 @@ export const pageQuery = graphql`
         node {
           excerpt
           fields {
+            readingTime {
+              text
+            }
             slug
           }
           frontmatter {

@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const colors = {
   portfolioBackground: '#081635',
   blogPostBackground: 'rgba(255, 255, 255, 0.08)',
+  fadedLine: 'rgba(255, 255, 255, 0.3)',
   primaryFontColor: '#FFFFFF',
   secondaryColor: 'rgb(239, 82, 138)',
   white: '#ffffff',
@@ -47,6 +48,7 @@ export const GlobalStyle = createGlobalStyle`
   /* Works on Chrome/Edge/Safari */
   *::-webkit-scrollbar {
     width: 1rem;
+    height: 0.7rem;
 
     @media (max-width: ${breakpoints.smallHand}) {
       display: none;

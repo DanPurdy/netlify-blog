@@ -1,4 +1,4 @@
-export interface IExperienceNodeType {
+interface IExperienceNodeType {
   body: string;
   frontmatter: {
     startDate: string;
@@ -15,13 +15,13 @@ export interface IExperienceNodeType {
   };
 }
 
-export interface IExperienceType {
+interface IExperienceType {
   edges: {
     node: IExperienceNodeType;
   }[];
 }
 
-export interface IPersonalType {
+interface IPersonalType {
   edges: {
     node: {
       childMdx: {

@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IExperienceType } from '../../types/content';
 
 import ExperienceItems from './components/ExperienceItems';
 import SectionHeader from '../SectionHeader/SectionHeader';

@@ -83,6 +83,9 @@ module.exports = {
           },
           {
             resolve: `gatsby-remark-vscode`,
+            options: {
+              colorTheme: 'Monokai',
+            },
           },
           {
             resolve: `gatsby-remark-copy-linked-files`,
@@ -93,19 +96,11 @@ module.exports = {
         ],
       },
     },
+    `gatsby-remark-reading-time`,
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [
-          {
-            family: `Lato`,
-            variants: [`700`],
-          },
-          {
-            family: `Noto Sans JP`,
-            variants: [`400`],
-          },
-        ],
+        fonts: [`Lato\:700`, `Noto Sans JP\:400`],
       },
     },
     {

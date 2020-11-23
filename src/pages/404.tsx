@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { graphql, PageProps } from 'gatsby';
 
-import PageLayout from '../components/PageLayout';
+import ThinLayout from '../components/ThinLayout';
 import SEO from '../components/SEO';
 import styled from 'styled-components';
 import PageHeader from '../components/PageHeader/PageHeader';
@@ -43,7 +43,7 @@ const NotFoundPage: FC<INotFoundPageProps> = ({ data, location }) => {
   const siteTitle = data?.site?.siteMetadata?.title;
 
   return (
-    <PageLayout location={location} title={siteTitle}>
+    <ThinLayout location={location} title={siteTitle}>
       <>
         <PageHeader currentLocation="404" />
         <CenteredContainer>
@@ -52,7 +52,7 @@ const NotFoundPage: FC<INotFoundPageProps> = ({ data, location }) => {
           <PageText>Sorry, can't find that page...</PageText>
         </CenteredContainer>
       </>
-    </PageLayout>
+    </ThinLayout>
   );
 };
 

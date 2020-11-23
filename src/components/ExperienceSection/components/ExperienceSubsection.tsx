@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { IExperienceNodeType } from '../../../types/content';
 
 import SubSectionContainer from '../../SubSectionContainer';
 import SubSectionTitle from '../../SubSectionTitle';

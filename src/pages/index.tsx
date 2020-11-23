@@ -1,4 +1,6 @@
-import React, { FC, ReactElement } from 'react';
+/// <reference path="../typings/content.d.ts" />
+
+import React, { FC } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { graphql } from 'gatsby';
 
@@ -7,8 +9,6 @@ import SEO from '../components/SEO';
 
 import ExperienceSection from '../components/ExperienceSection';
 import HomeSection from '../components/HomeSection';
-
-import { IExperienceType, IPersonalType } from '../types/content';
 
 interface IndexProps extends RouteComponentProps {
   data: {

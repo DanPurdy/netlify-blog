@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
     // edit below
-    title: `Dan Purdy's personal portfolio`,
+    title: `Dan Purdy Senior Fullstack Engineer`,
     author: `Dan Purdy`,
-    description: `Dan Purdy's portfolio and development blog`,
+    description: `Dan Purdy - fullstack engineer portfolio and development blog`,
     siteUrl: `https://dpurdy.me`,
     social: {
       twitter: `DanPurdy0`,
@@ -116,9 +116,8 @@ module.exports = {
       options: {
         trackingId: `UA-44111291-1`,
         head: false,
-        // TODO check back to this - enable and test below
-        // anonymize: true,
-        // respectDNT: true,
+        anonymize: true,
+        respectDNT: true,
       },
     },
   ],

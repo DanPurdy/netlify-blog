@@ -34,3 +34,19 @@ interface IPersonalType {
     };
   }[];
 }
+
+interface IPostType {
+  body: string;
+  excerpt: string;
+  fields: {
+    readingTime: {
+      text: string;
+    };
+    slug: string;
+  };
+  frontmatter: {
+    title: string;
+    date: string;
+    description: string;
+  };
+}

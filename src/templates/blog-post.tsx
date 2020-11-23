@@ -1,3 +1,5 @@
+/// <reference path="../typings/content.d.ts" />
+
 import React, { FC } from 'react';
 import { Link, graphql, PageProps } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
@@ -84,22 +86,6 @@ const PostBody = styled.section`
     }
   }
 `;
-
-interface IPostType {
-  body: string;
-  excerpt: string;
-  fields: {
-    readingTime: {
-      text: string;
-    };
-    slug: string;
-  };
-  frontmatter: {
-    title: string;
-    date: string;
-    description: string;
-  };
-}
 
 interface IBlogPostProps extends PageProps {
   data: {

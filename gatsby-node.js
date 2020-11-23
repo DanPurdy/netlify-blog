@@ -31,7 +31,6 @@ exports.createPages = ({ graphql, actions }) => {
     `
   )
     .then(result => {
-      console.log({ result });
       if (result.errors) {
         throw result.errors;
       }
@@ -58,7 +57,7 @@ exports.createPages = ({ graphql, actions }) => {
       return null;
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     });
 };
 

@@ -14,6 +14,7 @@ interface IndexProps extends RouteComponentProps {
   data: {
     experience: IExperienceType;
     personal: IPersonalType;
+    posts: IPostType;
     projects: {};
     site: {};
   };
@@ -22,7 +23,7 @@ interface IndexProps extends RouteComponentProps {
 const IndexPage: FC<IndexProps> = ({ data, location }) => {
   const siteTitle = 'Gatsby Starter Personal Website';
 
-  const { experience, personal, projects, site } = data;
+  const { experience, personal, posts, projects, site } = data;
 
   return (
     <>
@@ -103,6 +104,28 @@ export const pageQuery = graphql`
           frontmatter {
             title
             company
+          }
+        }
+      }
+    }
+    posts: allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
+      limit: 2
+    ) {
+      edges {
+        node {
+          excerpt
+          fields {
+            readingTime {
+              text
+            }
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
           }
         }
       }

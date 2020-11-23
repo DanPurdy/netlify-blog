@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import { IExperienceNodeType } from '../../../types/content';
 import { colors, breakpoints } from '../../../theme';
 import ExperienceDateSection from './ExperienceDateSection';
 import ExperienceSubSection from './ExperienceSubsection';

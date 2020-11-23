@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IExperienceType } from '../../../types/content';
 import ExperienceItem from './ExperienceItem';
 import styled from 'styled-components';
 

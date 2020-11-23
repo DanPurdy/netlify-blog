@@ -6,7 +6,7 @@ import PageHeader from '../components/PageHeader/PageHeader';
 import ThinLayout from '../components/ThinLayout';
 import SEO from '../components/SEO';
 import styled from 'styled-components';
-import { colors } from '../theme';
+import { breakpoints, colors } from '../theme';
 
 const PostContainer = styled.main`
   max-width: 960px;
@@ -27,6 +27,16 @@ const PostHeading = styled.h1`
   font-size: 5.5rem;
   padding-bottom: 1rem;
   margin-bottom: 0;
+  line-height: 1.4;
+
+  @media (max-width: ${breakpoints.smallPalm}) {
+    font-size: 4.5rem;
+  }
+
+  @media (max-width: ${breakpoints.largeHand}) {
+    font-size: 3.5rem;
+    line-height: 1.3;
+  }
 `;
 
 const PostMeta = styled.div`
@@ -47,6 +57,11 @@ const PostBody = styled.section`
   line-height: 3.3rem;
   color: #ffffff;
 
+  @media (max-width: ${breakpoints.smallPalm}) {
+    font-size: 1.7rem;
+    line-height: 2.8rem;
+  }
+
   p {
     margin: 0 0 3rem;
   }
@@ -54,9 +69,15 @@ const PostBody = styled.section`
   code: {
     letter-spacing: normal;
   }
+
   pre {
     font-size: 2rem;
     margin: 3rem 0;
+
+    @media (max-width: ${breakpoints.smallPalm}) {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+    }
 
     &.monokai {
       background: #000;
@@ -103,8 +124,6 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
   const post = data.mdx;
   const siteTitle = data.site.siteMetadata.title;
   const { previous, next } = pageContext;
-
-  console.log(post, data, pageContext);
 
   return (
     <ThinLayout location={location} title={siteTitle}>

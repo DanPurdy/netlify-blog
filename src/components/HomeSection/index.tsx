@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 
-import { IPersonalType } from '../../types/content';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Image from 'gatsby-image';
 import { breakpoints, colors } from '../../theme';

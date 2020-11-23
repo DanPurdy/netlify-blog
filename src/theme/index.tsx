@@ -48,6 +48,7 @@ export const GlobalStyle = createGlobalStyle`
   /* Works on Chrome/Edge/Safari */
   *::-webkit-scrollbar {
     width: 1rem;
+    height: 0.7rem;
 
     @media (max-width: ${breakpoints.smallHand}) {
       display: none;

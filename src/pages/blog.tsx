@@ -14,6 +14,9 @@ interface IBlogPageProps extends PageProps {
         node: {
           excerpt: string;
           fields: {
+            readingTime: {
+              text: string;
+            };
             slug: string;
           };
           frontmatter: {
@@ -58,10 +61,15 @@ const BlogLink = styled(props => <Link {...props} />)`
   text-decoration: none;
 `;
 
-const BlogBoxTitle = styled.h3`
+const BlogBoxHeading = styled.h3`
   margin: 2rem 0 2rem 0;
   font-size: 3.5rem;
   line-height: 5rem;
+
+  @media (max-width: ${breakpoints.largeHand}) {
+    font-size: 3rem;
+    line-height: 4rem;
+  }
 `;
 
 const BlogBoxContent = styled.div`
@@ -70,10 +78,18 @@ const BlogBoxContent = styled.div`
   font-size: 1.8rem;
 `;
 
-const BlogPostDate = styled.div`
-  text-align: left;
+const BlogPostMeta = styled.div`
+  margin: 2rem 0 1rem;
   font-size: 1.4rem;
+`;
+
+const BlogPostDate = styled.span`
+  text-align: left;
   color: ${colors.secondaryColor};
+`;
+
+const BlogPostReadTime = styled.span`
+  margin-left: 2rem;
 `;
 
 const Blog: FC<IBlogPageProps> = ({ data, location }) => {
@@ -92,16 +108,23 @@ const Blog: FC<IBlogPageProps> = ({ data, location }) => {
               return (
                 <BlogPostBox key={node.fields.slug}>
                   <BlogLink to={`/blog${node.fields.slug}`}>
-                    <BlogBoxTitle>{title}</BlogBoxTitle>
+                    <BlogBoxHeading>{title}</BlogBoxHeading>
                   </BlogLink>
-                  <BlogPostDate>{node.frontmatter.date}</BlogPostDate>
+                  <BlogPostMeta>
+                    <BlogPostDate>{node.frontmatter.date}</BlogPostDate>
+                    <BlogPostReadTime>
+                      {node.fields.readingTime.text}
+                    </BlogPostReadTime>
+                  </BlogPostMeta>
+                  {/*
+                  Can't decide whether to have or not...
                   <BlogBoxContent>
                     <p
                       dangerouslySetInnerHTML={{
                         __html: node.frontmatter.description || node.excerpt,
                       }}
                     />
-                  </BlogBoxContent>
+                  </BlogBoxContent> */}
                 </BlogPostBox>
               );
             })
@@ -131,6 +154,9 @@ export const pageQuery = graphql`
         node {
           excerpt
           fields {
+            readingTime {
+              text
+            }
             slug
           }
           frontmatter {

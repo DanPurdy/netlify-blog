@@ -16,14 +16,29 @@ interface IndexProps extends RouteComponentProps {
     personal: IPersonalType;
     posts: IPostType;
     projects: {};
-    site: {};
+    site: {
+      siteMetadata: {
+        author: string;
+        title: string;
+      };
+    };
   };
 }
 
 const IndexPage: FC<IndexProps> = ({ data, location }) => {
-  const siteTitle = 'Gatsby Starter Personal Website';
-
-  const { experience, personal, posts, projects, site } = data;
+  const {
+    experience,
+    personal,
+    site: {
+      siteMetadata: { author },
+    },
+  } = data;
+  const {
+    childMdx: {
+      body,
+      frontmatter: { title, subtitle },
+    },
+  } = personal.edges[0].node;
 
   return (
     <>
@@ -39,7 +54,7 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
           `Development blog`,
         ]}
       />
-      <Layout location={location} title={siteTitle}>
+      <Layout title={title}>
         <HomeSection data={personal} />
         <ExperienceSection experience={experience} />
       </Layout>
@@ -53,6 +68,7 @@ export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
+        author
         title
       }
     }

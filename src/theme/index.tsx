@@ -79,7 +79,7 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body {
     min-height: 100vh;
-    min-width: 320px
+    min-width: 320px;
   }
 
   img {
@@ -124,5 +124,6 @@ export const GlobalStyle = createGlobalStyle`
     color: ${colors.primaryFontColor};
     cursor: pointer;
     text-decoration: underline;
+    outline-color: ${colors.secondaryColor};
   }
 `;

@@ -11,8 +11,8 @@
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
     "babel-plugin-styled-components": "^1.10.0",
-    "gatsby": "^2.24.50",
-    "gatsby-image": "^2.4.16",
+    "gatsby": "^2.27.1",
+    "gatsby-image": "^2.6.0",
     "gatsby-plugin-feed-mdx": "^1.0.1",
     "gatsby-plugin-google-analytics": "^2.3.13",
     "gatsby-plugin-google-fonts": "^1.0.1",
@@ -32,12 +32,12 @@
     "gatsby-remark-vscode": "^1.4.0",
     "gatsby-source-filesystem": "^2.3.25",
     "gatsby-transformer-sharp": "^2.5.13",
-    "netlify-cms-app": "^2.12.9",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^5.2.1",
+    "netlify-cms-app": "^2.13.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
     "react-switch": "^5.0.1",
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.0",

@@ -6,6 +6,7 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Image from 'gatsby-image';
 import { breakpoints, colors } from '../../theme';
 
+import FrontPageHeader from '../FrontPageHeader';
 import SocialLinks from '../SocialLinks';
 
 const SectionContainer = styled.section``;
@@ -15,23 +16,6 @@ const ContentSection = styled.div`
 
   @media (max-width: ${breakpoints.largeHand}) {
     padding: 0;
-  }
-`;
-
-const FrontPageHeader = styled.header`
-  margin: 3rem 0 10rem;
-  text-align: center;
-
-  @media (max-width: ${breakpoints.palm}) {
-    margin-bottom: 4rem;
-  }
-
-  @media (max-width: ${breakpoints.smallPalm}) {
-    margin-bottom: 5rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    margin-top: 1rem;
   }
 `;
 
@@ -135,10 +119,7 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
   return (
     <SectionContainer>
       <ContentSection>
-        <FrontPageHeader>
-          <MainTitle>{title}</MainTitle>
-          <SubTitle>{subtitle}</SubTitle>
-        </FrontPageHeader>
+        <FrontPageHeader subtitle={subtitle} title={title} />
         <IntroContent>
           <ImageContainer>
             <Image

@@ -108,7 +108,7 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
   pageContext,
 }) => {
   const post = data.mdx;
-  const siteTitle = data.site.siteMetadata.title;
+  const siteTitle = data?.site?.siteMetadata?.title;
   const { previous, next } = pageContext;
 
   return (

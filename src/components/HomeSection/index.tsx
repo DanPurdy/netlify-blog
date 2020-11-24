@@ -1,3 +1,5 @@
+/// <reference path="../../typings/content.d.ts" />
+
 import React, { FC } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
@@ -109,7 +111,7 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
           fluid(maxHeight: 200) {
-            ...GatsbyImageSharpFluid_noBase64
+            ...GatsbyImageSharpFluid_tracedSVG
           }
         }
       }

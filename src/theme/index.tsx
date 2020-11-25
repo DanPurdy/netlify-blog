@@ -75,11 +75,18 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     color: ${colors.primaryFontColor};
     background-color: ${colors.portfolioBackground};
+    display: flex;
+    flex-direction: column;
   }
 
   html, body {
-    min-height: 100vh;
-    min-width: 320px
+    height: 100%;
+    min-width: 320px;
+  }
+
+  #___gatsby {
+    /* Set footer to flex-shrink: 0; see Footer.tsx */
+    flex: 1 0 auto;
   }
 
   img {
@@ -124,5 +131,6 @@ export const GlobalStyle = createGlobalStyle`
     color: ${colors.primaryFontColor};
     cursor: pointer;
     text-decoration: underline;
+    outline-color: ${colors.secondaryColor};
   }
 `;

@@ -11,7 +11,7 @@ interface INotFoundPageProps extends PageProps {
   data: {
     site: {
       siteMetadata: {
-        title: string;
+        author: string;
       };
     };
   };
@@ -40,10 +40,10 @@ const PageTitle = styled.h1`
 `;
 
 const NotFoundPage: FC<INotFoundPageProps> = ({ data, location }) => {
-  const siteTitle = data?.site?.siteMetadata?.title;
+  const author = data?.site?.siteMetadata?.author;
 
   return (
-    <ThinLayout location={location} title={siteTitle}>
+    <ThinLayout location={location} author={author}>
       <>
         <PageHeader currentLocation="404" />
         <CenteredContainer>
@@ -62,6 +62,7 @@ export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
+        author
         title
       }
     }

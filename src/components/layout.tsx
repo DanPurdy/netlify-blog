@@ -3,20 +3,23 @@ import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 
 import { breakpoints, GlobalStyle } from '../theme';
+import Footer from './Footer';
 
 interface ILayoutProps extends RouteComponentProps {
   title: string;
 }
 
-const Layout: FC<ILayoutProps> = ({ location, title, children }) => {
+const Layout: FC<ILayoutProps> = ({ title, children }) => {
   return (
-    <main>
-      <GlobalStyle />
-      {React.Children.map(children, (child, index) => (
-        <PageWrap>{child}</PageWrap>
-      ))}
-      <Footer />
-    </main>
+    <React.Fragment>
+      <main>
+        <GlobalStyle />
+        {React.Children.map(children, child => (
+          <PageWrap>{child}</PageWrap>
+        ))}
+      </main>
+      <Footer title={title} />
+    </React.Fragment>
   );
 };
 
@@ -30,11 +33,6 @@ const PageWrap = styled.div`
   @media (max-width: ${breakpoints.wide}) {
     padding: 2rem 2rem 8rem;
   }
-`;
-
-const Footer = styled.footer`
-  text-align: center;
-  margin: 2.4rem 0;
 `;
 
 export default Layout;

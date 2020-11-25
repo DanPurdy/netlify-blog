@@ -4,10 +4,11 @@ import styled, { css } from 'styled-components';
 import { breakpoints, colors } from '../theme';
 
 const FooterContainer = styled.div`
-  max-width: 1440px;
+  max-width: 800px;
   min-width: 320px;
   margin: 0 auto;
-  padding: 3rem 8rem 5rem;
+  padding: 0 4rem;
+  padding: 3rem 4rem 5rem;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;

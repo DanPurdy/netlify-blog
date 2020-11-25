@@ -29,6 +29,7 @@ interface IBlogPageProps extends PageProps {
     };
     site: {
       siteMetadata: {
+        author: string;
         title: string;
       };
     };
@@ -49,7 +50,7 @@ const BlogContainer = styled.section<{ numItems: number }>`
 
 const BlogPostBox = styled.div`
   margin: 0 0 2rem;
-  padding: 2rem;
+  padding: 2rem 0;
   border-bottom: 1px solid ${colors.fadedLine};
 
   @media (max-width: ${breakpoints.palm}) {
@@ -93,11 +94,11 @@ const BlogPostReadTime = styled.span`
 `;
 
 const Blog: FC<IBlogPageProps> = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title;
+  const author = data.site.siteMetadata.author;
   const posts = data.allMdx.edges;
 
   return (
-    <ThinLayout location={location} title={siteTitle}>
+    <ThinLayout location={location} author={author}>
       <>
         <SEO title="Blog" />
         <PageHeader currentLocation="Blog" />
@@ -143,6 +144,7 @@ export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
+        author
         title
       }
     }

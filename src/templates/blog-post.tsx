@@ -22,7 +22,7 @@ const Post = styled.article`
 const PostHeader = styled.header`
   margin-bottom: 5rem;
   border-bottom: 1px solid ${colors.fadedLine};
-  padding-bottom: 2rem;
+  padding-bottom: 2rem 0;
 `;
 
 const PostHeading = styled.h1`
@@ -92,6 +92,7 @@ interface IBlogPostProps extends PageProps {
     mdx: IPostType;
     site: {
       siteMetadata: {
+        author: string;
         title: string;
       };
     };
@@ -108,11 +109,11 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
   pageContext,
 }) => {
   const post = data.mdx;
-  const siteTitle = data?.site?.siteMetadata?.title;
+  const author = data?.site?.siteMetadata?.author;
   const { previous, next } = pageContext;
 
   return (
-    <ThinLayout location={location} title={siteTitle}>
+    <ThinLayout location={location} author={author}>
       <>
         <SEO
           title={post.frontmatter.title}

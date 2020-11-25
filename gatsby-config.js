@@ -99,9 +99,20 @@ module.exports = {
     },
     `gatsby-remark-reading-time`,
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: `gatsby-plugin-webfonts`,
       options: {
-        fonts: [`Lato\:700`, `Noto Sans JP\:400`],
+        fonts: {
+          google: [
+            {
+              family: 'Lato',
+              variants: ['700'],
+            },
+            {
+              family: 'Noto Sans JP',
+              variants: ['400'],
+            },
+          ],
+        },
       },
     },
     {

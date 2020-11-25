@@ -1,10 +1,12 @@
 backend:
   name: github
   repo: DanPurdy/netlify-blog
-  branch: develop
+  branch: master
 
+publish_mode: editorial_workflow
 media_folder: content/assets
 public_folder: assets
+site_url: https://dpurdy.me
 
 collections:
   - name: pages

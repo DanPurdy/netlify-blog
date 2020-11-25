@@ -196,11 +196,11 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
           <MainTitle>{title}</MainTitle>
         </Link>
         {subTitleElem}
-        {location !== 'blog' && (
+        {/* {location !== 'blog' && (
           <MainNav>
             <Link to="/blog">Blog</Link>
           </MainNav>
-        )}
+        )} */}
       </TitleContainer>
     </Header>
   );

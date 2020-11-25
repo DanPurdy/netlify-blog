@@ -14,7 +14,7 @@ const Layout: FC<ILayoutProps> = ({ title, children }) => {
     <React.Fragment>
       <main>
         <GlobalStyle />
-        {React.Children.map(children, (child, index) => (
+        {React.Children.map(children, child => (
           <PageWrap>{child}</PageWrap>
         ))}
       </main>

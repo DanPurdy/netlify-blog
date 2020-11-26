@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { breakpoints } from '../theme';
+import { breakpoints, colors } from '../theme';
 
 const SectionTitle = styled.h4`
   margin: 0 0 0.7rem;
-  opacity: 0.7;
   font-size: 1.8rem;
+  color: ${colors.experienceSubHeadings};
 
   @media (max-width: ${breakpoints.palm}) {
     font-size: 1.5rem;

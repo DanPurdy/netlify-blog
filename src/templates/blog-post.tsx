@@ -68,6 +68,12 @@ const PostBody = styled.section`
     margin: 0 0 3rem;
   }
 
+  h2,
+  h3,
+  h4 {
+    color: ${colors.blogSubHeading};
+  }
+
   code: {
     letter-spacing: normal;
   }
@@ -83,6 +89,18 @@ const PostBody = styled.section`
 
     &.monokai {
       background: #000;
+    }
+  }
+
+  a {
+    color: ${colors.neonPink};
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease-in-out;
+
+    &:hover {
+      border-bottom: 2px solid ${colors.neonPink};
     }
   }
 `;

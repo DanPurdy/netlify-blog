@@ -2,11 +2,20 @@ import { createGlobalStyle } from 'styled-components';
 
 export const colors = {
   portfolioBackground: '#081635',
-  blogPostBackground: 'rgba(255, 255, 255, 0.08)',
   fadedLine: 'rgba(255, 255, 255, 0.3)',
+  white: '#ffffff',
+
   primaryFontColor: '#FFFFFF',
   secondaryColor: 'rgb(239, 82, 138)',
-  white: '#ffffff',
+  blogSubHeading: '#FFE100',
+  experienceSubHeadings: ' #33AAFF',
+
+  darkPurple: '#081635',
+  neonPink: '#EF528A',
+  boldYellow: '#FFE100',
+  standoutRed: '#FF3D00',
+  neonTurquoise: '#00FFD1',
+  pastelBlue: '#33AAFF',
 };
 
 export const breakpoints = {

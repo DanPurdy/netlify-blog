@@ -13,7 +13,7 @@ Mocking is used to substitute parts of your infrastructure that you may not want
 
 I tend to attach request loggers to any calls that are directly involved in the current test i'm running. An example may be that you have a submit button on a form and you're looking to check that if a form is invalid it is prevented from being submitted. Attaching a logger to log any requests to the endpoint that that form would hit if valid means i am able to verify that no calls were made when they shouldn't have, not relying on purely the state of the form for my test result.
 
-### Request Logging
+## Request Logging
 
 How do we setup a logger in TestCafe? It's actually extremely simple.
 
@@ -107,7 +107,7 @@ test.requestHooks([signupLogger])('should test our request', (t) => {
 });
 ```
 
-### Request mocking
+## Request mocking
 
 Mocking is incredibly simple. You can think of them exactly the same was as any sort of test mocking. You're writing functionality to replace something that would happen in your real life application and controlling how it responds. Maybe you want to ensure that your app responds correctly to a 500 response from your login endpoint. Obviously you shouldn't add a way for your actual production code to throw an error just for your tests! 
 

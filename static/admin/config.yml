@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: DanPurdy/netlify-blog
-  branch: master
+  branch: main
 
 publish_mode: editorial_workflow
 media_folder: content/assets

@@ -72,6 +72,8 @@ const PostBody = styled.section`
   h3,
   h4 {
     color: ${colors.blogSubHeading};
+    line-height: 1.3;
+    margin: 3.5rem 0;
   }
 
   code: {
@@ -80,7 +82,7 @@ const PostBody = styled.section`
 
   pre {
     font-size: 2rem;
-    margin: 3rem 0;
+    margin: 4rem 0 6rem;
 
     @media (max-width: ${breakpoints.smallPalm}) {
       font-size: 1.4rem;

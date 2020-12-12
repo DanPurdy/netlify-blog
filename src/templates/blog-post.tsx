@@ -76,6 +76,29 @@ const PostBody = styled.section`
     margin: 3.5rem 0;
   }
 
+  h2 {
+    @media (max-width: ${breakpoints.smallPalm}) {
+      font-size: 3.5rem;
+      margin: 2.5rem 0;
+    }
+
+    @media (max-width: ${breakpoints.largeHand}) {
+      font-size: 3rem;
+      line-height: 1.3;
+    }
+  }
+
+  h3 {
+    @media (max-width: ${breakpoints.smallPalm}) {
+      font-size: 3rem;
+    }
+
+    @media (max-width: ${breakpoints.largeHand}) {
+      font-size: 2.6rem;
+      line-height: 1.2;
+    }
+  }
+
   code: {
     letter-spacing: normal;
   }

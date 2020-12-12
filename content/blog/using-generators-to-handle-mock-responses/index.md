@@ -36,10 +36,10 @@ incrementer.next().value // 13
 
 ```
 
-## Why are they useful in mocks
-Being able to easily control what generators return based on the number of times you increment the iterator means you can easily create repeatable and dependable mocks. 
+## Why are generators useful in mocks
+Being able to easily control what generators return based on the number of times you increment the iterator means you can easily create repeatable and dependable mocks.
 
-### Example 1
+### Example
 
 We have an endpoint that a user polls waiting for a status to be updated in our backend by a third party. I didn't want to add websockets for this single case, 99% of the time the endpoint will return a success on the 2nd call however we don't want our user to be sitting there with a never ending loading screen if the status is not updated by the third party, to prevent this we implemented a limit of around 10 calls before we show an error to the user and alert our ops team that something is wrong. We also need to handle the user getting a non pending success state after say 4 calls or an error state after 5 calls etc etc.
 To simulate this for in our end-to-end tests I ended up setting up mocks with generators that we can guarantee will show a failure status after 5 calls without needing to change anything that the client does which makes this a fair test and also makes it easily readable without having to rely on other state tactics in our mocks.
@@ -81,46 +81,9 @@ export const applicationCreatingFailureStatusMock = () => {
 ```
 That's all there is to it. When our mock is instantiated it creates a generator instance and returns a request mock, the request mock uses the generator value to set the body based on how many times the generator has been incremented and seen as that increment happens on every request we are guaranteeing the response of a certain call.
 
-### Example 2
-I have a seed data setup script for a test, its purpose is to set the start and end times for a load of appointments that we then use send to our backend to run our tests against.
-
-```js
-export function* slotTimeGenerator(sessionDate: string): Iterator<string> {
-  let hourOffset = 0;
-
-  while (true) {
-    // we only want sessions to be 9 hours long
-    if (hourOffset > 9) {
-      hourOffset = 0;
-    }
-
-    yield moment(sessionDate)
-      .hour(8 + hourOffset)
-      .utc()
-      .format();
-
-    hourOffset += 9;
-  }
-}
-
-// imagine mapping over certain dates here
-const slotTimeOne = slotTimeGenerator(date);
-const slotTimeTwo = slotTimeGenerator(date);
-
-// Slot start times
-  const slotStartTimeOne = slotTimeOne.next().value;
-  const slotEndTimeOne = slotTimeOne.next().value;
-
-templateString
-    .replace(/{{slot_end_time_one}}/, slotEndTimeOne)
-    .replace(/{{slot_start_time_one}}/, slotStartTimeOne)
-```
-
-I've simplified this a lot and could be achieved other ways but it should give you a rough idea of its usefulness and how
-
 
 ## Summing it up
-The two simple examples above can be modified to suit a whole host of needs when it comes to your tests. Generators allow you to produce repeatable and predictable outcomes without the need for tracking any sort of state, modifying how the client works in a way that wouldn't happen in the real world or passing extra data or parameters to functions/endpoints just to handle certain cases. 
+The simple example above can be modified to suit a whole host of needs when it comes to your tests. Generators allow you to produce repeatable and predictable outcomes without the need for tracking any sort of state, modifying how the client works in a way that wouldn't happen in the real world or passing extra data or parameters to functions/endpoints just to handle certain cases. 
 This should always be something you strive for in testing. Tests should not be dependent upon the state or outcome of another test, you don't want to see cascading failures all because an early test failed. Being able to guarantee how your generator behaves and when and how you can expect data in our examples goes a long way to achieving this goal.
 
 Happy testing.

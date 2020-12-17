@@ -5,7 +5,7 @@ title: Firebase Cloud Firestore security rules
 description: An introduction to Cloud Firestore security rules and how to unit
   test them to help secure your firebase application
 ---
-# What is Firebase Cloud Firestore
+## What is Firebase Cloud Firestore
 
 Briefly... 
 
@@ -20,7 +20,7 @@ Firestore comes with security rules, we can write these rules to give granular c
 
 I want to focus on the rules and how you can write tests against these in this post so I wont be covering much of the setup of Firebase or Firestore BUT I may add this in another post even if just for me to remember how i set everything up!
 
-## Writing Cloud Firestore security rules
+### Writing Cloud Firestore security rules
 
 At its most basic level you can write rules for `read` and `write` operations.
 These defaults can be broken down into the following:
@@ -54,6 +54,9 @@ service cloud.firestore {
 
 Every single rule you have will ultimately return a boolean true/false. If true the action will be allowed if false it won't. Rules are not filters and cannot be used as such though. For example if we only wanted to return all documents but our rule says to return true if the document is newer than 6 hours old - you couldn't write a rule to allow that and expect to get the filtered documents back, firestore would actually say well the rule says return true if the documents are newer than 6 hours we can return but some of the documents are old so return false. However if your query specified to only give you results newer than 6 hours old then the list of documents would satisfy the rule and you would get a list of documents returned to you.
 
+// function example
+// function with param example
+// array example
 
 
 ### Time for an example

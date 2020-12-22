@@ -1,7 +1,7 @@
 ---
 path: firebase-cloud-firestore-security-rules-part-one
 date: 2020-12-16T23:08:41.817Z
-title: Firebase Cloud Firestore security rules - Part one
+title: Firebase Cloud Firestore security rules - Part one - Writing the rules
 description: An introduction to Cloud Firestore security rules and how to unit
   test them to help secure your firebase application
 ---

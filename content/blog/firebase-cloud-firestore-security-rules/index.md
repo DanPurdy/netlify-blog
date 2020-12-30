@@ -12,7 +12,7 @@ Briefly...
 > Cloud Firestore is a NoSQL document database that lets you easily store, sync, and query data for your mobile and web apps - at global scale.
 
 What that means in layman's terms that we can easily digest is it's a really simple way for you to get setup with a cloud based NoSQL database and focus on building your application rather than worry about all the overhead of setting up a database and getting into all the devops work. Firebase Cloud Firestore includes a pretty generous free tier where the cost scales seemingly well as you move to that 'global scale' mentioned above.
-Firestore is not to be confused with the familiar Firebase offering of Realtime Database that they've been famous for and which ultimately led to their takeover by Google back in 2014, since that time Firebase have diversified into many areas similar to jamstack providers like Netlify etc by offering hosted serverless functions, hosting, authentication tooling all powered through the GCP platform but without all the kubernetes orchestration or whatever else you dream up.
+Firestore is not to be confused with the familiar Firebase offering of Realtime Database that they've been famous for and which ultimately led to their takeover by Google back in 2014, since that time Firebase have diversified into many areas similar to Jamstack providers like Netlify etc by offering hosted server-less functions, hosting, authentication tooling all powered through the GCP platform but without all the Kubernetes orchestration or whatever else you dream up.
 
 So Firestore is a cloud based NoSQL database that holds data and as with any data we keep or expose in some way to the internet we need to ensure it's secure and make sure only our application and those we deem trustworthy can access it in ways we expect and define.
 
@@ -21,6 +21,8 @@ Firestore comes with security rules, we can write these rules to give granular c
 I want to focus on the rules and how you can write tests against these in this post and the next so I wont be covering much of the setup of Firebase or Firestore BUT I may add this in another post further down the line even if just for me to remember how i set everything up when i worked on a Firebase project recently.
 
 ### Writing Cloud Firestore security rules
+
+You can find the accompanying repository on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo)
 
 At its most basic level you can write rules for `read` and `write` operations.
 These rules can be broken down into the following actions:
@@ -79,7 +81,7 @@ So firstly we should write down and describe what access people should be allowe
 #### stores
 1. Public should be able to see the stores
 1. only verified staff members should be able to update stores
-1. We should not be able to delete or create stores (maybe a superadmin role in the future but for now it will happen in the firebase panel)
+1. We should not be able to delete or create stores (maybe a super admin role in the future but for now it will happen in the firebase panel)
 
 #### menus
 1. menus should be publicly visible
@@ -107,20 +109,20 @@ service cloud.firestore {
 ```
 This first match rule applies to all documents at all levels and disallows any sort of action on it both read and write. This is a sensible default to have, later on when you add more documents and collections if you were to forget about your rules or if you just miss a case then everything is protected by default. This will not protect your data in cases where you mis-wrote a rule but nevertheless it prevents accidentally leaking new documents/collections.
 
-Next let's look at our shop rules:
+Next let's look at our store rules:
 ```
-match /shops/{shopId} {
+match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
-  allow update: if isStoreStaff(shopId);
+  allow update: if isStoreStaff(storeId);
   allow delete: if false;
 }
 ```
 We allow full public read access and we disable create and delete for all. However update has a function! Cloud security rules allows you to add functions, below let us see how it works.
 
 ```
-function isStoreStaff(shopId) {
-  return shopId in request.auth.token.stores
+function isStoreStaff(storeId) {
+  return storeId in request.auth.token.stores
 }
 ```
 
@@ -132,36 +134,36 @@ And yes this is a good idea, NoSQL databases don't support relationships in the 
 
 Ok so now we're familiar with that let's look at our menus collection.
 ```
-match /shops/{shopId} {
+match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
-  allow update: if isStoreStaff(shopId);
+  allow update: if isStoreStaff(storeId);
   allow delete: if false;
   
   match /menu/{menuId} {
     allow read: if true;
-    allow create, update: if isStoreStaff(shopId);
+    allow create, update: if isStoreStaff(storeId);
     allow delete: if false;
   }
 }
   
 ```
 
-First of all notice that it's nested inside our store, this follows the structure of our collections and sub collections but do note that your parent collection rules do not cascade to sub collections, they must have their own rules defined even if they match exactly those of their parent. Not much to add here - the rules are almost identical except also see that we have `create` and `update` on the same line, for verbosity you can comma separate the actions that have the same rules for each without having to write the rule twice. Also notice that because menu is a subcollection of a store it has access to the storeId of the parent document as you would of had to pass that to request this data i.e. `/shops/:storeId/menu/:menuId`
+First of all notice that it's nested inside our store, this follows the structure of our collections and sub collections but do note that your parent collection rules do not cascade to sub collections, they must have their own rules defined even if they match exactly those of their parent. Not much to add here - the rules are almost identical except also see that we have `create` and `update` on the same line, for verbosity you can comma separate the actions that have the same rules for each without having to write the rule twice. Also notice that because menu is a sub-collection of a store it has access to the storeId of the parent document as you would of had to pass that to request this data i.e. `/stores/:storeId/menu/:menuId`
 
 Finally let's look at our staff collection. I've left off the menu collection below for clarity.
 
 ```
-match /shops/{shopId} {
+match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
-  allow update: if isStoreStaff(shopId);
+  allow update: if isStoreStaff(storeId);
   allow delete: if false;
 
   //menu here
 
   match /staff/{staffMemberId} {
-    allow read, create: if isStoreStaff(shopId);
+    allow read, create: if isStoreStaff(storeId);
     allow update: if userOwnsDocument(staffMemberId);
     allow delete: if false;
   }
@@ -189,28 +191,28 @@ service cloud.firestore {
       allow read, write: if false;
     }
     
-    match /shops/{shopId} {
+    match /stores/{storeId} {
       allow read: if true;
       allow create: if false;
-      allow update: if isStoreStaff(shopId);
+      allow update: if isStoreStaff(storeId);
       allow delete: if false;
   
       match /menu/{menuId} {
         allow read: if true;
-        allow create, update: if isStoreStaff(shopId);
+        allow create, update: if isStoreStaff(storeId);
         allow delete: if false;
       }
       
       match /staff/{staffMemberId} {
-        allow read, create: if isStoreStaff(shopId);
+        allow read, create: if isStoreStaff(storeId);
         allow update: if userOwnsDocument(staffMemberId);
         allow delete: if false;
       }
     }
   }
 
-  function isStoreStaff(shopId) {
-    return shopId in request.auth.token.stores
+  function isStoreStaff(storeId) {
+    return storeId in request.auth.token.stores
   }
   
   function userOwnsData(staffMemberId) {
@@ -224,6 +226,7 @@ Great, we can sleep easy at night now, the bad guys can't get to our all importa
 
 I'll be covering the unit tests in part 2 of Firebase Cloud Firestore security rules - coming soon! 
 
+You can find the accompanying repository on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo)
 
 
 

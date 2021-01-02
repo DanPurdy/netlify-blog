@@ -36,7 +36,7 @@ You should already have your `firestore.rules` file adjacent to these two so the
 
 We're going to want to be setting default or dummy data into our Firestore emulator before many of our tests. We can use the `loadFirestoreRules` method from the rules-unit-testing package to load different rules on the fly so one simple setup pattern is to provide an unrestricted ruleset such as below
 
-```
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -146,77 +146,81 @@ We'll start with the read/get rule. As it's open to everyone we more want to mak
 
 First let's make sure that non authenticated users can read from our stores collection.
 
-```
+```javascript
 test('succeed when a non authenticated user tries to load a store', async () => {
   const db = await setup(null, {
-    'stores/SH00': {
+    'stores/ST01': {
       name: 'test',
-    },
+    }, 
   });
   const ref = db.collection('stores');
 
-  expect(await assertSucceeds(ref.doc('SH00').get()));
+  expect(await assertSucceeds(ref.doc('ST01').get()));
 });
 
 ```
 
 We pass `null` to our auth options and then pass a single default test store to our stores collection we then assert we can successfully read from this collection. We'll do much the same in our next test to ensure that an authenticated user can also read from this collection, to test this we just make sure we pass a user/auth object to our setup function.
 
-```
+```javascript
 test('succeed when a authenticated user tries to load a store', async () => {
   const db = await setup(
     {
       uid: 'user',
     },
     {
-      'stores/SH00': {
+      'stores/ST01': {
         name: 'test',
       },
     },
   );
   const ref = db.collection('stores');
 
-  expect(await assertSucceeds(ref.doc('SH00').get()));
+  expect(await assertSucceeds(ref.doc('ST01').get()));
 });
 ```
 
 Let's see that all together for our first test.
 
-```
+```javascript
 const { setup, teardown } = require('../helpers');
 const { assertSucceeds } = require('@firebase/rules-unit-testing');
 
-describe(`Store get/list rules`, () => {
-  afterAll(async () => {
-    await teardown();
-  });
-
-  test('succeed when a non authenticated user tries to load a store', async () => {
-    const db = await setup(null, {
-      'stores/SH00': {
-        name: 'test',
-      },
+describe('Stores read rules', () => {
+  describe('get', () => {
+    afterAll(async () => {
+      await teardown();
     });
-    const ref = db.collection('stores');
 
-    expect(await assertSucceeds(ref.doc('SH00').get()));
-  });
-
-  test('succeed when a authenticated user tries to load a store', async () => {
-    const db = await setup(
-      {
-        uid: 'user',
-      },
-      {
-        'stores/SH00': {
+    test('succeed when a non authenticated user tries to load a store', async () => {
+      const db = await setup(null, {
+        'stores/ST01': {
           name: 'test',
         },
-      },
-    );
-    const ref = db.collection('stores');
+      });
+      const ref = db.collection('stores');
 
-    expect(await assertSucceeds(ref.doc('SH00').get()));
+      expect(await assertSucceeds(ref.doc('ST01').get()));
+    });
+
+    test('succeed when a authenticated user tries to load a store', async () => {
+      const db = await setup(
+        {
+          uid: 'user',
+        },
+        {
+          'stores/ST01': {
+            name: 'test',
+          },
+        },
+      );
+      const ref = db.collection('stores');
+
+      expect(await assertSucceeds(ref.doc('ST01').get()));
+    });
   });
 });
+
 ```
+
 

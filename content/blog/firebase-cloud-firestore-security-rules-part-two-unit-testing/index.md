@@ -131,50 +131,50 @@ describe('Default firestore rules', () => {
 ```
 Again, fairly self explanatory - set up a random collection and assert that both a get request and an add request fail.
 
-Next let's test our `shops` collection, heres a reminder of the rules we have in place.
+Next let's test our `stores` collection, heres a reminder of the rules we have in place.
 
 ```javascript
-match /shops/{shopId} {
+match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
-  allow update: if isStoreStaff(shopId);
+  allow update: if isStoreStaff(storeId);
   allow delete: if false;
 }
 ```
 
 We'll start with the read/get rule. As it's open to everyone we more want to make sure that this remains readable to all types of users whether authenticated or not.
 
-First let's make sure that non authenticated users can read from our shops collection.
+First let's make sure that non authenticated users can read from our stores collection.
 
 ```
-test('succeed when a non authenticated user tries to load a shop', async () => {
+test('succeed when a non authenticated user tries to load a store', async () => {
   const db = await setup(null, {
-    'shops/SH00': {
+    'stores/SH00': {
       name: 'test',
     },
   });
-  const ref = db.collection('shops');
+  const ref = db.collection('stores');
 
   expect(await assertSucceeds(ref.doc('SH00').get()));
 });
 
 ```
 
-We pass `null` to our auth options and then pass a single default test shop to our shops collection we then assert we can successfully read from this collection. We'll do much the same in our next test to ensure that an authenticated user can also read from this collection, to test this we just make sure we pass a user/auth object to our setup function.
+We pass `null` to our auth options and then pass a single default test store to our stores collection we then assert we can successfully read from this collection. We'll do much the same in our next test to ensure that an authenticated user can also read from this collection, to test this we just make sure we pass a user/auth object to our setup function.
 
 ```
-test('succeed when a authenticated user tries to load a shop', async () => {
+test('succeed when a authenticated user tries to load a store', async () => {
   const db = await setup(
     {
       uid: 'user',
     },
     {
-      'shops/SH00': {
+      'stores/SH00': {
         name: 'test',
       },
     },
   );
-  const ref = db.collection('shops');
+  const ref = db.collection('stores');
 
   expect(await assertSucceeds(ref.doc('SH00').get()));
 });
@@ -186,34 +186,34 @@ Let's see that all together for our first test.
 const { setup, teardown } = require('../helpers');
 const { assertSucceeds } = require('@firebase/rules-unit-testing');
 
-describe(`Shop get/list rules`, () => {
+describe(`Store get/list rules`, () => {
   afterAll(async () => {
     await teardown();
   });
 
-  test('succeed when a non authenticated user tries to load a shop', async () => {
+  test('succeed when a non authenticated user tries to load a store', async () => {
     const db = await setup(null, {
-      'shops/SH00': {
+      'stores/SH00': {
         name: 'test',
       },
     });
-    const ref = db.collection('shops');
+    const ref = db.collection('stores');
 
     expect(await assertSucceeds(ref.doc('SH00').get()));
   });
 
-  test('succeed when a authenticated user tries to load a shop', async () => {
+  test('succeed when a authenticated user tries to load a store', async () => {
     const db = await setup(
       {
         uid: 'user',
       },
       {
-        'shops/SH00': {
+        'stores/SH00': {
           name: 'test',
         },
       },
     );
-    const ref = db.collection('shops');
+    const ref = db.collection('stores');
 
     expect(await assertSucceeds(ref.doc('SH00').get()));
   });

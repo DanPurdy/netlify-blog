@@ -139,6 +139,8 @@ describe('Default firestore rules', () => {
 
 Again, fairly self explanatory - set up a random collection and assert that both a get request and an add request fail.
 
+## Store ruleset tests
+
 Next let's test our `stores` collection, here's a reminder of the rules we have in place.
 
 ```javascript

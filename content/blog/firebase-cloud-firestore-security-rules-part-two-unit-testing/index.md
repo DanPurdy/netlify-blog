@@ -450,3 +450,80 @@ With the tests above you can see that we're first getting into the stores collec
 `/stores/ST00/menus/`
 
 As with our store tests this allows us to match the store ID in the path against the stores object in the user custom claims object which means we can check that the user is a member of this specific store and therefore give them or deny them access to the menu collection and documents.
+
+There's one more example we should look at inside of our staff rules, the update rule we added includes two conditions, one to check that the data we are trying to edit is actually our own staff record and the other to check the user is also a member of staff for the current store. Again a little convoluted and you'll probably want staff members to be able to update each others record (or more likely the fabled superadmin/store owner role mentioned previously!) 
+
+```javascript
+match /staff/{staffMemberId} {
+  allow read, create: if isStoreStaff(storeId);
+  allow update: if userOwnsData(staffMemberId) && isStoreStaff(storeId);
+  allow delete: if false;
+}
+```
+
+Again you can see all the [tests for the update rule on Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo/blob/main/firestore/tests/staff/update.test.js) but let's go over a few of them below.
+
+First let's check that a staff member cannot update another staff members record from the same store, similar to our previous menu tests we add a stores array with containing a store ID but this time we actually care what the UID of this user is set to. When accessing the staff collection we are specifying a document by 'staffMemberId' which is ultimately equivalent in our application to the users UID. In rest terms you could probably thing of the update happening as a PATCH request to `/stores/ST00/staff/SM00`. If the ID of document we're trying to update matches our user then and the user we passed is a staff member of the store then we can respond successfully, in the case below though the users ID does not match the record we're trying to update.
+
+```javascript
+test('fail when a store admin tries to update another staff member from the same store', async () => {
+  const db = await setup(
+    {
+      uid: 'SM01',
+      stores: ['ST00'],
+    },
+    {
+      'stores/ST00/staff/SM00': {
+        name: 'staffmember',
+      },
+    },
+  );
+  const ref = db.collection('stores').doc('ST00').collection('staff');
+
+  expect(await assertFails(ref.doc('SM00').update({ name: 'newTest' })));
+});
+``` 
+
+Next up we have a test to check that if the user ID doesn't match the staff record we want to update and also that our user is not a staff member of the store that we will fail the request
+
+```javascript
+test('fail when a store admin from a different store tries to update another staff member from another store', async () => {
+  const db = await setup(
+    {
+      uid: 'SM01',
+      stores: ['ST01'],
+    },
+    {
+      'stores/ST00/staff/SM00': {
+        name: 'staffmember',
+      },
+    },
+  );
+  const ref = db.collection('stores').doc('ST00').collection('staff');
+
+  expect(await assertFails(ref.doc('SM00').update({ name: 'newTest' })));
+});
+```
+
+Finally we check that when the user ID matches the staff member document ID and that the user is a staff member of the store as defined in the stores custom claim on the auth object that we allow the request to succeed.
+
+```javascript
+test('succeed when a user is a staff member and they try to update their own staff record', async () => {
+  const db = await setup(
+    {
+      uid: 'SM00',
+      stores: ['ST00'],
+    },
+    {
+      'stores/ST00/staff/SM00': {
+        name: 'staffmember',
+      },
+    },
+  );
+  const ref = db.collection('stores').doc('ST00').collection('staff');
+
+  expect(await assertSucceeds(ref.doc('SM00').update({ name: 'newTest' })));
+});
+```
+
+That's really all there is to it, We've covered a few simple rules and test cases and how to access data from our request / user to validate against data in our database before we respond to the request. We've looked at chaining conditions and also at nesting rules and how to test nested rules and the implications around nested rules. Hopefully this gives you a little heads up of how to approach testing your Firebase Firestore rules. It's absolutely essential to test these rules to reduce the risk of any of your data leaking or being easily accessible to the wrong people. Feel free to fork the [companion repository](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo) and build from there if you're just getting started or want some place to start.

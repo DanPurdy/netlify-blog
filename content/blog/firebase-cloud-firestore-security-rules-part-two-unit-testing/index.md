@@ -401,17 +401,19 @@ test('succeed when an authenticated user tries to update a store record to which
 });
 ```
 
-And that's it for our stores, they're now tested and we can be fairly certain and confident that we won't be allowing access to anyone that falls outside of our Firestore ruleset.
+And that's it for our stores, they're now tested and we can be fairly confident that we won't be allowing access to anyone that falls outside of our Firestore ruleset.
 
-Our remaining collections, menus and staff are all tested in a similar way so i won't be documenting all of their test cases but we can go over a few of them to see how they work. If you want to see all the tests in their entirety then don't forget that you can visit the repository I have setup to accompany this article on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo/).
+Our remaining collections, menus and staff are all tested in a similar way so i won't be documenting all of their test cases but we can go over a few of the cases we haven't already covered with our stores. If you want to see all the tests in their entirety then don't forget that you can visit the repository I have setup to accompany this article on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo/).
 
-The most important thing to understand when testing sub-collections is that even though these are descendants or children of stores the rules for the stores do not cascade onto their sub-collections.
+### Testing sub-collections
+
+The most important thing to understand when testing sub-collections is that even though these are descendants or children of our stores collection the rules for the stores do not cascade down onto their sub-collections. I.e. the read rule for the stores being set to false for a store would not prevent anyone from reading any of the store sub-collections, only the store documents themselves.
 
 >  Security rules apply only at the matched path
 
 see [the Firestore docs](https://firebase.google.com/docs/firestore/security/rules-structure#hierarchical_data) for more information there.
 
-What we do get though is the ID of the parent collection so we can still do checks on our request to make sure the user is a staff member of a store or similar. Let's take a look at an example of this below with our [menu create rule tests](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo/blob/main/firestore/tests/menus/create.test.js).
+What we do get when making a request to a sub-collection though is the ID of the parent collection so we can still do checks based on this to ensure the user is a staff member of a store or similar for example. Let's take a look at an example of this below with our [menu create rule tests](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo/blob/main/firestore/tests/menus/create.test.js).
 
 ```javascript
 test('fail when a non authenticated user tries to create a menu record', async () => {
@@ -445,7 +447,7 @@ test('succeed when a authenticated store admin from the same store tries to crea
 });
 ```
 
-With the tests above you can see that we're first getting into the stores collection, choosing a store by ID and accessing the menus sub-collection then attempting to add a document. If we were to think of this in URL terms or the Firestore path term you would end up with:
+With the tests above you can see that we're first getting into the stores collection, choosing a store by ID and accessing the menus sub-collection then attempting to add a document. If we were to think of this in REST terms you would be looking at a POST request to:
 
 `/stores/ST00/menus/`
 
@@ -526,4 +528,4 @@ test('succeed when a user is a staff member and they try to update their own sta
 });
 ```
 
-That's really all there is to it, We've covered a few simple rules and test cases and how to access data from our request / user to validate against data in our database before we respond to the request. We've looked at chaining conditions and also at nesting rules and how to test nested rules and the implications around nested rules. Hopefully this gives you a little heads up of how to approach testing your Firebase Firestore rules. It's absolutely essential to test these rules to reduce the risk of any of your data leaking or being easily accessible to the wrong people. Feel free to fork the [companion repository](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo) and build from there if you're just getting started or want some place to start.
+That's really all there is to it, we've covered a few simple rules and test cases and how to access data from our request / user to validate against data in our database before we respond to the request. We've looked at chaining conditions and also at nesting rules and how to test nested rules and the implications around nested rules. Hopefully this gives you a little heads up of how to approach testing your Firebase Firestore rules. It's absolutely essential to test these rules to reduce the risk of any of your data leaking or being easily accessible to the wrong people. Feel free to fork the [companion repository](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo) and build from there if you're just getting started or want some place to start.

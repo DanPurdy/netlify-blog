@@ -41,7 +41,7 @@ All pretty self explanatory. There are two main keywords that you need to be awa
 
 In the example below we are allowing anyone to read (get and list) store documents and at the same time preventing anyone from writing to the stores list or documents.
 
-```
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -95,7 +95,7 @@ So firstly we should write down and describe what access people should be allowe
 
 so let us write those rules starting with the basics of any rules file
 
-```
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -110,7 +110,8 @@ service cloud.firestore {
 This first match rule applies to all documents at all levels and disallows any sort of action on it both read and write. This is a sensible default to have, later on when you add more documents and collections if you were to forget about your rules or if you just miss a case then everything is protected by default. This will not protect your data in cases where you mis-wrote a rule but nevertheless it prevents accidentally leaking new documents/collections.
 
 Next let's look at our store rules:
-```
+
+```javascript
 match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
@@ -120,7 +121,7 @@ match /stores/{storeId} {
 ```
 We allow full public read access and we disable create and delete for all. However update has a function! Cloud security rules allows you to add functions, below let us see how it works.
 
-```
+```javascript
 function isStoreStaff(storeId) {
   return storeId in request.auth.token.stores
 }
@@ -133,7 +134,8 @@ On our users we have a custom claim called stores, it's an array of store ID's. 
 And yes this is a good idea, NoSQL databases don't support relationships in the way you may be used to in MySQL and therefore trying to look up a user ID and seeing if it exists on a store would mean pulling all the store documents and then pulling all of their staff collections and then checking over each staff document. Not only could this be fairly slow when you start to scale but it also could bankrupt you as each of those reads costs money! flattening out faux style relationships and keeping important information in two collections that refer to each other is fine and saves you a lot of time and effort. Notice also we are pulling the auth property from our request, rules by default have access to all of the request properties that were sent to retrieve the document(s) they also have access to the resource property which gives you access to the data your query would return.
 
 Ok so now we're familiar with that let's look at our menus collection.
-```
+
+```javascript
 match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
@@ -153,7 +155,7 @@ First of all notice that it's nested inside our store, this follows the structur
 
 Finally let's look at our staff collection. I've left off the menu collection below for clarity.
 
-```
+```javascript
 match /stores/{storeId} {
   allow read: if true;
   allow create: if false;
@@ -164,7 +166,7 @@ match /stores/{storeId} {
 
   match /staff/{staffMemberId} {
     allow read, create: if isStoreStaff(storeId);
-    allow update: if userOwnsDocument(staffMemberId);
+    allow update: if userOwnsDocument(staffMemberId) && isStoreStaff(storeId);
     allow delete: if false;
   }
 }
@@ -172,7 +174,7 @@ match /stores/{storeId} {
 
 Again much the same as our menu collection but we have a new function `userOwnsDocument` which takes a staffMemberId, notice again that this is the id of the document we're trying to get to or update and would have been passed in the route to the document. 
 
-```
+```javascript
 function userOwnsData(staffMemberId) {
   return request.auth.uid != null && request.auth.uid == staffMemberId
 }
@@ -182,7 +184,7 @@ Simple to understand right? We first make sure that the UID of our user exists i
 
 so here's our rule file altogether
 
-```
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -205,7 +207,7 @@ service cloud.firestore {
       
       match /staff/{staffMemberId} {
         allow read, create: if isStoreStaff(storeId);
-        allow update: if userOwnsDocument(staffMemberId);
+        allow update: if userOwnsDocument(staffMemberId) && isStoreStaff(storeId);
         allow delete: if false;
       }
     }
@@ -224,9 +226,9 @@ service cloud.firestore {
 
 Great, we can sleep easy at night now, the bad guys can't get to our all important data or add to our stores menus. Whoah, not so fast there! Where are the tests? That's right you can and DEFINITELY SHOULD write tests to check each of these rules, no if's and no but's, ideally we would have written these before we even wrote the rules but let's leave the TDD argument alone for now. What we absolutely do not want to do is to start working on our code and then update or add a rule and start leaking data after all of our effort to write good rules initially, so yes lets let our tests give us a good indication that we messed up - it's almost inevitable!
 
-I'll be covering the unit tests in part 2 of Firebase Cloud Firestore security rules - coming soon! 
+Part 2 is available [here](https://dpurdy.me/blog/firebase-cloud-firestore-security-rules-part-two-unit-testing/)
 
-You can find the accompanying repository on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo)
+You can also find the accompanying repository for this article on [Github](https://github.com/DanPurdy/firebase-firestore-rule-testing-demo)
 
 
 

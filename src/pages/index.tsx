@@ -110,20 +110,6 @@ export const pageQuery = graphql`
         }
       }
     }
-    projects: allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/projects/.*.md$/" } }
-    ) {
-      edges {
-        node {
-          body
-          frontmatter {
-            title
-            company
-          }
-        }
-      }
-    }
     posts: allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }

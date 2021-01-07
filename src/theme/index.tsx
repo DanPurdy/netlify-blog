@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const colors = {
   portfolioBackground: '#081635',
+  backgroundLight: '#1C2944',
   fadedLine: 'rgba(255, 255, 255, 0.3)',
   white: '#ffffff',
 

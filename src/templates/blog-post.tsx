@@ -99,8 +99,26 @@ const PostBody = styled.section`
     }
   }
 
-  code: {
+  h4 {
+    margin: 1.5rem 0;
+  }
+
+  blockquote {
+    font-size: 1.8rem;
+    border-left: 4px solid ${colors.neonPink};
+    padding: 3rem;
+    margin: 2rem 1rem;
+    background: ${colors.backgroundLight};
+    border-radius: 4px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  code {
     letter-spacing: normal;
+    border-radius: 4px;
   }
 
   pre {
@@ -117,12 +135,25 @@ const PostBody = styled.section`
     }
   }
 
+  ol,
+  ul {
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    line-height: 1.8;
+
+    li {
+      &::marker {
+        color: ${colors.pastelBlue};
+      }
+    }
+  }
+
   a {
     color: ${colors.neonPink};
     font-weight: bold;
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
 
     &:hover {
       border-bottom: 2px solid ${colors.neonPink};
@@ -180,31 +211,6 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
               <MDXRenderer>{post.body}</MDXRenderer>
             </PostBody>
             <hr />
-
-            <ul
-              style={{
-                display: `flex`,
-                flexWrap: `wrap`,
-                justifyContent: `space-between`,
-                listStyle: `none`,
-                padding: 0,
-              }}
-            >
-              <li>
-                {previous && (
-                  <Link to={`/blog${previous.fields.slug}`} rel="prev">
-                    ← {previous.frontmatter.title}
-                  </Link>
-                )}
-              </li>
-              <li>
-                {next && (
-                  <Link to={`/blog${next.fields.slug}`} rel="next">
-                    {next.frontmatter.title} →
-                  </Link>
-                )}
-              </li>
-            </ul>
           </Post>
         </PostContainer>
       </>

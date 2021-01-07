@@ -27,13 +27,13 @@ You can find the accompanying repository on [Github](https://github.com/DanPurdy
 At its most basic level you can write rules for `read` and `write` operations.
 These rules can be broken down into the following actions:
 #### read
-1. get
-1. list
+* get
+* list
 
 #### write
-1. create
-1. update
-1. delete
+* create
+* update
+* delete
 
 All pretty self explanatory. There are two main keywords that you need to be aware of when writing rules.
 * Match - we use this statement to 'match' against documents in the firestore database
@@ -79,19 +79,19 @@ stores
 
 So firstly we should write down and describe what access people should be allowed (maybe treat as the basis for your tests!)
 #### stores
-1. Public should be able to see the stores
-1. only verified staff members should be able to update stores
-1. We should not be able to delete or create stores (maybe a super admin role in the future but for now it will happen in the firebase panel)
+* Public should be able to see the stores
+* only verified staff members should be able to update stores
+* We should not be able to delete or create stores (maybe a super admin role in the future but for now it will happen in the firebase panel)
 
 #### menus
-1. menus should be publicly visible
-1. menus should only be editable by members of staff for that store
-1. menu items should be able to be deleted
+* menus should be publicly visible
+* menus should only be editable by members of staff for that store
+* menu items should be able to be deleted
 
 #### staff
-1. staff should not be publicly visible - only visible to other members of staff in the same store
-1. staff members should not be able to update other staff member records (simplified solution here)
-1. staff should be able to add a new staff member
+* staff should not be publicly visible - only visible to other members of staff in the same store
+* staff members should not be able to update other staff member records (simplified solution here)
+* staff should be able to add a new staff member
 
 so let us write those rules starting with the basics of any rules file
 

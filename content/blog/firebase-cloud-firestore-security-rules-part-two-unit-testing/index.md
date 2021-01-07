@@ -1,6 +1,6 @@
 ---
 path: firebase-cloud-firestore-security-rules-unit-testing
-date: 2020-12-22T17:03:35.330Z
+date: 2021-01-04T23:03:35.330Z
 title: Firebase Cloud Firestore security rules - Part two - unit testing
 description: A look at how to write unit tests for Firebase Cloud Firestore
   security rules to help ensure your data is secure.

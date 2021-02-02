@@ -60,6 +60,10 @@ const SEO: FC<ISeoProps> = ({
           content: title,
         },
         {
+          property: `og:image`,
+          content: site.siteMetadata.image,
+        },
+        {
           property: `og:description`,
           content: metaDescription,
         },

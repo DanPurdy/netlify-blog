@@ -5,6 +5,7 @@ module.exports = {
     author: `Dan Purdy`,
     description: `Dan Purdy - fullstack engineer portfolio and development blog`,
     siteUrl: `https://dpurdy.me`,
+    image: 'content/assets/svg/me-portrait.png',
     social: {
       twitter: `DanPurdy0`,
     },

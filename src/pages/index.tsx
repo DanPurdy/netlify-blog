@@ -15,7 +15,6 @@ interface IndexProps extends RouteComponentProps {
     experience: IExperienceType;
     personal: IPersonalType;
     posts: IPostType;
-    projects: {};
     site: {
       siteMetadata: {
         author: string;

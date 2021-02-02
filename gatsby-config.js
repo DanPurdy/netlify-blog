@@ -5,6 +5,9 @@ module.exports = {
     author: `Dan Purdy`,
     description: `Dan Purdy - fullstack engineer portfolio and development blog`,
     siteUrl: `https://dpurdy.me`,
+    image:
+      'https://res.cloudinary.com/huxr6hrje/image/upload/v1612228100/Priority%20Campaigns/me-portrait.png',
+    imageAlt: 'Portfolio image with a pixel art represenation of Dan Purdy',
     social: {
       twitter: `DanPurdy0`,
     },

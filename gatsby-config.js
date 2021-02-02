@@ -6,6 +6,7 @@ module.exports = {
     description: `Dan Purdy - fullstack engineer portfolio and development blog`,
     siteUrl: `https://dpurdy.me`,
     image: 'content/assets/svg/me-portrait.png',
+    imageAlt: 'Portfolio image with a pixel art represenation of Dan Purdy',
     social: {
       twitter: `DanPurdy0`,
     },

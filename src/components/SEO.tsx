@@ -34,6 +34,9 @@ const SEO: FC<ISeoProps> = ({
           siteMetadata {
             title
             description
+            image
+            imageAlt
+            siteUrl
             author
           }
         }
@@ -42,7 +45,7 @@ const SEO: FC<ISeoProps> = ({
   );
 
   const metaDescription = description || site.siteMetadata.description;
-
+  console.log();
   return (
     <Helmet
       htmlAttributes={{
@@ -61,7 +64,11 @@ const SEO: FC<ISeoProps> = ({
         },
         {
           property: `og:image`,
-          content: site.siteMetadata.image,
+          content: `${site.siteMetadata.image}`,
+        },
+        {
+          property: `og:image:alt`,
+          content: `${site.siteMetadata.imageAlt}`,
         },
         {
           property: `og:description`,

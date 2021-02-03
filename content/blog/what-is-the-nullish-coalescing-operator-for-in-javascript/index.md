@@ -1,6 +1,6 @@
 ---
 path: javascript-what-is-nullish-coalescing-in
-date: 2021-02-02T23:37:08.391Z
+date: 2021-02-03T00:46:38.844Z
 title: What is the nullish coalescing operator for in JavaScript
 description: I'm frequently asked why you would use the nullish coalescing
   operator rather than a simple OR operator, time to look at the differences

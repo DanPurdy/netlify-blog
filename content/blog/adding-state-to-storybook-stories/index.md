@@ -14,7 +14,7 @@ One of the small hurdles you'll encounter here though is when your component rel
 
 As with all popular tools over time as their ways of doing things or their API's change it can become time consuming trying to find the correct answer to any of your queries on Stack Overflow or the multitude of other links. This is true of Storybook too, there's a lot of information on how to add stories and add parent components to your stories etc but usually it's using the old style stories.
 
-![A list of Google search results for the term parent state storybook component react](screenshot-2021-03-10-at-22.26.27.png "Google search results for Storybook story parent state")
+![A list of Google search results for the term parent state storybook component react](storybook-google-results.jpg "Google search results for Storybook story parent state")
 
 Everyone of those links above uses the old `storiesOf` method which isn't the current way of writing a Storybook story.
 
@@ -63,7 +63,7 @@ WithDisabled.parameters = {
 
 You'll create a Template function that returns your component and passes its args down as props. Then by using `Template.bind` you can apply your different states, in the example above we have a default state and a disabled state this would give you the following structure
 
-![The sidebar of Storybook showing MyComponent and its two states](screenshot-2021-03-10-at-23.04.51.png "My Component in the Storybook sidebar")
+![The sidebar of Storybook showing MyComponent and its two states](storybook-sidebar.jpg "My Component in the Storybook sidebar")
 
 So you may have spotted it already but your Template variable is essentially a parent component. It takes an arguments object (props) and returns a component so there's no reason why you can't add to this and manage state internally within this template component.
 
@@ -71,7 +71,7 @@ So you may have spotted it already but your Template variable is essentially a p
 
 For this example we'll be looking at a tagCloud component in the Urban UI library, you can see the [tagCloud component here](https://urbanmassage.github.io/component-library/?path=/story/tagcloud--default). The parent state is required to allow us to pass a list of Tag elements to our tagCloud and keep that list up to date as elements are removed or the story is reset.
 
-![A screenshot of the tag cloud component of the Urban UI component library showing 3 tags](screenshot-2021-03-10-at-22.33.51.png "The Urban tag cloud component")
+![A screenshot of the tag cloud component of the Urban UI component library showing 3 tags](tag-cloud-component.jpg "The Urban tag cloud component")
 
 Our Tag cloud component is essentially just a wrapping div for style purposes that takes multiple elements as children and renders them 
 
@@ -98,7 +98,6 @@ const TagCloud: FC<TagCloudProps> = (props) => {
 };
 
 export default TagCloud;
-
 ```
 
 We pass Tag elements as children to our TagCloud component
@@ -294,10 +293,8 @@ Default.args = {};
 Default.parameters = {
   jest: ['TagCloud'],
 };
-
 ```
 
 So there we have it, you add some hooks to your Template component as you would build any normal React component and storybook will render your story and allow you to interact with your component in a more meaningful way to really showcase how your components work.
 
 You can try this for yourself [here](https://urbanmassage.github.io/component-library/?path=/story/tagcloud--default)
-

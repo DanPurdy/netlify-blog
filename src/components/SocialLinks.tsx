@@ -42,7 +42,7 @@ const SocialLinks: FC = () => {
         <GithubIcon />
       </Link>
       <Link
-        href="https://d2wgwec1ef3t7f.cloudfront.net/assets/Dan-Purdy-CV.pdf"
+        href="https://d2wgwec1ef3t7f.cloudfront.net/assets/Dan-Purdy-WEB-CV.pdf"
         aria-label="Download my CV"
         download
         target="_blank"

@@ -4,7 +4,7 @@ title: Urban
 url: https://urban.co
 logo: urban-logo-2020.svg
 startDate: 2016-11-18T01:06:13.890Z
-isCurrent: true
+isCurrent: false
 endDate: 2021-10-16T18:29:59.554Z
 position:
   - Lead Frontend Engineer

@@ -67,7 +67,7 @@ const ExprienceItem: FC<IExperienceItem> = ({ node }) => {
             sectionName="position"
             title="Position"
           />
-          {node.frontmatter.previousPosition.length ? (
+          {(node.frontmatter.previousPosition && node.frontmatter.previousPosition.length) ? (
             <ExperienceSubSection
               node={node}
               sectionName="previousPosition"

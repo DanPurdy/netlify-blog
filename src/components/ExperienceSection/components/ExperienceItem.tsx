@@ -13,6 +13,7 @@ interface IExperienceItem {
 
 const ItemContent = styled.div`
   display: flex;
+  margin-bottom: 12rem;
 
   @media (max-width: ${breakpoints.palm}) {
     flex-direction: column;

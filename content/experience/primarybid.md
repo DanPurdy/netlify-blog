@@ -11,5 +11,5 @@ position:
 ---
 PrimaryBid aims to give everyone fair access to IPOs and public company fundraises, at the same time and price as institutional investors.
 
-\
+
 more to come soon...

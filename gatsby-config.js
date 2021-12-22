@@ -3,7 +3,7 @@ module.exports = {
     // edit below
     title: `Dan Purdy Senior Fullstack Engineer`,
     author: `Dan Purdy`,
-    description: `Dan Purdy - fullstack engineer portfolio and development blog`,
+    description: `Portfolio and development blog of Dan Purdy, a senior fullstack engineer from London, UK. Focusing on JavaScript, Node, React and more!`,
     siteUrl: `https://dpurdy.me`,
     image:
       'https://res.cloudinary.com/huxr6hrje/image/upload/v1612228100/Priority%20Campaigns/me-portrait.png',

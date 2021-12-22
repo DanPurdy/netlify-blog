@@ -7,6 +7,7 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/SEO';
 
+import BlogSection from '../components/BlogSection';
 import ExperienceSection from '../components/ExperienceSection';
 import HomeSection from '../components/HomeSection';
 
@@ -14,7 +15,7 @@ interface IndexProps extends RouteComponentProps {
   data: {
     experience: IExperienceType;
     personal: IPersonalType;
-    posts: IPostType;
+    posts: IPostsType;
     site: {
       siteMetadata: {
         author: string;
@@ -28,6 +29,7 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
   const {
     experience,
     personal,
+    posts,
     site: {
       siteMetadata: { author },
     },
@@ -56,6 +58,7 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
       <Layout title={title}>
         <HomeSection data={personal} />
         <ExperienceSection experience={experience} />
+        <BlogSection posts={posts} />
       </Layout>
     </>
   );
@@ -112,7 +115,7 @@ export const pageQuery = graphql`
     posts: allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
-      limit: 2
+      limit: 3
     ) {
       edges {
         node {

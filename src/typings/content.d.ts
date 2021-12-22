@@ -35,6 +35,12 @@ interface IPersonalType {
   }[];
 }
 
+interface IPostsType {
+  edges: {
+    node: IPostType;
+  }[];
+}
+
 interface IPostType {
   body: string;
   excerpt: string;

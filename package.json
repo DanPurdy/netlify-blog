@@ -34,7 +34,7 @@
     "gatsby-remark-vscode": "^1.4.0",
     "gatsby-source-filesystem": "^2.3.25",
     "gatsby-transformer-sharp": "^2.5.13",
-    "netlify-cms-app": "^2.13.3",
+    "netlify-cms-app": "^2.15.63",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",

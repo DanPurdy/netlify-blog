@@ -2,7 +2,7 @@
 id: pbid
 title: PrimaryBid
 url: https://primarybid.com/
-logo: img_0016.png
+logo: primarybid-logo-white-text.d2225ef0.svg
 startDate: 2021-11-16T19:41:02.072Z
 isCurrent: true
 endDate: 2021-11-16T19:41:02.078Z

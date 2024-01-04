@@ -14,4 +14,4 @@ previousPosition:
 ---
 PrimaryBid aims to give everyone fair access to IPOs and public company fundraises, at the same time and price as institutional investors.
 
-I work as an Engineering Manager running the Retail Users pod. Working closely with the product and engineering teams to design and implement solutions.
+My current role is a Senior Engineering Manager, I lead two of our platform teams while also supporting the wider engineering team. I focus on making sure our teams are working effectively together while also working closely with our product team to ensure that the right work is being delivered. I contribute to the overall design of our system and still manage to commit the odd bit of code too.

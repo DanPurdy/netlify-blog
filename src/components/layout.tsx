@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import { RouteComponentProps } from '@reach/router';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { breakpoints, GlobalStyle } from '../theme';
 import Footer from './Footer';
 
-interface ILayoutProps extends RouteComponentProps {
+interface ILayoutProps {
   title: string;
+  children: ReactNode;
 }
 
 const Layout: FC<ILayoutProps> = ({ title, children }) => {

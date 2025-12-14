@@ -1,8 +1,7 @@
 /// <reference path="../typings/content.d.ts" />
 
 import React, { FC } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { graphql } from 'gatsby';
+import { graphql, PageProps } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/SEO';
@@ -11,7 +10,7 @@ import BlogSection from '../components/BlogSection';
 import ExperienceSection from '../components/ExperienceSection';
 import HomeSection from '../components/HomeSection';
 
-interface IndexProps extends RouteComponentProps {
+interface IndexProps extends PageProps {
   data: {
     experience: IExperienceType;
     personal: IPersonalType;
@@ -36,7 +35,7 @@ const IndexPage: FC<IndexProps> = ({ data, location }) => {
   } = data;
   const {
     childMdx: {
-      body,
+      excerpt,
       frontmatter: { title, subtitle },
     },
   } = personal.edges[0].node;
@@ -80,7 +79,7 @@ export const pageQuery = graphql`
           id
           name
           childMdx {
-            body
+            excerpt
             frontmatter {
               title
               subtitle
@@ -90,12 +89,12 @@ export const pageQuery = graphql`
       }
     }
     experience: allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/experience/.*.md$/" } }
+      sort: { frontmatter: { startDate: DESC } }
+      filter: { internal: { contentFilePath: { regex: "/experience/.*.md$/" } } }
     ) {
       edges {
         node {
-          body
+          excerpt
           frontmatter {
             startDate(formatString: "MMM YYYY")
             endDate(formatString: "MMM YYYY")
@@ -113,17 +112,15 @@ export const pageQuery = graphql`
       }
     }
     posts: allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
+      sort: { frontmatter: { date: DESC } }
+      filter: { internal: { contentFilePath: { regex: "/blog/.*.md$/" } } }
       limit: 3
     ) {
       edges {
         node {
           excerpt
           fields {
-            readingTime {
-              text
-            }
+            readingTime
             slug
           }
           frontmatter {

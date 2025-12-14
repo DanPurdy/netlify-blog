@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { colors, breakpoints } from '../../../theme';
 import ExperienceDateSection from './ExperienceDateSection';
@@ -77,7 +76,7 @@ const ExprienceItem: FC<IExperienceItem> = ({ node }) => {
           ) : null}
         </InfoSection>
         <MainText>
-          <MDXRenderer>{node.body}</MDXRenderer>
+          <p>{node.excerpt}</p>
         </MainText>
       </ItemContent>
     </>

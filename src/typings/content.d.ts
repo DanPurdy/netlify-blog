@@ -1,5 +1,5 @@
 interface IExperienceNodeType {
-  body: string;
+  excerpt: string;
   frontmatter: {
     startDate: string;
     endDate: string;
@@ -25,7 +25,7 @@ interface IPersonalType {
   edges: {
     node: {
       childMdx: {
-        body: string;
+        excerpt: string;
         frontmatter: {
           title: string;
           subtitle: string;
@@ -42,12 +42,9 @@ interface IPostsType {
 }
 
 interface IPostType {
-  body: string;
   excerpt: string;
   fields: {
-    readingTime: {
-      text: string;
-    };
+    readingTime: string;
     slug: string;
   };
   frontmatter: {

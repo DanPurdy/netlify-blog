@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link, useStaticQuery, graphql } from 'gatsby';
-import Image from 'gatsby-image';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 import { colors, fonts, breakpoints } from '../../theme';
 
@@ -141,7 +141,6 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
             id
             name
             childMdx {
-              body
               frontmatter {
                 title
                 subtitle
@@ -152,15 +151,18 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
       }
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+          gatsbyImageData(
+            height: 100
+            placeholder: NONE
+            layout: CONSTRAINED
+          )
         }
       }
     }
   `);
 
   const title = personal?.edges[0]?.node?.childMdx?.frontmatter?.title;
+  const image = getImage(portrait.childImageSharp);
 
   const location = currentLocation?.toLowerCase();
 
@@ -182,13 +184,15 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
     <Header>
       <ImageContainer>
         <LogoLink to="/">
-          <Image
-            alt={title}
-            loading="eager"
-            fluid={portrait.childImageSharp.fluid}
-            imgStyle={{ objectFit: 'contain' }}
-            style={{ maxHeight: '100px', width: '100%', maxWidth: '100px' }}
-          />
+          {image && (
+            <GatsbyImage
+              alt={title || 'Logo'}
+              loading="eager"
+              image={image}
+              objectFit="contain"
+              style={{ maxHeight: '100px', width: '100%', maxWidth: '100px' }}
+            />
+          )}
         </LogoLink>
       </ImageContainer>
       <TitleContainer>
@@ -196,11 +200,6 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
           <MainTitle>{title}</MainTitle>
         </Link>
         {subTitleElem}
-        {/* {location !== 'blog' && (
-          <MainNav>
-            <Link to="/blog">Blog</Link>
-          </MainNav>
-        )} */}
       </TitleContainer>
     </Header>
   );

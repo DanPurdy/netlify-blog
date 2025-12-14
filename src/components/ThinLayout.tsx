@@ -1,12 +1,13 @@
-import React, { FC } from 'react';
-import { RouteComponentProps } from '@reach/router';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import FooterThin from './FooterThin';
 
 import { breakpoints, GlobalStyle } from '../theme';
 
-interface ILayoutProps extends RouteComponentProps {
+interface ILayoutProps {
   author: string;
+  location?: Location;
+  children: ReactNode;
 }
 
 const ThinLayout: FC<ILayoutProps> = ({ location, author, children }) => {

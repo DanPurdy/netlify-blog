@@ -2,10 +2,9 @@
 
 import React, { FC } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 
-import { MDXRenderer } from 'gatsby-plugin-mdx';
-import Image from 'gatsby-image';
 import { breakpoints, colors } from '../../theme';
 
 import FrontPageHeader from '../FrontPageHeader';
@@ -94,6 +93,13 @@ const MainText = styled.div`
   }
 `;
 
+const BodyText = styled.div`
+  p {
+    margin: 0 0 1.5rem;
+    line-height: 1.6;
+  }
+`;
+
 interface IExperienceProps {
   data: IPersonalType;
 }
@@ -101,7 +107,7 @@ interface IExperienceProps {
 const HomeSection: FC<IExperienceProps> = ({ data }) => {
   const {
     childMdx: {
-      body,
+      excerpt,
       frontmatter: { title, subtitle },
     },
   } = data.edges[0].node;
@@ -110,13 +116,17 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
     query HomeImageQuery {
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 200) {
-            ...GatsbyImageSharpFluid_tracedSVG
-          }
+          gatsbyImageData(
+            height: 200
+            placeholder: TRACED_SVG
+            layout: CONSTRAINED
+          )
         }
       }
     }
   `);
+
+  const image = getImage(imageData.portrait.childImageSharp);
 
   return (
     <SectionContainer>
@@ -124,16 +134,20 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
         <FrontPageHeader subtitle={subtitle} title={title} />
         <IntroContent>
           <ImageContainer>
-            <Image
-              alt={title}
-              loading="eager"
-              fluid={imageData.portrait.childImageSharp.fluid}
-              imgStyle={{ objectFit: 'contain' }}
-              style={{ maxHeight: '200px', width: '100%', maxWidth: '200px' }}
-            />
+            {image && (
+              <GatsbyImage
+                alt={title}
+                loading="eager"
+                image={image}
+                objectFit="contain"
+                style={{ maxHeight: '200px', width: '100%', maxWidth: '200px' }}
+              />
+            )}
           </ImageContainer>
           <MainText>
-            <MDXRenderer>{body}</MDXRenderer>
+            <BodyText>
+              <p>{excerpt}</p>
+            </BodyText>
             <SocialLinks />
           </MainText>
         </IntroContent>

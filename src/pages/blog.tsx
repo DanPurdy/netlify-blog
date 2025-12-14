@@ -14,9 +14,7 @@ interface IBlogPageProps extends PageProps {
         node: {
           excerpt: string;
           fields: {
-            readingTime: {
-              text: string;
-            };
+            readingTime: string;
             slug: string;
           };
           frontmatter: {
@@ -114,18 +112,9 @@ const Blog: FC<IBlogPageProps> = ({ data, location }) => {
                   <BlogPostMeta>
                     <BlogPostDate>{node.frontmatter.date}</BlogPostDate>
                     <BlogPostReadTime>
-                      {node.fields.readingTime.text}
+                      {node.fields.readingTime}
                     </BlogPostReadTime>
                   </BlogPostMeta>
-                  {/*
-                  Can't decide whether to have or not...
-                  <BlogBoxContent>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: node.frontmatter.description || node.excerpt,
-                      }}
-                    />
-                  </BlogBoxContent> */}
                 </BlogPostBox>
               );
             })
@@ -149,16 +138,14 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
+      sort: { frontmatter: { date: DESC } }
+      filter: { internal: { contentFilePath: { regex: "/blog/.*.md$/" } } }
     ) {
       edges {
         node {
           excerpt
           fields {
-            readingTime {
-              text
-            }
+            readingTime
             slug
           }
           frontmatter {

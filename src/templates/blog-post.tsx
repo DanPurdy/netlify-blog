@@ -1,8 +1,7 @@
 /// <reference path="../typings/content.d.ts" />
 
-import React, { FC } from 'react';
-import { Link, graphql, PageProps } from 'gatsby';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import React, { FC, ReactNode } from 'react';
+import { Link, graphql, PageProps, HeadFC } from 'gatsby';
 
 import PageHeader from '../components/PageHeader/PageHeader';
 import ThinLayout from '../components/ThinLayout';
@@ -12,7 +11,6 @@ import { breakpoints, colors } from '../theme';
 
 const PostContainer = styled.main`
   max-width: 960px;
-  /* margin: 0 auto; */
 `;
 
 const Post = styled.article`
@@ -163,7 +161,18 @@ const PostBody = styled.section`
 
 interface IBlogPostProps extends PageProps {
   data: {
-    mdx: IPostType;
+    mdx: {
+      id: string;
+      excerpt: string;
+      frontmatter: {
+        title: string;
+        date: string;
+        description: string;
+      };
+      fields: {
+        readingTime: string;
+      };
+    };
     site: {
       siteMetadata: {
         author: string;
@@ -172,15 +181,17 @@ interface IBlogPostProps extends PageProps {
     };
   };
   pageContext: {
-    previous: IPostType;
-    next: IPostType;
+    previous: { fields: { slug: string }; frontmatter: { title: string } } | null;
+    next: { fields: { slug: string }; frontmatter: { title: string } } | null;
   };
+  children: ReactNode;
 }
 
 const BlogPostTemplate: FC<IBlogPostProps> = ({
   data,
   location,
   pageContext,
+  children,
 }) => {
   const post = data.mdx;
   const author = data?.site?.siteMetadata?.author;
@@ -204,12 +215,10 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
                 }}
               >
                 <PostDate>{post.frontmatter.date}</PostDate>
-                <PostReadTime>{post.fields.readingTime.text}</PostReadTime>
+                <PostReadTime>{post.fields.readingTime}</PostReadTime>
               </PostMeta>
             </PostHeader>
-            <PostBody>
-              <MDXRenderer>{post.body}</MDXRenderer>
-            </PostBody>
+            <PostBody>{children}</PostBody>
             <hr />
           </Post>
         </PostContainer>
@@ -221,26 +230,23 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($id: String!) {
     site {
       siteMetadata {
         title
         author
       }
     }
-    mdx(fields: { slug: { eq: $slug } }) {
+    mdx(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
-      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
         description
       }
       fields {
-        readingTime {
-          text
-        }
+        readingTime
       }
     }
   }

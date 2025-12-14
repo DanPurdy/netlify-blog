@@ -139,7 +139,7 @@ export const pageQuery = graphql`
     }
     allMdx(
       sort: { frontmatter: { date: DESC } }
-      filter: { internal: { contentFilePath: { regex: "/blog/.*.md$/" } } }
+      filter: { internal: { contentFilePath: { regex: "/content/blog/" } } }
     ) {
       edges {
         node {

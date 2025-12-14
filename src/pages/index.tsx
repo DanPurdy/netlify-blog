@@ -90,7 +90,9 @@ export const pageQuery = graphql`
     }
     experience: allMdx(
       sort: { frontmatter: { startDate: DESC } }
-      filter: { internal: { contentFilePath: { regex: "/experience/.*.md$/" } } }
+      filter: {
+        internal: { contentFilePath: { regex: "/content/experience/" } }
+      }
     ) {
       edges {
         node {
@@ -113,7 +115,9 @@ export const pageQuery = graphql`
     }
     posts: allMdx(
       sort: { frontmatter: { date: DESC } }
-      filter: { internal: { contentFilePath: { regex: "/blog/.*.md$/" } } }
+      filter: {
+        internal: { contentFilePath: { regex: "/content/blog/" } }
+      }
       limit: 3
     ) {
       edges {

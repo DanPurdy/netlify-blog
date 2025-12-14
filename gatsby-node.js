@@ -16,7 +16,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(`
     {
       allMdx(
-        filter: { internal: { contentFilePath: { regex: "/blog/.*.md$/" } } }
+        filter: { internal: { contentFilePath: { regex: "/content/blog/" } } }
         sort: { frontmatter: { date: DESC } }
         limit: 1000
       ) {
@@ -94,4 +94,41 @@ exports.createSchemaCustomization = ({ actions }) => {
       readingTime: String
     }
   `);
+};
+
+exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+  const config = getConfig();
+
+  // Remove the existing SVG rule from file-loader
+  config.module.rules = config.module.rules.map(rule => {
+    if (rule.test && rule.test.toString().includes('svg')) {
+      return {
+        ...rule,
+        exclude: /content\/assets\/svg\/.*\.svg$/,
+      };
+    }
+    return rule;
+  });
+
+  // Add SVGR loader for our SVG icons
+  config.module.rules.push({
+    test: /content\/assets\/svg\/.*\.svg$/,
+    use: [
+      {
+        loader: '@svgr/webpack',
+        options: {
+          svgoConfig: {
+            plugins: [
+              {
+                name: 'removeViewBox',
+                active: false,
+              },
+            ],
+          },
+        },
+      },
+    ],
+  });
+
+  actions.replaceWebpackConfig(config);
 };

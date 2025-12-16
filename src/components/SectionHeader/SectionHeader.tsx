@@ -1,40 +1,22 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { colors } from '../../theme';
+import * as React from 'react';
+import { FC } from 'react';
 
-interface ISectionHeaderStyleProps {
+interface ISectionHeaderProps {
+  title: string;
   reverse?: boolean;
 }
 
-interface ISectionHeaderProps extends ISectionHeaderStyleProps {
-  title: string;
-}
-
-const MainSectionHeader = styled.div<ISectionHeaderStyleProps>`
-  display: flex;
-  align-items: flex-end;
-  flex-direction: ${({ reverse }) => (reverse ? `row-reverse` : `row`)};
-`;
-
-const MainSectionTitle = styled.h2<ISectionHeaderStyleProps>`
-  font-size: 4rem;
-  line-height: 1;
-  color: ${colors.secondaryColor};
-  margin: ${({ reverse }) => (reverse ? `0 0 0 2rem` : `0 2rem 0 0`)};
-`;
-
-const MainSectionLine = styled.div`
-  flex: 1 1 auto;
-  height: 3px;
-  border-bottom: 3px solid ${colors.secondaryColor};
-  margin-bottom: 0.4rem;
-`;
-
 const SectionHeader: FC<ISectionHeaderProps> = ({ reverse = false, title }) => (
-  <MainSectionHeader reverse={reverse}>
-    <MainSectionTitle reverse={reverse}>{title}</MainSectionTitle>
-    <MainSectionLine />
-  </MainSectionHeader>
+  <div className={`flex items-end ${reverse ? 'flex-row-reverse' : 'flex-row'}`}>
+    <h2
+      className={`text-6xl leading-none text-neon-pink ${
+        reverse ? 'ml-4 mr-0' : 'mr-4 ml-0'
+      }`}
+    >
+      {title}
+    </h2>
+    <div className="flex-1 h-[3px] border-b-[3px] border-neon-pink mb-1" />
+  </div>
 );
 
 export default SectionHeader;

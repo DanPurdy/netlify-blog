@@ -1,23 +1,16 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { breakpoints } from '../theme';
+import * as React from 'react';
+import { FC, ReactNode } from 'react';
 
-const SubSection = styled.div`
-  font-size: 1.8rem;
-  margin: 0 0 2.5rem;
+interface SubSectionContainerProps {
+  children: ReactNode;
+}
 
-  @media (max-width: ${breakpoints.palm}) {
-    flex: 1 1 50%;
-    padding: 0 1rem 0 0;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    flex: 1 1 100%;
-  }
-`;
-
-const SubSectionContainer: FC<{}> = ({ children }) => {
-  return <SubSection>{children}</SubSection>;
+const SubSectionContainer: FC<SubSectionContainerProps> = ({ children }) => {
+  return (
+    <div className="mb-6 text-exp leading-exp font-normal md:text-lg md:leading-relaxed">
+      {children}
+    </div>
+  );
 };
 
 export default SubSectionContainer;

@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import * as React from 'react';
+import { FC } from 'react';
 
 import ExperienceItems from './components/ExperienceItems';
 import SectionHeader from '../SectionHeader/SectionHeader';

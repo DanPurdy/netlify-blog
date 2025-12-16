@@ -1,64 +1,63 @@
 const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
-exports.createPages = ({ graphql, actions }) => {
+const calculateReadingTime = (text) => {
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+};
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
   const blogPost = path.resolve(`./src/templates/blog-post.tsx`);
-  return graphql(
-    `
-      {
-        allMdx(
-          filter: { fileAbsolutePath: { regex: "/blog/.*.md$/" } }
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-                readingTime {
-                  text
-                }
-              }
-              frontmatter {
-                title
-              }
-            }
+
+  const result = await graphql(`
+    {
+      allMdx(
+        filter: { internal: { contentFilePath: { regex: "/content/blog/" } } }
+        sort: { frontmatter: { date: DESC } }
+        limit: 1000
+      ) {
+        nodes {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
+          internal {
+            contentFilePath
           }
         }
       }
-    `
-  )
-    .then(result => {
-      if (result.errors) {
-        throw result.errors;
-      }
+    }
+  `);
 
-      // Create blog posts pages.
-      const posts = result.data.allMdx.edges;
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`);
+    return;
+  }
 
-      posts.forEach((post, index) => {
-        const previous =
-          index === posts.length - 1 ? null : posts[index + 1].node;
-        const next = index === 0 ? null : posts[index - 1].node;
+  const posts = result.data.allMdx.nodes;
 
-        createPage({
-          path: `blog${post.node.fields.slug}`,
-          component: blogPost,
-          context: {
-            slug: post.node.fields.slug,
-            previous,
-            next,
-          },
-        });
-      });
+  posts.forEach((post, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1];
+    const next = index === 0 ? null : posts[index - 1];
 
-      return null;
-    })
-    .catch(err => {
-      console.error(err);
+    createPage({
+      path: `blog${post.fields.slug}`,
+      component: `${blogPost}?__contentFilePath=${post.internal.contentFilePath}`,
+      context: {
+        id: post.id,
+        slug: post.fields.slug,
+        previous,
+        next,
+      },
     });
+  });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -71,5 +70,65 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value,
     });
+
+    // Calculate reading time
+    const readingTime = calculateReadingTime(node.body || '');
+    createNodeField({
+      name: `readingTime`,
+      node,
+      value: readingTime,
+    });
   }
+};
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+
+  createTypes(`
+    type Mdx implements Node {
+      fields: MdxFields
+    }
+
+    type MdxFields {
+      slug: String
+      readingTime: String
+    }
+  `);
+};
+
+exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+  const config = getConfig();
+
+  // Remove the existing SVG rule from file-loader
+  config.module.rules = config.module.rules.map(rule => {
+    if (rule.test && rule.test.toString().includes('svg')) {
+      return {
+        ...rule,
+        exclude: /content\/assets\/svg\/.*\.svg$/,
+      };
+    }
+    return rule;
+  });
+
+  // Add SVGR loader for our SVG icons
+  config.module.rules.push({
+    test: /content\/assets\/svg\/.*\.svg$/,
+    use: [
+      {
+        loader: '@svgr/webpack',
+        options: {
+          svgoConfig: {
+            plugins: [
+              {
+                name: 'removeViewBox',
+                active: false,
+              },
+            ],
+          },
+        },
+      },
+    ],
+  });
+
+  actions.replaceWebpackConfig(config);
 };

@@ -1,19 +1,12 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { breakpoints } from '../theme';
+import * as React from 'react';
+import { FC, ReactNode } from 'react';
 
-const MainSectionContainer = styled.section`
-  @media (max-width: ${breakpoints.wide}) {
-    padding: 0 2rem;
-  }
+interface SectionContainerProps {
+  children: ReactNode;
+}
 
-  @media (max-width: ${breakpoints.largeHand}) {
-    padding: 0;
-  }
-`;
-
-const SectionContainer: FC = ({ children }) => (
-  <MainSectionContainer>{children}</MainSectionContainer>
+const SectionContainer: FC<SectionContainerProps> = ({ children }) => (
+  <section className="mt-40 mb-24 2xl:px-4 md:px-0">{children}</section>
 );
 
 export default SectionContainer;

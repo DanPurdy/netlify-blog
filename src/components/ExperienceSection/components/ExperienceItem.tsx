@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import * as React from 'react';
+import { FC } from 'react';
+import Markdown from 'react-markdown';
 
-import { colors, breakpoints } from '../../../theme';
 import ExperienceDateSection from './ExperienceDateSection';
 import ExperienceSubSection from './ExperienceSubsection';
 import ExperienceItemLogo from './ExperienceItemLogo';
@@ -11,52 +10,21 @@ interface IExperienceItem {
   node: IExperienceNodeType;
 }
 
-const ItemContent = styled.div`
-  display: flex;
-  margin-bottom: 12rem;
-
-  @media (max-width: ${breakpoints.palm}) {
-    flex-direction: column;
-  }
-`;
-
-const InfoSection = styled.div`
-  flex: 1 1 30%;
-
-  @media (max-width: ${breakpoints.palm}) {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    border-bottom: 1px solid ${colors.white};
-    margin-bottom: 4rem;
-  }
-`;
-
-const MainText = styled.div`
-  flex: 3 3 70%;
-  font-size: 1.9rem;
-  line-height: 2.6rem;
-  color: ${colors.white};
-
-  p {
-    margin: 0 0 2.5rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    font-size: 1.7rem;
-  }
-`;
-
-const ExprienceItem: FC<IExperienceItem> = ({ node }) => {
+const ExperienceItem: FC<IExperienceItem> = ({ node }) => {
   return (
-    <>
-      <ExperienceItemLogo
-        altText={node.frontmatter.title}
-        publicURL={node.frontmatter.logo.publicURL}
-        url={node.frontmatter.url}
-      />
-      <ItemContent>
-        <InfoSection>
+    <div className="mb-48">
+      {/* Logo - full width on its own row */}
+      <div className="mb-14">
+        <ExperienceItemLogo
+          altText={node.frontmatter.title}
+          publicURL={node.frontmatter.logo.publicURL}
+          url={node.frontmatter.url}
+        />
+      </div>
+      {/* Content row: dates/position on left, description on right */}
+      <div className="flex flex-col xl:flex-row">
+        {/* Left: Dates and position info - STACKED VERTICALLY */}
+        <div className="mb-8 pb-4 border-b border-faded-line xl:flex-[1_1_30%] xl:border-b-0 xl:pb-0 xl:mb-0 xl:pr-8">
           <ExperienceDateSection
             endDate={node.frontmatter.endDate}
             isCurrent={node.frontmatter.isCurrent}
@@ -68,20 +36,22 @@ const ExprienceItem: FC<IExperienceItem> = ({ node }) => {
             sectionName="position"
             title="Position"
           />
-          {(node.frontmatter.previousPosition && node.frontmatter.previousPosition.length) ? (
+          {node.frontmatter.previousPosition &&
+          node.frontmatter.previousPosition.length ? (
             <ExperienceSubSection
               node={node}
               sectionName="previousPosition"
               title="Previous Positions"
             />
           ) : null}
-        </InfoSection>
-        <MainText>
-          <MDXRenderer>{node.body}</MDXRenderer>
-        </MainText>
-      </ItemContent>
-    </>
+        </div>
+        {/* Right: Description */}
+        <div className="leading-exp text-white xl:flex-[3_3_70%] md:text-xl/10 md:leading-relaxed [&>p]:mb-10 [&>p:last-child]:mb-0">
+          <Markdown>{node.body}</Markdown>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default ExprienceItem;
+export default ExperienceItem;

@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import * as React from 'react';
+import { FC } from 'react';
 
 interface IExperienceItemLogo {
   altText: string;
@@ -7,27 +7,21 @@ interface IExperienceItemLogo {
   url: string;
 }
 
-const ItemLogoContainer = styled.div`
-  width: 100%;
-  margin: 0 0 7rem;
-`;
-
-const ItemLogo = styled.img`
-  width: 100%;
-  max-width: 300px;
-`;
-
 const ExperienceItemLogo: FC<IExperienceItemLogo> = ({
   altText,
   publicURL,
   url,
 }) => {
   return (
-    <ItemLogoContainer>
+    <div className="w-full">
       <a href={url} target="_blank" rel="noopener noreferrer">
-        <ItemLogo src={publicURL} alt={`${altText} logo`}></ItemLogo>
+        <img
+          src={publicURL}
+          alt={`${altText} logo`}
+          className="w-full max-w-[300px]"
+        />
       </a>
-    </ItemLogoContainer>
+    </div>
   );
 };
 

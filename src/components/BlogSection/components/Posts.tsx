@@ -1,30 +1,20 @@
 /// <reference path="../../../typings/content.d.ts" />
 
-import React, { FC } from 'react';
+import * as React from 'react';
+import { FC } from 'react';
 import Post from './Post';
-import styled from 'styled-components';
-import { breakpoints } from '../../../theme';
 
 interface IPostProps {
   posts: IPostsType;
 }
 
-const PostsContainer = styled.div`
-  margin: 10rem 0 6rem;
-  padding: 0 2rem;
-
-  @media (max-width: ${breakpoints.palm}) {
-    padding: 0;
-  }
-`;
-
 const Posts: FC<IPostProps> = ({ posts }) => {
   return (
-    <PostsContainer>
+    <div className="my-20 mb-12 px-4 xl:px-0">
       {posts.edges.map(({ node }) => (
         <Post key={node.fields.slug} node={node} />
       ))}
-    </PostsContainer>
+    </div>
   );
 };
 

@@ -1,136 +1,7 @@
-import React, { FC } from 'react';
+import * as React from 'react';
+import { FC } from 'react';
 import { Link, useStaticQuery, graphql } from 'gatsby';
-import Image from 'gatsby-image';
-import styled from 'styled-components';
-import { colors, fonts, breakpoints } from '../../theme';
-
-const Header = styled.header`
-  padding: 4rem 0 2rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const ImageContainer = styled.div`
-  flex: 1 1 10rem;
-  max-width: 10rem;
-  display: flex;
-  justify-content: flex-start;
-  margin-right: 2rem;
-
-  @media (max-width: ${breakpoints.palm}) {
-    max-width: 8rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    max-width: 6rem;
-  }
-`;
-
-const LogoLink = styled(Link)`
-  width: 100px;
-  height: 100px;
-
-  @media (max-width: ${breakpoints.palm}) {
-    width: 80px;
-    height: 80px;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    width: 60px;
-    height: 60px;
-  }
-`;
-
-const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-top: 1rem;
-  flex: 1;
-
-  @media (max-width: ${breakpoints.smallPalm}) {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  > a {
-    @media (max-width: ${breakpoints.mediumHand}) {
-      flex-basis: 100%;
-    }
-  }
-`;
-
-const MainTitle = styled.h1`
-  margin: 0;
-
-  @media (max-width: ${breakpoints.palm}) {
-    font-size: 5rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    font-size: 4rem;
-  }
-`;
-
-const SubTitle = styled.h2`
-  font-size: 4rem;
-  color: ${colors.secondaryColor};
-  margin: 0;
-  padding: 0 0 0 2rem;
-  align-self: flex-end;
-
-  @media (max-width: ${breakpoints.palm}) {
-    font-size: 3rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: ${breakpoints.mediumHand}) {
-    flex-basis: auto;
-    padding: 0 1rem 0 0;
-    font-size: 2rem;
-  }
-`;
-
-const MainNav = styled.nav`
-  flex: 1;
-  font-family: ${fonts.heading};
-  font-size: 3rem;
-  align-self: flex-end;
-  margin: 0 0 0 2rem;
-  text-align: right;
-  padding: 0 1rem 0.5rem;
-
-  @media (max-width: ${breakpoints.palm}) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: ${breakpoints.smallPalm}) {
-    flex-basis: 100%;
-    text-align: left;
-    margin: 0;
-    font-size: 2rem;
-    padding: 0;
-  }
-
-  @media (max-width: ${breakpoints.mediumHand}) {
-    flex-basis: auto;
-  }
-
-  a {
-    text-decoration: none;
-    transition: color 0.1s ease-in, border-color 0.2s ease-in-out;
-    border-bottom: 1px solid transparent;
-    padding: 0;
-
-    &:hover {
-      border-color: ${colors.secondaryColor};
-      color: ${colors.secondaryColor};
-    }
-  }
-`;
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
   const { personal, portrait } = useStaticQuery(graphql`
@@ -141,7 +12,6 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
             id
             name
             childMdx {
-              body
               frontmatter {
                 title
                 subtitle
@@ -152,15 +22,18 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
       }
       portrait: file(absolutePath: { regex: "/me-portrait.png/" }) {
         childImageSharp {
-          fluid(maxHeight: 100) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
+          gatsbyImageData(
+            height: 100
+            placeholder: NONE
+            layout: CONSTRAINED
+          )
         }
       }
     }
   `);
 
   const title = personal?.edges[0]?.node?.childMdx?.frontmatter?.title;
+  const image = getImage(portrait.childImageSharp);
 
   const location = currentLocation?.toLowerCase();
 
@@ -168,41 +41,42 @@ const PageHeader: FC<{ currentLocation?: string }> = ({ currentLocation }) => {
 
   if (currentLocation && location === 'blog') {
     subTitleElem = (
-      <SubTitle>
-        <Link to="/blog" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <h2 className="text-3xl text-neon-pink m-0 px-6 pr-0 pt-6 self-end flex-auto sm:text-4xl md:text-4xl xl:text-4xl xl:flex-initial xl:pl-4">
+        <Link to="/blog" className="no-underline text-inherit">
           {currentLocation}
         </Link>
-      </SubTitle>
+      </h2>
     );
   } else {
-    subTitleElem = <SubTitle>{currentLocation}</SubTitle>;
+    subTitleElem = (
+      <h2 className="text-3xl text-neon-pink m-0 px-2 pr-0 self-end flex-auto sm:text-4xl md:text-5xl xl:text-6xl xl:flex-initial xl:pl-4">
+        {currentLocation}
+      </h2>
+    );
   }
 
   return (
-    <Header>
-      <ImageContainer>
-        <LogoLink to="/">
-          <Image
-            alt={title}
-            loading="eager"
-            fluid={portrait.childImageSharp.fluid}
-            imgStyle={{ objectFit: 'contain' }}
-            style={{ maxHeight: '100px', width: '100%', maxWidth: '100px' }}
-          />
-        </LogoLink>
-      </ImageContainer>
-      <TitleContainer>
+    <header className="py-8 pb-4 flex justify-start items-center">
+      <div className="flex-[1_1_10rem] max-w-[6rem] flex justify-start mr-4 md:max-w-[8rem] xl:max-w-[10rem]">
+        <Link to="/" className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] xl:w-[100px] xl:h-[100px]">
+          {image && (
+            <GatsbyImage
+              alt={title || 'Logo'}
+              loading="eager"
+              image={image}
+              objectFit="contain"
+              style={{ maxHeight: '100px', width: '100%', maxWidth: '100px' }}
+            />
+          )}
+        </Link>
+      </div>
+      <div className="flex items-center pt-2 flex-1 flex-wrap justify-between basis-full sm:flex-nowrap sm:basis-auto lg:justify-start">
         <Link to="/">
-          <MainTitle>{title}</MainTitle>
+          <h1 className="m-0 text-4xl md:text-5xl xl:text-6xl">{title}</h1>
         </Link>
         {subTitleElem}
-        {/* {location !== 'blog' && (
-          <MainNav>
-            <Link to="/blog">Blog</Link>
-          </MainNav>
-        )} */}
-      </TitleContainer>
-    </Header>
+      </div>
+    </header>
   );
 };
 

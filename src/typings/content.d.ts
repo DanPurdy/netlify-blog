@@ -42,12 +42,9 @@ interface IPostsType {
 }
 
 interface IPostType {
-  body: string;
   excerpt: string;
   fields: {
-    readingTime: {
-      text: string;
-    };
+    readingTime: string;
     slug: string;
   };
   frontmatter: {

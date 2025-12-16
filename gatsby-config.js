@@ -1,6 +1,5 @@
 module.exports = {
   siteMetadata: {
-    // edit below
     title: `Dan Purdy Senior Fullstack Engineer`,
     author: `Dan Purdy`,
     description: `Portfolio and development blog of Dan Purdy, a senior fullstack engineer from London, UK. Focusing on JavaScript, Node, React and more!`,
@@ -15,10 +14,10 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-netlify`,
-    `gatsby-plugin-netlify-cms`,
-    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-postcss`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -31,9 +30,6 @@ module.exports = {
         icon: `content/assets/svg/favicon.svg`,
       },
     },
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-feed-mdx`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -80,53 +76,22 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-vscode`,
-            options: {
-              colorTheme: 'Monokai',
-            },
-          },
-          {
             resolve: `gatsby-remark-copy-linked-files`,
           },
           {
             resolve: `gatsby-remark-smartypants`,
           },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: null,
+              aliases: {},
+              showLineNumbers: false,
+              noInlineHighlight: false,
+            },
+          },
         ],
-      },
-    },
-    `gatsby-remark-reading-time`,
-    {
-      resolve: `gatsby-plugin-webfonts`,
-      options: {
-        fonts: {
-          google: [
-            {
-              family: 'Lato',
-              variants: ['700'],
-            },
-            {
-              family: 'Noto Sans JP',
-              variants: ['400'],
-            },
-          ],
-        },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-react-svg`,
-      options: {
-        rule: {
-          include: /content\/assets\/svg\/.*\.svg/,
-        },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-44111291-1`,
-        head: false,
-        anonymize: true,
-        respectDNT: true,
       },
     },
   ],

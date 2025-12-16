@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import * as React from 'react';
+import { FC } from 'react';
 
 import SubSectionContainer from '../../SubSectionContainer';
 import SubSectionTitle from '../../SubSectionTitle';
@@ -10,16 +10,6 @@ interface IExperienceSubSectionProps {
   title: string;
 }
 
-const ItemList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const ItemListItem = styled.li`
-  padding: 0.2rem 0;
-`;
-
 const ExperienceSubSection: FC<IExperienceSubSectionProps> = ({
   node,
   sectionName,
@@ -28,13 +18,16 @@ const ExperienceSubSection: FC<IExperienceSubSectionProps> = ({
   return (
     <SubSectionContainer>
       <SubSectionTitle>{title}</SubSectionTitle>
-      <ItemList>
+      <ul className="list-none p-0 m-0">
         {node.frontmatter[sectionName].map(pos => (
-          <ItemListItem key={`${node.frontmatter.id}-${pos.replace(' ', '-')}`}>
+          <li
+            key={`${node.frontmatter.id}-${pos.replace(' ', '-')}`}
+            className="py-0.5"
+          >
             {pos}
-          </ItemListItem>
+          </li>
         ))}
-      </ItemList>
+      </ul>
     </SubSectionContainer>
   );
 };

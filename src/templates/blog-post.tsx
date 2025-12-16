@@ -1,163 +1,12 @@
 /// <reference path="../typings/content.d.ts" />
 
-import React, { FC, ReactNode } from 'react';
-import { Link, graphql, PageProps, HeadFC } from 'gatsby';
+import * as React from 'react';
+import { FC, ReactNode } from 'react';
+import { graphql, PageProps } from 'gatsby';
 
 import PageHeader from '../components/PageHeader/PageHeader';
 import ThinLayout from '../components/ThinLayout';
 import SEO from '../components/SEO';
-import styled from 'styled-components';
-import { breakpoints, colors } from '../theme';
-
-const PostContainer = styled.main`
-  max-width: 960px;
-`;
-
-const Post = styled.article`
-  margin-bottom: 12rem;
-`;
-
-const PostHeader = styled.header`
-  margin-bottom: 5rem;
-  border-bottom: 1px solid ${colors.fadedLine};
-  padding-bottom: 2rem 0;
-`;
-
-const PostHeading = styled.h1`
-  font-size: 5.5rem;
-  padding-bottom: 1rem;
-  margin-bottom: 0;
-  line-height: 1.4;
-
-  @media (max-width: ${breakpoints.smallPalm}) {
-    font-size: 4.5rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    font-size: 3.5rem;
-    line-height: 1.3;
-  }
-`;
-
-const PostMeta = styled.div`
-  margin: 2rem 0 1rem;
-  font-size: 1.6rem;
-`;
-
-const PostDate = styled.span`
-  color: ${colors.secondaryColor};
-`;
-const PostReadTime = styled.span`
-  margin-left: 2rem;
-`;
-
-const PostBody = styled.section`
-  letter-spacing: -0.3px;
-  font-size: 2rem;
-  line-height: 3.3rem;
-  color: #ffffff;
-
-  @media (max-width: ${breakpoints.smallPalm}) {
-    font-size: 1.7rem;
-    line-height: 2.8rem;
-  }
-
-  p {
-    margin: 0 0 3rem;
-  }
-
-  h2,
-  h3,
-  h4 {
-    color: ${colors.blogSubHeading};
-    line-height: 1.3;
-    margin: 3.5rem 0;
-  }
-
-  h2 {
-    @media (max-width: ${breakpoints.smallPalm}) {
-      font-size: 3.5rem;
-      margin: 2.5rem 0;
-    }
-
-    @media (max-width: ${breakpoints.largeHand}) {
-      font-size: 3rem;
-      line-height: 1.3;
-    }
-  }
-
-  h3 {
-    @media (max-width: ${breakpoints.smallPalm}) {
-      font-size: 3rem;
-    }
-
-    @media (max-width: ${breakpoints.largeHand}) {
-      font-size: 2.6rem;
-      line-height: 1.2;
-    }
-  }
-
-  h4 {
-    margin: 1.5rem 0;
-  }
-
-  blockquote {
-    font-size: 1.8rem;
-    border-left: 4px solid ${colors.neonPink};
-    padding: 3rem;
-    margin: 2rem 1rem;
-    background: ${colors.backgroundLight};
-    border-radius: 4px;
-
-    p {
-      margin: 0;
-    }
-  }
-
-  code {
-    letter-spacing: normal;
-    border-radius: 4px;
-  }
-
-  pre {
-    font-size: 2rem;
-    margin: 4rem 0 6rem;
-
-    @media (max-width: ${breakpoints.smallPalm}) {
-      font-size: 1.4rem;
-      line-height: 1.6rem;
-    }
-
-    &.monokai {
-      background: #000;
-    }
-  }
-
-  ol,
-  ul {
-    margin: 1.5rem 0;
-    font-size: 1.8rem;
-    line-height: 1.8;
-
-    li {
-      &::marker {
-        color: ${colors.pastelBlue};
-      }
-    }
-  }
-
-  a {
-    color: ${colors.neonPink};
-    font-weight: bold;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease-in-out;
-
-    &:hover {
-      border-bottom: 2px solid ${colors.neonPink};
-    }
-  }
-`;
 
 interface IBlogPostProps extends PageProps {
   data: {
@@ -190,12 +39,10 @@ interface IBlogPostProps extends PageProps {
 const BlogPostTemplate: FC<IBlogPostProps> = ({
   data,
   location,
-  pageContext,
   children,
 }) => {
   const post = data.mdx;
   const author = data?.site?.siteMetadata?.author;
-  const { previous, next } = pageContext;
 
   return (
     <ThinLayout location={location} author={author}>
@@ -205,23 +52,23 @@ const BlogPostTemplate: FC<IBlogPostProps> = ({
           description={post.frontmatter.description || post.excerpt}
         />
         <PageHeader currentLocation="Blog" />
-        <PostContainer>
-          <Post>
-            <PostHeader>
-              <PostHeading>{post.frontmatter.title}</PostHeading>
-              <PostMeta
-                style={{
-                  display: `block`,
-                }}
-              >
-                <PostDate>{post.frontmatter.date}</PostDate>
-                <PostReadTime>{post.fields.readingTime}</PostReadTime>
-              </PostMeta>
-            </PostHeader>
-            <PostBody>{children}</PostBody>
-            <hr />
-          </Post>
-        </PostContainer>
+        <main className="max-w-content-medium">
+          <article className="mb-24">
+            <header className="mb-22 border-b border-faded-line pb-4">
+              <h1 className="text-3-5xl pb-2 mb-0 mt-16 leading-tight md:text-4-5xl md:leading-snug lg:text-5-5xl">
+                {post.frontmatter.title}
+              </h1>
+              <div className="my-8 mb-4 text-base block">
+                <span className="text-neon-pink">{post.frontmatter.date}</span>
+                <span className="ml-8">{post.fields.readingTime}</span>
+              </div>
+            </header>
+            <section className="blog-content text-white leading-relaxed">
+              {children}
+            </section>
+            <hr className="border-faded-line" />
+          </article>
+        </main>
       </>
     </ThinLayout>
   );

@@ -1,6 +1,7 @@
 /// <reference path="../typings/content.d.ts" />
 
-import React, { FC } from 'react';
+import * as React from 'react';
+import { FC } from 'react';
 import { graphql, PageProps } from 'gatsby';
 
 import Layout from '../components/layout';
@@ -24,19 +25,15 @@ interface IndexProps extends PageProps {
   };
 }
 
-const IndexPage: FC<IndexProps> = ({ data, location }) => {
+const IndexPage: FC<IndexProps> = ({ data }) => {
   const {
     experience,
     personal,
     posts,
-    site: {
-      siteMetadata: { author },
-    },
   } = data;
   const {
     childMdx: {
-      excerpt,
-      frontmatter: { title, subtitle },
+      frontmatter: { title },
     },
   } = personal.edges[0].node;
 
@@ -79,7 +76,7 @@ export const pageQuery = graphql`
           id
           name
           childMdx {
-            excerpt
+            body
             frontmatter {
               title
               subtitle
@@ -96,7 +93,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          excerpt
+          body
           frontmatter {
             startDate(formatString: "MMM YYYY")
             endDate(formatString: "MMM YYYY")

@@ -1,0 +1,292 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+
+@import "tailwindcss";
+
+/* Custom theme configuration for Tailwind v4 */
+@theme {
+  /* Breakpoints - mobile first, max-width approach */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 400px;
+  --breakpoint-md: 500px;
+  --breakpoint-lg: 650px;
+  --breakpoint-xl: 768px;
+  --breakpoint-2xl: 1080px;
+
+  /* Colors */
+  --color-portfolio-bg: #081635;
+  --color-portfolio-bg-light: #1C2944;
+  --color-faded-line: rgba(255, 255, 255, 0.3);
+  --color-neon-pink: #EF528A;
+  --color-bold-yellow: #FFE100;
+  --color-pastel-blue: #33AAFF;
+
+  /* Font families */
+  --font-heading: 'Lato', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+
+  /* Font sizes - matching original site (with html font-size: 62.5%, 1rem = 10px) */
+  --text-xs: 1.2rem;
+  --text-sm: 1.4rem;
+  --text-base: 1.6rem;
+  --text-lg: 1.8rem;
+  --text-exp: 1.9rem;
+  --text-xl: 2rem;
+  --text-intro: 2.2rem;
+  --text-2xl: 2.4rem;
+  --text-blog-title: 3.5rem;
+  --text-3xl: 3rem;
+  --text-3-5xl: 3.5rem;
+  --text-3-8xl: 3.8rem;
+  --text-4xl: 4rem;
+  --text-4-5xl: 4.5rem;
+  --text-5xl: 5rem;
+  --text-5-5xl: 5.5rem;
+  --text-6xl: 6rem;
+  --text-6-6xl: 6.6rem;
+  --text-7xl: 7.5rem;
+  --text-8xl: 9.5rem;
+  --text-9xl: 11rem;
+
+  /* Line heights */
+  --leading-exp: 2.6rem;
+
+  /* Letter spacing */
+  --tracking-tighter-2: -2px;
+  --tracking-tighter-3: -3px;
+  --tracking-tighter-4: -4px;
+  --tracking-tighter-5: -5px;
+  --tracking-tighter-6: -6px;
+  --tracking-tighter-7: -7px;
+  --tracking-tighter-8: -8px;
+
+  /* Max widths */
+  --max-width-content: 1440px;
+  --max-width-content-lg: 1000px;
+  --max-width-content-medium: 850px;
+  --max-width-content-thin: 700px;
+
+  /* Min widths */
+  --min-width-screen-min: 320px;
+
+  /* Spacing */
+  --spacing-32: 8rem;
+  --spacing-16: 4rem;
+  --spacing-8: 2rem;
+}
+
+@layer base {
+  *, :after, :before {
+    box-sizing: border-box;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #081635 #EF528A;
+  }
+
+  *::-webkit-scrollbar {
+    width: 1rem;
+    height: 0.7rem;
+  }
+
+  @media (max-width: 350px) {
+    *::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #081635;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #EF528A;
+  }
+
+  html {
+    font-size: 62.5%; /* Makes 1rem = 10px for easier calculations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body text-white bg-portfolio-bg flex flex-col min-w-screen-min;
+    font-size: 1.9rem; /* 14px */
+    font-weight: 500;
+    line-height: 2.6rem;
+    letter-spacing: -1px;
+    padding: 0;
+    margin: 0;
+  }
+
+  html, body {
+    height: 100%;
+    min-width: 320px;
+  }
+
+  #___gatsby {
+    flex: 1 0 auto;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: middle;
+  }
+
+  h1, h2, h3 {
+    @apply font-heading;
+    font-weight: 700;
+  }
+
+  h1 {
+    display: inline-block;
+    @apply text-6-6xl;
+  }
+
+  h2 {
+    @apply text-3-8xl;
+  }
+
+  h3 {
+    @apply text-3xl;
+    line-height: 4.1rem;
+  }
+
+  h4 {
+    @apply text-lg;
+    margin: 1rem 0;
+    line-height: 2.1rem;
+  }
+
+  @media (max-width: 768px) {
+    h4 {
+      @apply text-base;
+    }
+  }
+
+  b, strong {
+    font-weight: 500;
+  }
+
+  a {
+    @apply text-white cursor-pointer underline;
+    outline-color: #EF528A;
+  }
+}
+
+/* Blog content styling */
+@layer components {
+  .blog-content {
+    font-size: 2rem;
+    line-height: 3.3rem;
+  }
+
+  .blog-content p {
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4 {
+    @apply text-bold-yellow;
+    line-height: 1.3;
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+    font-weight: 500;
+  }
+
+  .blog-content h2 {
+    @apply text-3-8xl;
+  }
+
+  @media (max-width: 650px) {
+    .blog-content h2 {
+      @apply text-4xl;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .blog-content h2 {
+      @apply text-3xl;
+    }
+  }
+
+  .blog-content h3 {
+    @apply text-4xl;
+  }
+
+  @media (max-width: 650px) {
+    .blog-content h3 {
+      @apply text-3xl;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .blog-content h3 {
+      @apply text-2xl;
+    }
+  }
+
+  .blog-content h4 {
+    @apply text-2xl;
+  }
+
+  .blog-content blockquote {
+    @apply text-lg border-l-4 border-neon-pink p-6 my-4 mx-2 bg-portfolio-bg-light rounded;
+  }
+
+  .blog-content blockquote p {
+    @apply m-0;
+  }
+
+  .blog-content code {
+    @apply rounded tracking-normal;
+  }
+
+  .blog-content pre {
+    @apply text-xl my-8 mb-12;
+  }
+
+  @media (max-width: 650px) {
+    .blog-content pre {
+      @apply text-sm leading-snug;
+    }
+  }
+
+  .blog-content ol,
+  .blog-content ul {
+    @apply my-3 text-lg leading-relaxed;
+  }
+
+  .blog-content li::marker {
+    @apply text-pastel-blue;
+  }
+
+  .blog-content a {
+    @apply text-neon-pink font-bold no-underline border-b-2 border-transparent transition-colors;
+  }
+
+  .blog-content a:hover {
+    @apply border-neon-pink;
+  }
+
+  /* Prism code highlighting overrides */
+  .gatsby-highlight {
+    @apply my-8 rounded overflow-x-auto;
+  }
+
+  .gatsby-highlight pre[class*="language-"] {
+    @apply p-6 text-sm leading-relaxed;
+    background: #1d1f21;
+    border-radius: 0.5rem;
+  }
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', monospace;
+  }
+}

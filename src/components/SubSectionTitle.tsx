@@ -1,19 +1,16 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { breakpoints, colors } from '../theme';
+import * as React from 'react';
+import { FC, ReactNode } from 'react';
 
-const SectionTitle = styled.h4`
-  margin: 0 0 0.7rem;
-  font-size: 1.8rem;
-  color: ${colors.experienceSubHeadings};
+interface SubSectionTitleProps {
+  children: ReactNode;
+}
 
-  @media (max-width: ${breakpoints.palm}) {
-    font-size: 1.5rem;
-  }
-`;
-
-const SubSectionTitle: FC<{}> = ({ children }) => {
-  return <SectionTitle>{children}</SectionTitle>;
+const SubSectionTitle: FC<SubSectionTitleProps> = ({ children }) => {
+  return (
+    <h4 className="m-0 mb-1 text-lg text-pastel-blue font-normal xl:text-base">
+      {children}
+    </h4>
+  );
 };
 
 export default SubSectionTitle;

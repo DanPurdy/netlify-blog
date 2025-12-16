@@ -1,63 +1,31 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { breakpoints, colors } from '../theme';
+import * as React from 'react';
+import { FC } from 'react';
 
-import TwitterIcon from '../../content/assets/svg/twitter.svg';
 import LinkedInIcon from '../../content/assets/svg/linked-in.svg';
 import GithubIcon from '../../content/assets/svg/github.svg';
-import CVIcon from '../../content/assets/svg/cv.svg';
-
-const Container = styled.section`
-  display: flex;
-  justify-content: flex-start;
-  margin: 6rem 0 4rem;
-
-  @media (max-width: ${breakpoints.palm}) {
-    justify-content: center;
-  }
-`;
-
-const Link = styled.a`
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  border: 2px solid ${colors.secondaryColor};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 2rem;
-  padding: 1rem;
-  text-decoration: none;
-`;
 
 const SocialLinks: FC = () => {
   return (
-    <Container>
-      <Link
+    <section className="flex justify-center my-20 mb-8 xl:justify-start">
+      <a
         href="https://github.com/danpurdy"
         aria-label="Find me on Github"
         target="_blank"
         rel="noopener noreferrer"
+        className="w-[60px] h-[60px] rounded-full border-2 border-neon-pink flex justify-center items-center mr-4 p-2 no-underline"
       >
         <GithubIcon />
-      </Link>
-      <Link
-        href="https://twitter.com/danpurdy0"
-        aria-label="Find me on Twitter"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <TwitterIcon />
-      </Link>
-      <Link
+      </a>
+      <a
         href="https://www.linkedin.com/in/dan-purdy-developer"
         aria-label="Find me on LinkedIn"
         target="_blank"
         rel="noopener noreferrer"
+        className="w-[60px] h-[60px] rounded-full border-2 border-neon-pink flex justify-center items-center mr-4 p-2 no-underline"
       >
         <LinkedInIcon />
-      </Link>
-    </Container>
+      </a>
+    </section>
   );
 };
 

@@ -1,7 +1,5 @@
-import React, { FC, ReactNode } from 'react';
-import styled from 'styled-components';
-
-import { breakpoints, GlobalStyle } from '../theme';
+import * as React from 'react';
+import { FC, ReactNode } from 'react';
 import Footer from './Footer';
 
 interface ILayoutProps {
@@ -11,28 +9,17 @@ interface ILayoutProps {
 
 const Layout: FC<ILayoutProps> = ({ title, children }) => {
   return (
-    <React.Fragment>
+    <>
       <main>
-        <GlobalStyle />
         {React.Children.map(children, child => (
-          <PageWrap>{child}</PageWrap>
+          <div className="min-h-screen max-w-content min-w-screen-min mx-auto px-8 py-8 md:px-16 2xl:px-32">
+            {child}
+          </div>
         ))}
       </main>
       <Footer title={title} />
-    </React.Fragment>
+    </>
   );
 };
-
-const PageWrap = styled.div`
-  min-height: 100vh;
-  max-width: 1440px;
-  min-width: 320px;
-  margin: 0 auto;
-  padding: 8rem;
-
-  @media (max-width: ${breakpoints.wide}) {
-    padding: 2rem 2rem 8rem;
-  }
-`;
 
 export default Layout;

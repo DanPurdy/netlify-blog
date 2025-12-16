@@ -1,6 +1,7 @@
 /// <reference path="../../typings/content.d.ts" />
 
-import React, { FC } from 'react';
+import * as React from 'react';
+import { FC } from 'react';
 
 import Posts from './components/Posts';
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -10,7 +11,7 @@ interface IPostsProps {
   posts: IPostsType;
 }
 
-const ExperienceSection: FC<IPostsProps> = ({ posts }) => {
+const BlogSection: FC<IPostsProps> = ({ posts }) => {
   return (
     <SectionContainer>
       <SectionHeader title="Blog" />
@@ -19,4 +20,4 @@ const ExperienceSection: FC<IPostsProps> = ({ posts }) => {
   );
 };
 
-export default ExperienceSection;
+export default BlogSection;

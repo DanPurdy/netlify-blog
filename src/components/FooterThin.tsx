@@ -1,120 +1,40 @@
 import { Link } from 'gatsby';
-import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
-import { breakpoints, colors } from '../theme';
-
-const FooterContainer = styled.div`
-  max-width: 800px;
-  min-width: 320px;
-  margin: 0 auto;
-  padding: 0 4rem;
-  padding: 3rem 4rem 5rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  flex-shrink: 0;
-
-  @media (max-width: ${breakpoints.wide}) {
-    padding: 2rem 4rem 4rem;
-  }
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    padding: 2rem;
-    display: block;
-  }
-`;
-
-const FooterLinks = styled.ul`
-  margin: 0 0 0 1rem;
-  padding: 0;
-  list-style: none;
-  display: flex;
-
-  @media (max-width: ${breakpoints.largeHand}) {
-    margin: 0;
-    padding: 2rem 0;
-  }
-`;
-
-const FooterElement = styled.li``;
-
-const FooterTitle = styled.h3`
-  font-size: 3.5rem;
-  line-height: 1;
-  margin: 0;
-  letter-spacing: -2.5px;
-`;
-
-const anchorStyles = css`
-  font-size: 1.6rem;
-  margin-left: 1.8rem;
-  text-decoration: none;
-  border-bottom: 1px solid ${colors.portfolioBackground};
-  color: ${colors.secondaryColor};
-  transition: color 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
-
-  &:hover {
-    border-bottom: 1px solid ${colors.secondaryColor};
-    color: ${colors.primaryFontColor};
-    opacity: 0.9;
-  }
-`;
-
-const FooterTitleLink = styled(props => <Link {...props} />)`
-  text-decoration: none;
-`;
-
-const FooterAnchor = styled.a`
-  ${anchorStyles}
-`;
-
-const FooterLinkAnchor = styled(props => <Link {...props} />)`
-  ${anchorStyles}
-
-  &:first-of-type {
-    @media (max-width: ${breakpoints.largeHand}) {
-      margin-left: 0;
-    }
-  }
-`;
+import * as React from 'react';
+import { FC } from 'react';
 
 interface FooterProps {
   title: string;
 }
 
-const Footer: FC<FooterProps> = ({ title }) => {
+const FooterThin: FC<FooterProps> = ({ title }) => {
   return (
-    <FooterContainer>
-      <FooterTitleLink to="/">
-        <FooterTitle>{title}</FooterTitle>
-      </FooterTitleLink>
-      <FooterLinks>
-        <FooterElement>
-          <FooterLinkAnchor to="/blog">Blog</FooterLinkAnchor>
-        </FooterElement>
-        <FooterElement>
-          <FooterAnchor
-            href="https://twitter.com/danpurdy0"
-            aria-label="Find me on Twitter"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="max-w-content-thin min-w-screen-min mx-auto p-4 block flex-shrink-0 md:flex md:items-end md:justify-start md:px-8 md:py-6 md:pb-10">
+      <Link to="/" className="no-underline">
+        <h3 className="text-4xl leading-none m-0 tracking-tighter-2 md:text-5xl">{title}</h3>
+      </Link>
+      <ul className="m-0 py-4 p-0 list-none flex md:ml-4 md:py-0">
+        <li>
+          <Link
+            to="/blog"
+            className="text-base ml-4 no-underline border-b border-portfolio-bg text-neon-pink transition-all duration-300 hover:border-neon-pink hover:text-white hover:opacity-90 md:first:ml-0"
           >
-            Twitter
-          </FooterAnchor>
-        </FooterElement>
-        <FooterElement>
-          <FooterAnchor
+            Blog
+          </Link>
+        </li>
+        <li>
+          <a
             href="https://github.com/danpurdy"
             aria-label="Find me on Github"
             target="_blank"
             rel="noopener noreferrer"
+            className="text-base ml-4 no-underline border-b border-portfolio-bg text-neon-pink transition-all duration-300 hover:border-neon-pink hover:text-white hover:opacity-90"
           >
             Github
-          </FooterAnchor>
-        </FooterElement>
-      </FooterLinks>
-    </FooterContainer>
+          </a>
+        </li>
+      </ul>
+    </div>
   );
 };
 
-export default Footer;
+export default FooterThin;

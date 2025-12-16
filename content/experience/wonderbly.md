@@ -3,9 +3,9 @@ id: wonderbly
 title: Wonderbly
 url: https://www.wonderbly.com/
 logo: wonderbly-logo.svg
-startDate: Jul 2025
+startDate: 2025-07-28T09:00:00.000Z
 isCurrent: true
-endDate: Dec 2025
+endDate: 2025-07-28T09:00:00.000Z
 position:
   - Head of Ecommerce Engineering
 ---

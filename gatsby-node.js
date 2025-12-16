@@ -87,11 +87,27 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type Mdx implements Node {
       fields: MdxFields
+      frontmatter: MdxFrontmatter
     }
 
     type MdxFields {
       slug: String
       readingTime: String
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String
+      date: Date @dateformat
+      startDate: Date @dateformat
+      endDate: Date @dateformat
+      description: String
+      id: String
+      isCurrent: Boolean
+      logo: File @fileByRelativePath
+      position: [String]
+      previousPosition: [String]
+      url: String
+      subtitle: String
     }
   `);
 };

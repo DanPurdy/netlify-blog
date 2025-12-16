@@ -27,7 +27,7 @@ const HomeSection: FC<IExperienceProps> = ({ data }) => {
         childImageSharp {
           gatsbyImageData(
             height: 200
-            placeholder: TRACED_SVG
+            placeholder: BLURRED
             layout: CONSTRAINED
           )
         }

@@ -4,3 +4,10 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+# Force the patched sharp for its Dependabot high (GHSA, fixed in 0.35).
+# The image-size and extract-zip highs have no published fix yet — their
+# advisories name 2.0.3 and 2.0.2 as patched, but npm's latest are 2.0.2 and
+# 2.0.1. Revisit when upstream releases land.
+overrides:
+  sharp: '>=0.35.0'

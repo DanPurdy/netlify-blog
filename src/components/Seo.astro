@@ -4,17 +4,22 @@
  * natively, so this is plain markup with no runtime and no dependency — which
  * is what made moving to React 19 free.
  */
+import { getCollection } from 'astro:content';
+
 interface Props {
   title: string;
   description?: string;
   keywords?: string[];
 }
 
+// Site-wide name and fallback description are editable content, not code —
+// they come from the same personal_details entry the home hero uses.
+const personal = (await getCollection('personal'))[0];
+
 const SITE = {
-  title: 'Dan Purdy',
-  author: 'Dan Purdy',
-  description:
-    'Development blog of Dan Purdy, an engineering leader from London, UK, writing about JavaScript, testing and tooling.',
+  title: personal.data.title,
+  author: personal.data.title,
+  description: personal.data.seoDescription,
   image:
     'https://res.cloudinary.com/huxr6hrje/image/upload/v1612228100/Priority%20Campaigns/me-portrait.png',
   imageAlt: 'Portfolio image with a pixel art represenation of Dan Purdy',

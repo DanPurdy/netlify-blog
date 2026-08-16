@@ -7,10 +7,13 @@ import { getCollection, render } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostRow from '../components/PostRow.astro';
-import { projects } from '../data/projects';
 
 const personal = (await getCollection('personal'))[0];
 const { Content: Intro } = await render(personal);
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -41,13 +44,16 @@ function formatDateRange(job: (typeof experience)[number]) {
   ]}
 >
   <div class="hero">
-    <h1>Engineering leader in London writing about <em>JavaScript, testing &amp; the tools between.</em></h1>
+    <h1>
+      {personal.data.headline}{' '}
+      {personal.data.headlineAccent && <em>{personal.data.headlineAccent}</em>}
+    </h1>
     <div class="sub">
       <Intro />
       <div class="social">
-        <a href="https://github.com/danpurdy" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/dan-purdy-developer" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="mailto:dan@dpurdy.me">Email</a>
+        <a href={personal.data.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={personal.data.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={`mailto:${personal.data.email}`}>Email</a>
         <a href="/rss.xml">RSS</a>
       </div>
     </div>
@@ -63,11 +69,11 @@ function formatDateRange(job: (typeof experience)[number]) {
     <div class="projects">
       {
         projects.map((project) => (
-          <a class="proj" href={project.url} target="_blank" rel="noopener noreferrer">
+          <a class="proj" href={project.data.url} target="_blank" rel="noopener noreferrer">
             <h3>
-              {project.name} <span>{project.role}</span>
+              {project.data.name} <span>{project.data.role}</span>
             </h3>
-            <p>{project.description}</p>
+            <p>{project.data.description}</p>
           </a>
         ))
       }

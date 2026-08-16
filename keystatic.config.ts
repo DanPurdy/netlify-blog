@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection, singleton } from '@keystatic/core';
 
 /**
  * Keystatic is a view over the git files, not a separate store. Everything it
@@ -72,8 +72,39 @@ export default config({
     brand: { name: 'dpurdy.me' },
     navigation: {
       Writing: ['drafts', 'posts'],
-      Site: ['experience'],
+      Site: ['home', 'experience', 'projects'],
     },
+  },
+
+  singletons: {
+    /** The home hero, bio, social links and site-wide SEO defaults. */
+    home: singleton({
+      label: 'Home & profile',
+      path: 'content/personal_details',
+      format: { contentField: 'body' },
+      schema: {
+        title: fields.text({ label: 'Name' }),
+        subtitle: fields.text({ label: 'Role' }),
+        headline: fields.text({
+          label: 'Headline',
+          description: 'The big sentence on the home page, up to the accent.',
+        }),
+        headlineAccent: fields.text({
+          label: 'Headline accent',
+          description:
+            'The pink remainder of the sentence. Leave empty for no colour break.',
+        }),
+        github: fields.url({ label: 'GitHub URL' }),
+        linkedin: fields.url({ label: 'LinkedIn URL' }),
+        email: fields.text({ label: 'Email address' }),
+        seoDescription: fields.text({
+          label: 'SEO description',
+          multiline: true,
+          description: 'Fallback meta description for pages without their own.',
+        }),
+        body: body('Bio'),
+      },
+    }),
   },
 
   collections: {
@@ -134,6 +165,30 @@ export default config({
         }),
         tags,
         body: body('Body'),
+      },
+    }),
+
+    projects: collection({
+      label: 'Side projects',
+      slugField: 'name',
+      path: 'content/projects/*',
+      format: { contentField: 'body' },
+      columns: ['name', 'role'],
+      schema: {
+        name: fields.slug({ name: { label: 'Name' } }),
+        role: fields.text({
+          label: 'Role',
+          description: 'The small annotation on the card: author, demo, tool…',
+        }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        url: fields.url({ label: 'URL' }),
+        order: fields.integer({
+          label: 'Order',
+          description: 'Cards sort ascending by this.',
+        }),
+        // Unused on the site; Keystatic needs a content field to keep these
+        // as markdown files rather than YAML.
+        body: body('Notes'),
       },
     }),
 

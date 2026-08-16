@@ -55,9 +55,29 @@ const personal = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
+    // The home hero, split where the accent colour starts. An empty accent
+    // renders the headline with no colour break.
+    headline: z.string(),
+    headlineAccent: z.string().default(''),
+    github: z.string().url(),
+    linkedin: z.string().url(),
+    email: z.string().email(),
+    seoDescription: z.string(),
+  }),
+});
+
+const projects = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/projects' }),
+  schema: z.object({
+    name: z.string(),
+    // The small mono annotation on the card: author, demo, tool…
+    role: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    order: z.number().default(0),
   }),
 });
 
 // drafts/ is deliberately absent. Keystatic reads that directory directly, and
 // leaving it out of the content config guarantees a draft can never reach a build.
-export const collections = { blog, experience, personal };
+export const collections = { blog, experience, personal, projects };

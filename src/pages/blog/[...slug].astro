@@ -1,0 +1,108 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { readingTime } from '../../lib/reading-time';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // gatsby-node.js computed these into page context and blog-post.tsx never
+      // rendered them. Newest first, so "next" is the newer neighbour.
+      next: index === 0 ? null : posts[index - 1],
+      previous: index === posts.length - 1 ? null : posts[index + 1],
+    },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  next: CollectionEntry<'blog'> | null;
+  previous: CollectionEntry<'blog'> | null;
+}
+
+const { post, next, previous } = Astro.props;
+const { Content } = await render(post);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-GB', {
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+  });
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  variant="thin"
+>
+  <PageHeader currentLocation="Blog" />
+  <div class="max-w-content-medium">
+    <article class="mb-24">
+      <header class="mb-22 border-b border-faded-line pb-4">
+        <h1
+          class="text-3-5xl pb-2 mb-0 mt-16 leading-tight md:text-4-5xl md:leading-snug lg:text-5-5xl"
+        >
+          {post.data.title}
+        </h1>
+        <div class="my-8 mb-4 text-base flex flex-wrap items-center gap-x-8 gap-y-2">
+          <span class="text-neon-pink">{formatDate(post.data.date)}</span>
+          <span>{readingTime(post.body)}</span>
+          {
+            post.data.tags.length > 0 && (
+              <span class="flex flex-wrap gap-x-3 text-sm">
+                {post.data.tags.map((tag) => (
+                  <a
+                    href={`/tags/${tag}/`}
+                    class="no-underline text-pastel-blue hover:underline"
+                  >
+                    #{tag}
+                  </a>
+                ))}
+              </span>
+            )
+          }
+        </div>
+      </header>
+
+      <section class="blog-content text-white leading-relaxed">
+        <Content />
+      </section>
+
+      <hr class="border-faded-line" />
+
+      {
+        (previous || next) && (
+          <nav class="mt-12 flex flex-col gap-6 sm:flex-row sm:justify-between">
+            <div class="sm:max-w-[45%]">
+              {previous && (
+                <a href={`/blog/${previous.id}/`} class="no-underline group block">
+                  <span class="block text-sm text-neon-pink mb-1">Previous</span>
+                  <span class="text-lg group-hover:underline">
+                    {previous.data.title}
+                  </span>
+                </a>
+              )}
+            </div>
+            <div class="sm:max-w-[45%] sm:text-right">
+              {next && (
+                <a href={`/blog/${next.id}/`} class="no-underline group block">
+                  <span class="block text-sm text-neon-pink mb-1">Next</span>
+                  <span class="text-lg group-hover:underline">{next.data.title}</span>
+                </a>
+              )}
+            </div>
+          </nav>
+        )
+      }
+    </article>
+  </div>
+</BaseLayout>

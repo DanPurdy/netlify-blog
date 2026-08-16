@@ -1,0 +1,52 @@
+---
+/**
+ * Replaces the react-helmet based SEO component. Astro renders head tags
+ * natively, so this is plain markup with no runtime and no dependency — which
+ * is what made moving to React 19 free.
+ */
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[];
+}
+
+const SITE = {
+  title: 'Dan Purdy Senior Fullstack Engineer',
+  author: 'Dan Purdy',
+  description:
+    'Portfolio and development blog of Dan Purdy, a senior fullstack engineer from London, UK. Focusing on JavaScript, Node, React and more!',
+  image:
+    'https://res.cloudinary.com/huxr6hrje/image/upload/v1612228100/Priority%20Campaigns/me-portrait.png',
+  imageAlt: 'Portfolio image with a pixel art represenation of Dan Purdy',
+  twitter: 'DanPurdy0',
+};
+
+const { title, description, keywords = [] } = Astro.props;
+const metaDescription = description || SITE.description;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<title>{title} | {SITE.title}</title>
+<meta name="description" content={metaDescription} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={metaDescription} />
+<meta property="og:image" content={SITE.image} />
+<meta property="og:image:alt" content={SITE.imageAlt} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content={SITE.author} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={metaDescription} />
+
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE.title}
+  href={new URL('rss.xml', Astro.site)}
+/>

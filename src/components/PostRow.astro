@@ -16,15 +16,11 @@ const formattedDate = new Intl.DateTimeFormat('en-GB', {
 }).format(post.data.date);
 
 const tagList = post.data.tags.map((tag) => `#${tag}`).join(' ');
-
-// Frontmatter titles use plain hyphens; display copy prefers em dashes, same
-// as the post page's statement heading.
-const displayTitle = post.data.title.replaceAll(' - ', ' — ');
 ---
 
 <a class="post" href={`/blog/${post.id}/`}>
   <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
-  <h3>{displayTitle}</h3>
+  <h3>{post.data.title}</h3>
   <span class="tags">{tagList}</span>
   {showDescription && <p>{post.data.description}</p>}
 </a>

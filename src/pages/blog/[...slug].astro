@@ -38,25 +38,24 @@ const formatDate = (date: Date) =>
   });
 
 // Titles like "Firebase Cloud Firestore security rules - Part one - Writing
-// the rules" get an accent-coloured second half. Frontmatter uses plain
-// hyphens; the display copy normalises them to em dashes, then splits on the
-// first one only so any further dashes stay in the emphasised remainder.
-const DASH_SPLIT = ' — ';
-const displayTitle = post.data.title.replaceAll(' - ', DASH_SPLIT);
-const dashIndex = displayTitle.indexOf(DASH_SPLIT);
+// the rules" get an accent-coloured second half: split on the first " - "
+// only, so any further dashes stay in the emphasised remainder. The title
+// text itself is rendered exactly as written in frontmatter.
+const DASH_SPLIT = ' - ';
+const dashIndex = post.data.title.indexOf(DASH_SPLIT);
 const titleBefore =
-  dashIndex === -1 ? displayTitle : displayTitle.slice(0, dashIndex);
+  dashIndex === -1 ? post.data.title : post.data.title.slice(0, dashIndex);
 const titleAfter =
-  dashIndex === -1 ? null : displayTitle.slice(dashIndex + DASH_SPLIT.length);
+  dashIndex === -1 ? null : post.data.title.slice(dashIndex + DASH_SPLIT.length);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} width="narrow">
   <div class="post-hd">
     <div class="crumb">
-      <a href="/">Writing</a> — {formatDate(post.data.date)} — {readingTime(post.body)}
+      <a href="/">Writing</a> · {formatDate(post.data.date)} · {readingTime(post.body)}
     </div>
     <h1>
-      {titleAfter === null ? titleBefore : <>{titleBefore} — <em>{titleAfter}</em></>}
+      {titleAfter === null ? titleBefore : <>{titleBefore} - <em>{titleAfter}</em></>}
     </h1>
     {
       post.data.tags.length > 0 && (

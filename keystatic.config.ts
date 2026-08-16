@@ -18,6 +18,14 @@ const body = (label: string) =>
     extension: 'md',
   });
 
+/**
+ * Note on templates: Keystatic ignores `defaultValue` on content fields — it is
+ * honoured on scalar fields like the status select below, but a new entry's body
+ * always opens empty. Starters are therefore real draft entries which you
+ * duplicate ("Duplicate entry…" in the toolbar). Adding a new starter is just
+ * adding another draft whose title begins with "Template —".
+ */
+
 const tags = fields.array(fields.text({ label: 'Tag' }), {
   label: 'Tags',
   itemLabel: (props) => props.value,
@@ -50,6 +58,7 @@ export default config({
       path: 'drafts/*/',
       format: { contentField: 'body' },
       entryLayout: 'content',
+      columns: ['title', 'status'],
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
         status: fields.select({

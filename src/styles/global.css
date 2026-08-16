@@ -274,19 +274,22 @@
     @apply border-neon-pink;
   }
 
-  /* Prism code highlighting overrides */
-  .gatsby-highlight {
-    @apply my-8 rounded overflow-x-auto;
-  }
-
-  .gatsby-highlight pre[class*="language-"] {
-    @apply p-6 text-sm leading-relaxed;
-    background: #1d1f21;
+  /* Shiki code blocks. Astro emits .astro-code; the old .gatsby-highlight and
+     Prism .language-* selectors no longer match anything. */
+  .astro-code {
+    @apply my-8 p-6 rounded overflow-x-auto text-sm leading-relaxed;
     border-radius: 0.5rem;
   }
 
-  code[class*="language-"],
-  pre[class*="language-"] {
+  .astro-code,
+  .astro-code code,
+  .blog-content code {
     font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', monospace;
+  }
+
+  /* Shiki sets its own colours inline, so the generic pre sizing must not
+     fight it. */
+  .blog-content pre.astro-code {
+    @apply text-sm my-8 mb-12;
   }
 }

@@ -18,13 +18,12 @@ export default defineConfig({
   integrations: [react(), mdx(), sitemap(), keystatic()],
 
   markdown: {
-    // Shiki is Astro's default highlighter and supports a theme per colour
-    // scheme natively, which the light/dark redesign needs anyway.
+    // Single dark theme, because the site is dark-only until the redesign.
+    // Shiki's dual-theme mode needs a CSS variable block to switch between
+    // them, so configuring it now would just render light code blocks on a
+    // dark page for anyone whose OS is set to light. Revisit in phase 2.
     shikiConfig: {
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark',
-      },
+      theme: 'github-dark',
     },
   },
 

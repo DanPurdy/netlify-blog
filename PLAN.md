@@ -121,8 +121,13 @@ work. Local dev defaults to local storage, which never prompts for sign-in, so
 the wizard does not appear there either. Both conditions are needed at once:
 
 ```sh
-KEYSTATIC_STORAGE=github pnpm dev
+PUBLIC_KEYSTATIC_STORAGE=github pnpm dev
 ```
+
+The `PUBLIC_` prefix is load-bearing. `keystatic.config.ts` is bundled into the
+browser as well as the server, because the admin UI is a React island, so the
+flag has to be readable from client code — and it must be read via
+`import.meta.env`, not `process.env`, which does not exist there.
 
 Then open `/keystatic` and sign in. The wizard writes the credentials into
 `.env`, which is gitignored. Copy `KEYSTATIC_GITHUB_CLIENT_ID`,

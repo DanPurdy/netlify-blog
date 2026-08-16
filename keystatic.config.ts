@@ -46,15 +46,22 @@ const tags = fields.array(fields.text({ label: 'Tag' }), {
  *
  * To create or re-create the GitHub App, run:
  *
- *   KEYSTATIC_STORAGE=github pnpm dev
+ *   PUBLIC_KEYSTATIC_STORAGE=github pnpm dev
  *
  * then open /keystatic and sign in. The wizard writes the credentials it creates
  * into .env, which is gitignored. Copy those values into Netlify's environment
  * variables for the deployed site, and add the production callback URL to the
  * GitHub App afterwards — the app is created pointing at localhost.
+ *
+ * Both flags must come from import.meta.env rather than process.env: this file is
+ * bundled into the browser as well, because the admin UI is a React island, and
+ * `process` does not exist there. `process.env.NODE_ENV` happens to survive only
+ * because Vite replaces that exact expression with a literal; anything else off
+ * `process.env` throws ReferenceError during hydration and renders a blank page.
+ * The PUBLIC_ prefix is required for the value to reach client code at all.
  */
 const useGitHubStorage =
-  process.env.NODE_ENV !== 'development' || process.env.KEYSTATIC_STORAGE === 'github';
+  !import.meta.env.DEV || import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github';
 
 export default config({
   storage: useGitHubStorage

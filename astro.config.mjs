@@ -5,7 +5,6 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import netlify from '@astrojs/netlify';
 import keystatic from '@keystatic/astro';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://dpurdy.me',
@@ -25,9 +24,5 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-dark',
     },
-  },
-
-  vite: {
-    plugins: [tailwindcss()],
   },
 });

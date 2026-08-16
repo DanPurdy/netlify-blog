@@ -325,7 +325,18 @@ and side projects need a home. `iamrob.in` demonstrates the shape — a scrollin
 index column beside a fixed identity panel on desktop. This is additional to the
 `/work` route and is in scope for phase 2's information architecture.
 
-### Phase 3 — write and ship one
+**Outcome, August 2026.** Four mockup directions were built and Dan picked a
+hybrid: direction A's palette, type (Figtree + JetBrains Mono) and tidiness with
+direction C's statement hero and post-list layout — recorded as `d-hybrid` in
+`mockups/README.md`. That design is now implemented across the site: tokens and
+prose styles in `src/styles/global.css` (light and dark, system default plus a
+persisted toggle), the inverted blog-first home page, the statement post page,
+the new `/work` route (typographic — the employer logos are white-text SVGs and
+would vanish on the light ground), restyled `/blog`, tag pages and 404, and a
+side-projects card row on the home page fed by `src/data/projects.ts`. Tailwind
+was removed in the process: every page was being rewritten anyway, and the
+mockup CSS transfers verbatim into Astro scoped styles, which it could not
+through a utility-class translation. Fonts are self-hosted via Fontsource.
 
 Through the loop, on the new site.
 

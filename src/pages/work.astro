@@ -1,0 +1,153 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+);
+
+// render() is async per-entry, so resolve every entry's Content component up
+// front rather than awaiting inline inside the template.
+const roles = await Promise.all(
+  experience.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content };
+  }),
+);
+
+const yearFull = (date: Date) => date.getFullYear();
+const yearShort = (date: Date) => String(date.getFullYear()).slice(-2);
+
+// Mirrors the work strip on the front page: "2025 —" while current, else a
+// full start year through a 2-digit end year, e.g. "2016 – 21".
+const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number]['data']) =>
+  isCurrent ? `${yearFull(startDate)} —` : `${yearFull(startDate)} – ${endDate ? yearShort(endDate) : ''}`;
+---
+
+<BaseLayout
+  title="Work"
+  description="Where Dan Purdy has worked — full role history."
+  width="wide"
+>
+  <header class="page-h">
+    <h1>Work<em>.</em></h1>
+    <p class="sub">A fuller history than the strip on the front page. Writing lives <a href="/">here</a>.</p>
+  </header>
+
+  <div class="roles">
+    {
+      roles.map(({ entry, Content }) => (
+        <section class="job">
+          <div class="job-h">
+            <h2>
+              <a href={entry.data.url} target="_blank" rel="noopener noreferrer">
+                {entry.data.title}
+              </a>
+            </h2>
+            <time>{timeLabel(entry.data)}</time>
+          </div>
+          <p class="roles-line">
+            {entry.data.position.join(' · ')}
+            {entry.data.previousPosition.length > 0 && (
+              <span class="prev"> (previously {entry.data.previousPosition.join(' · ')})</span>
+            )}
+          </p>
+          <div class="body">
+            <Content />
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page-h {
+    padding: 56px 0 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-h h1 {
+    font: 800 clamp(32px, 4.5vw, 48px) / 1.06 'Figtree Variable', sans-serif;
+    letter-spacing: -0.03em;
+  }
+  .page-h h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .page-h .sub {
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+  .page-h .sub a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .job {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .job:last-child {
+    border-bottom: 0;
+  }
+
+  .job-h {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .job-h h2 {
+    font: 800 24px 'Figtree Variable', sans-serif;
+    letter-spacing: -0.02em;
+  }
+  .job-h h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .job-h h2 a:hover {
+    color: var(--accent);
+  }
+  .job-h time {
+    font: 500 13px 'JetBrains Mono', monospace;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .roles-line {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+  .roles-line .prev {
+    color: var(--ink-faint);
+  }
+
+  .body {
+    margin-top: 24px;
+  }
+  .body :global(p) {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: 62ch;
+    margin: 0 0 0.9em;
+  }
+  .body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 680px) {
+    .page-h {
+      padding: 44px 0 28px;
+    }
+    .job-h {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+  }
+</style>

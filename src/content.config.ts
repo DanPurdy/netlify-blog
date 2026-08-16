@@ -55,9 +55,41 @@ const personal = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
+    // The home hero, split where the accent colour starts. An empty accent
+    // renders the headline with no colour break.
+    headline: z.string(),
+    headlineAccent: z.string().default(''),
+    // The link row under the hero bio. Any number of entries, including none;
+    // urls may be site-relative (/rss.xml) or absolute.
+    links: z
+      .array(z.object({ label: z.string(), url: z.string() }))
+      .default([]),
+    seoDescription: z.string(),
+  }),
+});
+
+/**
+ * A project whose markdown body is non-empty gets a case-study page at
+ * /projects/<id>, and links around the site point there instead of at the
+ * repo. An empty body means the project is a card only.
+ */
+const projects = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/projects' }),
+  schema: z.object({
+    name: z.string(),
+    // The small mono annotation on the card: author, demo, tool…
+    role: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    // The live site or product page, when one exists.
+    site: z.string().url().optional(),
+    year: z.string().optional(),
+    status: z.string().optional(),
+    stack: z.array(z.string()).default([]),
+    order: z.number().default(0),
   }),
 });
 
 // drafts/ is deliberately absent. Keystatic reads that directory directly, and
 // leaving it out of the content config guarantees a draft can never reach a build.
-export const collections = { blog, experience, personal };
+export const collections = { blog, experience, personal, projects };

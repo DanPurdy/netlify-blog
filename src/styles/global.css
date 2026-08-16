@@ -1,295 +1,182 @@
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+/* Direction D — "Hybrid". Tokens, type and spacing copied verbatim from the
+   approved mockups (mockups/d-hybrid/index.html, post.html) — treat their
+   values as authoritative, not as a starting point to retune. */
+@import '@fontsource-variable/figtree';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
 
-@import "tailwindcss";
-
-/* Custom theme configuration for Tailwind v4 */
-@theme {
-  /* Breakpoints - mobile first, max-width approach */
-  --breakpoint-xs: 320px;
-  --breakpoint-sm: 400px;
-  --breakpoint-md: 500px;
-  --breakpoint-lg: 650px;
-  --breakpoint-xl: 768px;
-  --breakpoint-2xl: 1080px;
-
-  /* Colors */
-  --color-portfolio-bg: #081635;
-  --color-portfolio-bg-light: #1C2944;
-  --color-faded-line: rgba(255, 255, 255, 0.3);
-  --color-neon-pink: #EF528A;
-  --color-bold-yellow: #FFE100;
-  --color-pastel-blue: #33AAFF;
-
-  /* Font families */
-  --font-heading: 'Lato', sans-serif;
-  --font-body: 'Noto Sans JP', sans-serif;
-
-  /* Font sizes - matching original site (with html font-size: 62.5%, 1rem = 10px) */
-  --text-xs: 1.2rem;
-  --text-sm: 1.4rem;
-  --text-base: 1.6rem;
-  --text-lg: 1.8rem;
-  --text-exp: 1.9rem;
-  --text-xl: 2rem;
-  --text-intro: 2.2rem;
-  --text-2xl: 2.4rem;
-  --text-blog-title: 3.5rem;
-  --text-3xl: 3rem;
-  --text-3-5xl: 3.5rem;
-  --text-3-8xl: 3.8rem;
-  --text-4xl: 4rem;
-  --text-4-5xl: 4.5rem;
-  --text-5xl: 5rem;
-  --text-5-5xl: 5.5rem;
-  --text-6xl: 6rem;
-  --text-6-6xl: 6.6rem;
-  --text-7xl: 7.5rem;
-  --text-8xl: 9.5rem;
-  --text-9xl: 11rem;
-
-  /* Line heights */
-  --leading-exp: 2.6rem;
-
-  /* Letter spacing */
-  --tracking-tighter-2: -2px;
-  --tracking-tighter-3: -3px;
-  --tracking-tighter-4: -4px;
-  --tracking-tighter-5: -5px;
-  --tracking-tighter-6: -6px;
-  --tracking-tighter-7: -7px;
-  --tracking-tighter-8: -8px;
-
-  /* Max widths */
-  --max-width-content: 1440px;
-  --max-width-content-lg: 1000px;
-  --max-width-content-medium: 850px;
-  --max-width-content-thin: 700px;
-
-  /* Min widths */
-  --min-width-screen-min: 320px;
-
-  /* Spacing */
-  --spacing-32: 8rem;
-  --spacing-16: 4rem;
-  --spacing-8: 2rem;
+:root {
+  --ground: #f5f7fa;
+  --ground-raise: #ffffff;
+  --ink: #182338;
+  --ink-soft: #4a5a75;
+  --ink-faint: #60718c;
+  --accent: #d6156c;
+  --accent-soft: #fbe3ef;
+  --line: #dde4ee;
+  --code-bg: #0f1b2e;
+  --code-ink: #d7e2f2;
+  --sel: #fbd3e6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #0c1626;
+    --ground-raise: #132034;
+    --ink: #e4ebf6;
+    --ink-soft: #9fb0c9;
+    --ink-faint: #7286a6;
+    --accent: #ff3d93;
+    --accent-soft: #3a1230;
+    --line: #22314b;
+    --code-bg: #0a1220;
+    --code-ink: #c9d7ec;
+    --sel: #571a3e;
+  }
+}
+:root[data-theme='dark'] {
+  --ground: #0c1626;
+  --ground-raise: #132034;
+  --ink: #e4ebf6;
+  --ink-soft: #9fb0c9;
+  --ink-faint: #7286a6;
+  --accent: #ff3d93;
+  --accent-soft: #3a1230;
+  --line: #22314b;
+  --code-bg: #0a1220;
+  --code-ink: #c9d7ec;
+  --sel: #571a3e;
 }
 
-@layer base {
-  *, :after, :before {
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::selection {
+  background: var(--sel);
+}
 
+/* Clip on html as well as body: the hero glow deliberately bleeds past the
+   right edge, and body-only clipping still lets the root element scroll. */
+html {
+  overflow-x: clip;
+}
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 18px/1.6 'Figtree Variable', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+a {
+  color: inherit;
+}
+
+/* Visually hidden until keyboard focus lands on it. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  padding: 10px 16px;
+  background: var(--ground-raise);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 99;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* One width everywhere so the header never shifts between pages; prose
+   passages narrow themselves with their own max-width. */
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Prose — copied verbatim from mockups/d-hybrid/post.html's .prose rules. */
+.prose p {
+  margin: 0 0 1.15em;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.prose h2 {
+  font-size: 27px;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin: 1.9em 0 0.55em;
+}
+.prose h3 {
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+  margin: 1.7em 0 0.5em;
+}
+.prose h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 1.4em 0 0.35em;
+  color: var(--accent);
+}
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 6px 0 6px 20px;
+  margin: 1.4em 0;
+  color: var(--ink-soft);
+  font-size: 19px;
+  font-weight: 500;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1.15em;
+  padding-left: 1.3em;
+}
+.prose li {
+  margin-bottom: 0.35em;
+}
+.prose code {
+  font: 400 15px 'JetBrains Mono', monospace;
+  background: var(--ground-raise);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent-soft);
+}
+.prose a:hover {
+  border-color: var(--accent);
+}
+
+/* Astro/Shiki emits pre.astro-code with its own inline colours — size and
+   space it without touching color. */
+.prose pre.astro-code {
+  border-radius: 14px;
+  padding: 22px 24px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font: 400 14.5px/1.65 'JetBrains Mono', monospace;
+}
+.prose pre.astro-code code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
   * {
-    scrollbar-width: thin;
-    scrollbar-color: #081635 #EF528A;
-  }
-
-  *::-webkit-scrollbar {
-    width: 1rem;
-    height: 0.7rem;
-  }
-
-  @media (max-width: 350px) {
-    *::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  *::-webkit-scrollbar-track {
-    background: #081635;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: #EF528A;
-  }
-
-  html {
-    font-size: 62.5%; /* Makes 1rem = 10px for easier calculations */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    @apply font-body text-white bg-portfolio-bg flex flex-col min-w-screen-min;
-    font-size: 1.9rem; /* 14px */
-    font-weight: 500;
-    line-height: 2.6rem;
-    letter-spacing: -1px;
-    padding: 0;
-    margin: 0;
-  }
-
-  html, body {
-    height: 100%;
-    min-width: 320px;
-  }
-
-  #___gatsby {
-    flex: 1 0 auto;
-  }
-
-  img {
-    max-width: 100%;
-    vertical-align: middle;
-  }
-
-  h1, h2, h3 {
-    @apply font-heading;
-    font-weight: 700;
-  }
-
-  h1 {
-    display: inline-block;
-    @apply text-6-6xl;
-  }
-
-  h2 {
-    @apply text-3-8xl;
-  }
-
-  h3 {
-    @apply text-3xl;
-    line-height: 4.1rem;
-  }
-
-  h4 {
-    @apply text-lg;
-    margin: 1rem 0;
-    line-height: 2.1rem;
-  }
-
-  @media (max-width: 768px) {
-    h4 {
-      @apply text-base;
-    }
-  }
-
-  b, strong {
-    font-weight: 500;
-  }
-
-  a {
-    @apply text-white cursor-pointer underline;
-    outline-color: #EF528A;
+    transition: none !important;
   }
 }
 
-/* Blog content styling */
-@layer components {
-  .blog-content {
-    font-size: 2rem;
-    line-height: 3.3rem;
-  }
-
-  .blog-content p {
-    margin-bottom: 3rem;
-    line-height: 1.8;
-  }
-
-  .blog-content h2,
-  .blog-content h3,
-  .blog-content h4 {
-    @apply text-bold-yellow;
-    line-height: 1.3;
-    margin-top: 3.5rem;
-    margin-bottom: 3.5rem;
-    font-weight: 500;
-  }
-
-  .blog-content h2 {
-    @apply text-3-8xl;
-  }
-
-  @media (max-width: 650px) {
-    .blog-content h2 {
-      @apply text-4xl;
-      margin-top: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-  }
-
-  @media (max-width: 500px) {
-    .blog-content h2 {
-      @apply text-3xl;
-    }
-  }
-
-  .blog-content h3 {
-    @apply text-4xl;
-  }
-
-  @media (max-width: 650px) {
-    .blog-content h3 {
-      @apply text-3xl;
-    }
-  }
-
-  @media (max-width: 500px) {
-    .blog-content h3 {
-      @apply text-2xl;
-    }
-  }
-
-  .blog-content h4 {
-    @apply text-2xl;
-  }
-
-  .blog-content blockquote {
-    @apply text-lg border-l-4 border-neon-pink p-6 my-4 mx-2 bg-portfolio-bg-light rounded;
-  }
-
-  .blog-content blockquote p {
-    @apply m-0;
-  }
-
-  .blog-content code {
-    @apply rounded tracking-normal;
-  }
-
-  .blog-content pre {
-    @apply text-xl my-8 mb-12;
-  }
-
-  @media (max-width: 650px) {
-    .blog-content pre {
-      @apply text-sm leading-snug;
-    }
-  }
-
-  .blog-content ol,
-  .blog-content ul {
-    @apply my-3 text-lg leading-relaxed;
-  }
-
-  .blog-content li::marker {
-    @apply text-pastel-blue;
-  }
-
-  .blog-content a {
-    @apply text-neon-pink font-bold no-underline border-b-2 border-transparent transition-colors;
-  }
-
-  .blog-content a:hover {
-    @apply border-neon-pink;
-  }
-
-  /* Shiki code blocks. Astro emits .astro-code; the old .gatsby-highlight and
-     Prism .language-* selectors no longer match anything. */
-  .astro-code {
-    @apply my-8 p-6 rounded overflow-x-auto text-sm leading-relaxed;
-    border-radius: 0.5rem;
-  }
-
-  .astro-code,
-  .astro-code code,
-  .blog-content code {
-    font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', monospace;
-  }
-
-  /* Shiki sets its own colours inline, so the generic pre sizing must not
-     fight it. */
-  .blog-content pre.astro-code {
-    @apply text-sm my-8 mb-12;
-  }
+img {
+  max-width: 100%;
 }

@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection, singleton } from '@keystatic/core';
 
 /**
  * Keystatic is a view over the git files, not a separate store. Everything it
@@ -72,8 +72,51 @@ export default config({
     brand: { name: 'dpurdy.me' },
     navigation: {
       Writing: ['drafts', 'posts'],
-      Site: ['experience'],
+      Site: ['home', 'experience', 'projects'],
     },
+  },
+
+  singletons: {
+    /** The home hero, bio, social links and site-wide SEO defaults. */
+    home: singleton({
+      label: 'Home & profile',
+      path: 'content/personal_details',
+      format: { contentField: 'body' },
+      schema: {
+        title: fields.text({ label: 'Name' }),
+        subtitle: fields.text({ label: 'Role' }),
+        headline: fields.text({
+          label: 'Headline',
+          description: 'The big sentence on the home page, up to the accent.',
+        }),
+        headlineAccent: fields.text({
+          label: 'Headline accent',
+          description:
+            'The pink remainder of the sentence. Leave empty for no colour break.',
+        }),
+        links: fields.array(
+          fields.object({
+            label: fields.text({ label: 'Text' }),
+            url: fields.text({
+              label: 'URL',
+              description: 'Absolute (https://…) or site-relative (/rss.xml).',
+            }),
+          }),
+          {
+            label: 'Links',
+            description:
+              'The link row under the home page bio. Add as many or as few as you like.',
+            itemLabel: (props) => props.fields.label.value,
+          },
+        ),
+        seoDescription: fields.text({
+          label: 'SEO description',
+          multiline: true,
+          description: 'Fallback meta description for pages without their own.',
+        }),
+        body: body('Bio'),
+      },
+    }),
   },
 
   collections: {
@@ -134,6 +177,44 @@ export default config({
         }),
         tags,
         body: body('Body'),
+      },
+    }),
+
+    projects: collection({
+      label: 'Side projects',
+      slugField: 'name',
+      path: 'content/projects/*',
+      format: { contentField: 'body' },
+      columns: ['name', 'role'],
+      schema: {
+        name: fields.slug({ name: { label: 'Name' } }),
+        role: fields.text({
+          label: 'Role',
+          description: 'The small annotation on the card: author, demo, tool…',
+        }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        url: fields.url({ label: 'Repository URL' }),
+        site: fields.url({
+          label: 'Site URL',
+          description: 'Live site or product page, if there is one.',
+        }),
+        year: fields.text({
+          label: 'Year',
+          description: 'When it started — shown on the projects list.',
+        }),
+        status: fields.text({
+          label: 'Status',
+          description: 'e.g. live, archived, reference.',
+        }),
+        stack: fields.array(fields.text({ label: 'Technology' }), {
+          label: 'Stack',
+          itemLabel: (props) => props.value,
+        }),
+        order: fields.integer({
+          label: 'Order',
+          description: 'Cards sort ascending by this.',
+        }),
+        body: body('Case study'),
       },
     }),
 

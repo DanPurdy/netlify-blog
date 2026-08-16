@@ -1,0 +1,150 @@
+---
+/**
+ * The side-projects index. Rows follow the writing list's shape: year in the
+ * date column, name as the title, role and status as the mono annotation.
+ * Projects with a written case study link to it; the rest go to their repo.
+ */
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Side projects"
+  description="Side projects and open source work by Dan Purdy."
+>
+  <header class="page-h">
+    <h1>Side projects<em>.</em></h1>
+    <p class="sub">
+      Open source and tools built outside work. Writing lives <a href="/">here</a>.
+    </p>
+  </header>
+
+  <section>
+    {
+      projects.map((project) => (
+        <a class="row" href={`/projects/${project.id}/`}>
+          <time>{project.data.year}</time>
+          <h3>{project.data.name}</h3>
+          <span class="tags">
+            {project.data.role}
+            {project.data.status && ` · ${project.data.status}`}
+          </span>
+          <p>{project.data.description}</p>
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .page-h {
+    padding: 56px 0 36px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .page-h h1 {
+    font:
+      800 clamp(32px, 4.5vw, 48px) / 1.06 'Figtree Variable',
+      sans-serif;
+    letter-spacing: -0.035em;
+  }
+
+  .page-h h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .page-h .sub {
+    margin-top: 12px;
+    color: var(--ink-soft);
+  }
+
+  .page-h .sub a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 92px 1fr auto;
+    column-gap: 32px;
+    align-items: baseline;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+  }
+
+  .row:last-of-type {
+    border-bottom: 0;
+  }
+
+  .row time {
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .row h3 {
+    font:
+      800 clamp(21px, 2.3vw, 27px) / 1.15 'Figtree Variable',
+      sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  .row:hover h3 {
+    color: var(--accent);
+  }
+
+  .row .tags {
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .row p {
+    grid-column: 2;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    max-width: 60ch;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 680px) {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 14px;
+      padding: 26px 0;
+    }
+
+    .row time {
+      order: -2;
+    }
+
+    .row .tags {
+      order: -1;
+    }
+
+    .row h3 {
+      width: 100%;
+      font-size: 22px;
+      margin-top: 10px;
+    }
+
+    .row p {
+      width: 100%;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+  }
+</style>

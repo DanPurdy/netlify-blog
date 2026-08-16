@@ -232,14 +232,123 @@ Four gaps found in the current site, all in scope:
 
 The actual unblock, per the diagnosis above.
 
-- Editorial typography: a real long-form body face, 65–75ch measure, and
+**The blog stops being tacked on.** This is an information-architecture change,
+decided August 2026, not just a repaint. Today `/` is a three-screen portfolio —
+full-viewport name hero, then Work, then three recent posts — and the blog is
+exiled to `/blog`. That ordering says the writing is an afterthought, which is
+the thing being fixed.
+
+- `/` opens with a **compact intro card**: portrait, two or three sentences,
+  social links and RSS. No full-viewport hero.
+- Immediately below it, the **writing list** — every post, not three.
+- A **condensed Work strip** at the foot of `/`, linking to a new `/work` route
+  that carries the full experience entries currently inlined on the home page.
+- `/blog/` stays resolving. It is a live URL, it is in the sitemap, and posts
+  cross-link to it.
+- `/blog/<slug>/` is untouched. Still the hard gate from phase 1.
+
+Design work proper:
+
+- Editorial typography: **serif body, sans headings**, 65–75ch measure, and
   `letter-spacing: -1px` removed from prose.
 - Light and dark themes as described, system default plus toggle.
 - Accent contrast retuned for both modes.
 - The post page is the thing being designed. Target: a page Dan would paste into
   Slack without wincing.
 
-### Phase 3 — write and ship one
+**What survives of the current identity is deliberately open.** The neon pink is
+liked but not mandated. The giant tracked-tight display type was the portfolio's
+voice and may not be the blog's. Both are decided after the references below, not
+before.
+
+**How the design gets picked.** Deriving it from this document plus an agent's
+own judgement reliably produces tasteful generic. Instead:
+
+1. Dan supplies reference URLs — post pages he would be happy to have written on.
+2. Those pages are screenshotted desktop and mobile, and reduced to a concrete
+   spec: measure, type scale ratio, faces, vertical rhythm, how code blocks and
+   headings sit, colour temperature. Naming what he is reacting to, not cloning.
+3. Two or three **standalone HTML mockup directions** are built from that spec —
+   each direction is a post page *and* the new home page, in both themes, using a
+   real post's content (`content/blog/firebase-cloud-firestore-security-rules/`
+   has code blocks; bio lives in `content/personal_details.md`). Files go in
+   `mockups/` (gitignored). Cheap to throw away. Reference screenshots:
+   `.playwright-mcp/refs/*.png`.
+4. He picks or mixes; only then is it implemented into Astro tokens and
+   components across the whole site.
+
+Judging a page as a page beats judging a written description of one.
+
+**References, supplied August 2026.** Positives: `joshwcomeau.com` in dark mode
+(the original inspiration for the current site, still standing), `samwho.dev`
+(clean, easy to read), `iamrob.in` (desktop-versus-mobile treatment),
+`studioprimal.com` (bold statement landing, the original intent for the home
+page), `digitalmeadow.studio` (visual character without photography). Anti-example:
+`overreacted.io` — "too simple, the fonts are too small, more notes than
+presentation".
+
+Measured, at a 1440px viewport:
+
+| Site | Body face | Size / line-height | Measure | Ground |
+| --- | --- | --- | --- | --- |
+| Comeau (dark) | Wotfard, sans | 18px / 1.5 | 686px | `#182939` |
+| samwho | Seravek, sans | 18.7px / 1.5 | 748px | white, serif headings |
+| iamrob.in | Fira Mono | 17.4px / 1.63 | 576px | `#EAE8E3` |
+| overreacted (anti) | Merriweather, serif | 16px / 1.75 | 632px | pure white |
+| dpurdy.me today | Noto Sans JP | 20px / 1.65, -1px tracking | ~850px | `#081635` |
+
+What they share, and what it implies:
+
+- **Neither ground is pure.** Off-white or near-black, never `#fff` or `#000`.
+  Studio Primal is the deliberate exception, using true black as a canvas for one
+  loud colour.
+- **Measure runs 576–748px.** The current 850px is most of the "bland" feeling on
+  its own, before any face is changed.
+- **The hero is a sentence, not a name.** Primal and Robin both lead with a full
+  sentence in heavy sans at 48–50px, line-height 1.0–1.1, with a colour break
+  mid-sentence. `DAN PURDY` at 110px is larger and says less.
+- **None of them use photography.** Robin has a drawn mark, Meadow renders ASCII,
+  Primal uses video stills. The "no images" constraint is not a constraint.
+
+**The serif decision is reversed.** "Serif body, sans headings" was chosen in the
+abstract before references existed. Every positive reference uses a sans or mono
+body; the sole serif-body site in the set is the anti-example. Body face is
+therefore reopened, with sans and mono as the live candidates.
+
+**Generated imagery is rejected.** Higgsfield-style AI art or voxel illustration
+was considered. It reads as decoration on a code blog, dates quickly, and imposes
+an asset pipeline the project does not otherwise need. Meadow and Robin get more
+character from ASCII and a single drawn mark.
+
+**New requirement: a side-projects surface.** Open-source contributions, books
+and side projects need a home. `iamrob.in` demonstrates the shape — a scrolling
+index column beside a fixed identity panel on desktop. This is additional to the
+`/work` route and is in scope for phase 2's information architecture.
+
+**Outcome, August 2026.** Four mockup directions were built and Dan picked a
+hybrid: direction A's palette, type (Figtree + JetBrains Mono) and tidiness with
+direction C's statement hero and post-list layout — recorded as `d-hybrid` in
+`mockups/README.md`. That design is now implemented across the site: tokens and
+prose styles in `src/styles/global.css` (light and dark, system default plus a
+persisted toggle), the inverted blog-first home page, the statement post page,
+the new `/work` route (typographic — the employer logos are white-text SVGs and
+would vanish on the light ground), restyled `/blog`, tag pages and 404, and a
+side-projects surface. Tailwind was removed in the process: every page was
+being rewritten anyway, and the mockup CSS transfers verbatim into Astro
+scoped styles, which it could not through a utility-class translation. Fonts
+are self-hosted via Fontsource.
+
+The side-projects surface grew past the card row during review: projects are
+a content collection with case-study pages at `/projects/<id>` (post-page
+typography, sticky facts rail, optional live-site link) and an index at
+`/projects`; the case-study prose appears as Dan writes it in Keystatic.
+`/work` shows each company's full role progression as a timeline. A
+follow-up pass added the SEO layer (share card, article metadata, JSON-LD,
+sitemap advertisement, CMS-driven feed identity), hover prefetch, immutable
+asset caching, a skip link, AA contrast fixes, and the `dp` favicon. The
+toolchain moved to Node 24 under mise. Still pending after merge: Cloudflare
+Web Analytics (cookieless, no banner) once the beacon token is to hand, and
+the Keystatic GitHub App's production callback URL.
 
 Through the loop, on the new site.
 
@@ -269,6 +378,10 @@ markup differences from the layout consolidation do not create noise. The target
 is 11 routes: `/`, `/404`, `/blog/` and the eight posts. `/admin/` disappears
 deliberately with Decap, `/_gatsby/slices/*` is framework internal, and Gatsby's
 duplicate `/404/` is not reproduced.
+
+From phase 2 onward the snapshot is a **URL gate only**, not a text-parity gate.
+The home page is being restructured and `/work` is being added, so page text will
+legitimately differ. What must not change is the eight post paths and `/blog/`.
 
 The baseline confirmed the slug trap is real: the live URL is
 `/blog/firebase-cloud-firestore-security-rules/`, taken from the directory name,

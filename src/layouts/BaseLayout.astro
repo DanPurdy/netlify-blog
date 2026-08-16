@@ -2,30 +2,20 @@
 /**
  * Consolidates the former layout.tsx and ThinLayout.tsx. The two differed only
  * in container width and which footer they rendered.
- *
- * Note the wide variant does not wrap its slot: the old layout.tsx mapped over
- * children and gave each its own min-h-screen container, so the home page
- * supplies those wrappers itself to preserve the existing layout.
  */
 import Seo from '../components/Seo.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
-  keywords?: string[];
-  variant?: 'wide' | 'thin';
-  author?: string;
+  /** Set on blog posts; forwarded to Seo for article metadata. */
+  publishedTime?: Date;
 }
 
-const {
-  title,
-  description,
-  keywords,
-  variant = 'wide',
-  author = 'Dan Purdy',
-} = Astro.props;
+const { title, description, publishedTime } = Astro.props;
 ---
 
 <!doctype html>
@@ -34,23 +24,24 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <Seo title={title} description={description} keywords={keywords} />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <Seo title={title} description={description} publishedTime={publishedTime} />
+    <script is:inline>
+      // Runs before first paint so the stored theme never flashes the default.
+      const t = localStorage.getItem('theme');
+      if (t) document.documentElement.dataset.theme = t;
+    </script>
   </head>
   <body>
-    {
-      variant === 'thin' ? (
-        <main>
-          <div class="max-w-content-thin min-w-screen-min min-h-[85vh] mx-auto px-4 md:px-8">
-            <slot />
-          </div>
-        </main>
-      ) : (
-        <main>
-          <slot />
-        </main>
-      )
-    }
-    <SiteFooter title={author} variant={variant} />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="wrap">
+      <SiteHeader />
+      <main id="main">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
   </body>
 </html>

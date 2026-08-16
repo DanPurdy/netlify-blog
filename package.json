@@ -18,13 +18,13 @@
     "@astrojs/react": "^6.0.2",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@keystatic/astro": "^5.2.0",
     "@keystatic/core": "^0.6.5",
-    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.2",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

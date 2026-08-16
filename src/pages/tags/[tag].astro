@@ -2,8 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import { readingTime } from '../../lib/reading-time';
+import PostRow from '../../components/PostRow.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -29,46 +28,46 @@ interface Props {
 }
 
 const { tag, posts } = Astro.props;
-
-const formatDate = (date: Date) =>
-  date.toLocaleDateString('en-GB', {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-  });
 ---
 
-<BaseLayout
-  title={`Posts tagged ${tag}`}
-  description={`Blog posts tagged ${tag}`}
-  variant="thin"
->
-  <PageHeader currentLocation="Blog" />
-  <section class="my-10 xl:mt-12 md:mt-8">
-    <h2 class="text-4xl mb-4">
-      <span class="text-neon-pink">#</span>{tag}
-    </h2>
-    <p class="text-lg mb-8">
-      {posts.length} {posts.length === 1 ? 'post' : 'posts'} ·
-      <a href="/blog" class="text-pastel-blue no-underline hover:underline">
-        all posts
-      </a>
-    </p>
-    {
-      posts.map((post) => (
-        <div class="m-0 mb-8 py-8 border-b border-faded-line xl:mr-0">
-          <a href={`/blog/${post.id}/`} class="no-underline">
-            <h3 class="my-4 text-3xl leading-tight md:text-3-5xl md:leading-tight">
-              {post.data.title}
-            </h3>
-          </a>
-          <p class="text-lg leading-relaxed my-2 mb-4">{post.data.description}</p>
-          <div class="my-8 mb-4 text-sm flex flex-wrap items-center gap-x-8">
-            <span class="text-left text-neon-pink">{formatDate(post.data.date)}</span>
-            <span>{readingTime(post.body)}</span>
-          </div>
-        </div>
-      ))
-    }
+<BaseLayout title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}`} width="wide">
+  <section class="listing">
+    <header class="page-h">
+      <h1><span class="hash">#</span>{tag}</h1>
+      <p class="sub">
+        {posts.length} {posts.length === 1 ? 'post' : 'posts'} ·{' '}
+        <a href="/">all writing →</a>
+      </p>
+    </header>
+    {posts.map((post) => <PostRow post={post} />)}
   </section>
 </BaseLayout>
+
+<style>
+  .listing {
+    margin-top: 52px;
+  }
+  .page-h {
+    margin-bottom: 16px;
+  }
+  .page-h h1 {
+    font: 800 clamp(28px, 4vw, 40px) / 1.15 'Figtree Variable', sans-serif;
+    letter-spacing: -0.025em;
+  }
+  .page-h h1 .hash {
+    color: var(--accent);
+  }
+  .page-h .sub {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+  }
+  .page-h .sub a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .page-h .sub a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,193 @@
+---
+/**
+ * A project case study. The typography deliberately matches the blog post
+ * template; the project facts sit in a rail beside the prose on desktop
+ * (sticky, so they stay in view) and stack above it on mobile.
+ */
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  // Every project gets a page; the case-study prose appears as it's written.
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { name, description, role, url, site, year, status, stack } = project.data;
+const hasStudy = Boolean(project.body?.trim());
+---
+
+<BaseLayout title={name} description={description}>
+  <div class="proj-hd">
+    <div class="crumb">
+      <a href="/projects">Projects</a>{year && <> · {year}</>}
+    </div>
+    <h1>{name}<em>.</em></h1>
+    <p class="lede">{description}</p>
+  </div>
+
+  <div class="study">
+    <aside class="rail">
+      <dl>
+        <dt>Role</dt>
+        <dd>{role}</dd>
+        {
+          status && (
+            <>
+              <dt>Status</dt>
+              <dd>{status}</dd>
+            </>
+          )
+        }
+        {
+          stack.length > 0 && (
+            <>
+              <dt>Stack</dt>
+              <dd>{stack.join(', ')}</dd>
+            </>
+          )
+        }
+        {
+          site && (
+            <>
+              <dt>Site</dt>
+              <dd>
+                <a href={site} target="_blank" rel="noopener noreferrer">
+                  Visit ↗
+                </a>
+              </dd>
+            </>
+          )
+        }
+        <dt>Source</dt>
+        <dd>
+          <a href={url} target="_blank" rel="noopener noreferrer">Repository ↗</a>
+        </dd>
+      </dl>
+    </aside>
+
+    <article class="prose">
+      {hasStudy ? <Content /> : <p class="pending">Full write-up to come.</p>}
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .proj-hd {
+    margin: 52px 0 44px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .crumb {
+    font:
+      600 12px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+
+  /* Underlined so the link is distinguishable by more than colour alone. */
+  .crumb a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .proj-hd h1 {
+    font:
+      800 clamp(34px, 4.6vw, 52px) / 1.06 'Figtree Variable',
+      sans-serif;
+    letter-spacing: -0.035em;
+  }
+
+  .proj-hd h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .lede {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 60ch;
+  }
+
+  .pending {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .study {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 680px);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .rail {
+    position: sticky;
+    top: 32px;
+  }
+
+  .rail dt {
+    font:
+      600 12px 'JetBrains Mono',
+      monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+
+  .rail dd {
+    margin: 0 0 18px;
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .rail dd a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .rail dd a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 780px) {
+    .study {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .rail {
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 28px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+
+    .rail dl {
+      display: contents;
+    }
+  }
+</style>

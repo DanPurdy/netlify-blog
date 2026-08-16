@@ -11,10 +11,12 @@ export async function GET(context: APIContext) {
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
 
+  // Feed identity comes from the same editable entry as the rest of the site.
+  const personal = (await getCollection('personal'))[0];
+
   return rss({
-    title: 'Dan Purdy',
-    description:
-      'Development blog of Dan Purdy, a senior fullstack engineer from London, UK.',
+    title: personal.data.title,
+    description: personal.data.seoDescription,
     site: context.site!,
     items: posts.map((post) => ({
       title: post.data.title,

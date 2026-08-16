@@ -1,0 +1,83 @@
+---
+// Transcribed from the `header.hd` block in mockups/d-hybrid/index.html.
+---
+
+<header class="hd">
+  <a class="brand" href="/">dan<em>purdy</em></a>
+  <nav>
+    <a href="/">Writing</a>
+    <a href="/work">Work</a>
+    <a href="/rss.xml" title="RSS">RSS</a>
+    <button class="tbtn" id="theme-toggle" aria-label="Toggle theme">◐</button>
+  </nav>
+</header>
+
+<style>
+  header {
+    padding: 28px 0;
+  }
+  .hd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hd .brand {
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .hd .brand em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  nav {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    font-size: 15.5px;
+    font-weight: 500;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+  nav a:hover {
+    color: var(--accent);
+  }
+  .tbtn {
+    border: 1px solid var(--line);
+    background: var(--ground-raise);
+    color: var(--ink-soft);
+    border-radius: 99px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .tbtn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 680px) {
+    nav {
+      gap: 14px;
+    }
+  }
+</style>
+
+<script>
+  // Mirrors the mockup's tog(): flip the stored theme and persist it so the
+  // pre-paint script in BaseLayout can read it back before first render.
+  const button = document.getElementById('theme-toggle');
+  button?.addEventListener('click', () => {
+    const current =
+      document.documentElement.dataset.theme ||
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

@@ -1,12 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
 ---
 
-<BaseLayout title="404: Not Found" variant="thin">
-  <PageHeader currentLocation="404" />
-  <section class="flex flex-col items-center justify-center w-full text-center my-[15%]">
-    <h1 class="m-4 md:text-6xl">Not Found</h1>
-    <p class="text-xl">Sorry, can&apos;t find that page...</p>
+<BaseLayout title="404: Not Found">
+  <section class="not-found">
+    <h1>Nothing lives at this address<em>.</em></h1>
+    <p>The page you're looking for has moved, been renamed, or never existed.</p>
+    <a href="/">Back to writing →</a>
   </section>
 </BaseLayout>
+
+<style>
+  .not-found {
+    padding: 64px 0;
+  }
+  .not-found h1 {
+    font: 800 clamp(36px, 5vw, 58px) / 1.06 'Figtree Variable', sans-serif;
+    letter-spacing: -0.035em;
+    max-width: 20ch;
+  }
+  .not-found h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .not-found p {
+    margin-top: 20px;
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 52ch;
+  }
+  .not-found a {
+    display: inline-block;
+    margin-top: 28px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .not-found a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,5 @@
+# Toolchain for local dev. Netlify reads .nvmrc (kept in sync with this file);
+# pnpm is also pinned via the packageManager field in package.json for corepack.
+[tools]
+node = "24"
+pnpm = "11.22.0"

@@ -1,6 +1,6 @@
 ---
 title: Dan Purdy
-subtitle: Senior Fullstack Engineer
+subtitle: VP of Engineering
 headline: Engineering leader in London writing about
 headlineAccent: JavaScript, testing & the tools between.
 links:
@@ -12,6 +12,4 @@ links:
     url: /rss.xml
 seoDescription: Development blog of Dan Purdy, an engineering leader from London, UK, writing about JavaScript, testing and tooling.
 ---
-I'm Dan, a Senior Fullstack Engineer from London, UK. I work with teams to architect, plan and build responsive, accessible, user-focused web applications while mentoring and guiding other developers and stakeholders. 
-
-I specialise in JavaScript, more specifically Node and React. You can currently find me working as a Senior Engineering Manager at PrimaryBid
+VP of Engineering at Wonderbly, leading the shift to AI-native engineering: building the agent workflows and tooling that make teams smarter and more capable without sacrificing their culture, and launching AI-powered brands. Over a decade building and mentoring engineering teams in London; the how and the why get written up here.

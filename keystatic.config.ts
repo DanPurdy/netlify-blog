@@ -33,11 +33,33 @@ const tags = fields.array(fields.text({ label: 'Tag' }), {
     'Lowercased and hyphenated automatically at build time. Reuse existing tags where you can.',
 });
 
+/**
+ * Local storage writes straight to disk with no auth, which is what you want at
+ * the desk. GitHub storage is what makes publishing from any device work.
+ *
+ * The override matters for one specific job. Keystatic's GitHub App setup wizard
+ * refuses to run unless NODE_ENV is development — see createdGithubApp in
+ * @keystatic/core, which returns "App setup only allowed in development".
+ * Running /keystatic/setup on a deployed site therefore cannot work. But local
+ * dev defaults to local storage, which never asks you to sign in, so the wizard
+ * never appears either.
+ *
+ * To create or re-create the GitHub App, run:
+ *
+ *   KEYSTATIC_STORAGE=github pnpm dev
+ *
+ * then open /keystatic and sign in. The wizard writes the credentials it creates
+ * into .env, which is gitignored. Copy those values into Netlify's environment
+ * variables for the deployed site, and add the production callback URL to the
+ * GitHub App afterwards — the app is created pointing at localhost.
+ */
+const useGitHubStorage =
+  process.env.NODE_ENV !== 'development' || process.env.KEYSTATIC_STORAGE === 'github';
+
 export default config({
-  storage:
-    process.env.NODE_ENV === 'development'
-      ? { kind: 'local' }
-      : { kind: 'github', repo: 'DanPurdy/netlify-blog' },
+  storage: useGitHubStorage
+    ? { kind: 'github', repo: 'DanPurdy/netlify-blog' }
+    : { kind: 'local' },
 
   ui: {
     brand: { name: 'dpurdy.me' },

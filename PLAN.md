@@ -114,6 +114,24 @@ store:
 surface. It provides capture, editing and publishing anywhere. It does not put an
 agent beside you in that browser — the refine step remains agent-on-files.
 
+**Creating the GitHub App.** The setup wizard only runs in development —
+`createdGithubApp` in `@keystatic/core` returns "App setup only allowed in
+development" otherwise — so running `/keystatic/setup` on a deployed site cannot
+work. Local dev defaults to local storage, which never prompts for sign-in, so
+the wizard does not appear there either. Both conditions are needed at once:
+
+```sh
+KEYSTATIC_STORAGE=github pnpm dev
+```
+
+Then open `/keystatic` and sign in. The wizard writes the credentials into
+`.env`, which is gitignored. Copy `KEYSTATIC_GITHUB_CLIENT_ID`,
+`KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET` and
+`PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` into Netlify's environment variables, scoped
+to every deploy context you want the admin to work in — Netlify defaults can
+leave deploy previews without them. The app is created pointing at localhost, so
+add the deployed callback URL to it in GitHub App settings afterwards.
+
 Two collections: `posts` over `content/blog/`, and `drafts` over `drafts/`.
 Sveltia was considered and rejected as not Astro-native and self-described beta.
 

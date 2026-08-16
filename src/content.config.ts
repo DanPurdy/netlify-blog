@@ -68,6 +68,11 @@ const personal = defineCollection({
   }),
 });
 
+/**
+ * A project whose markdown body is non-empty gets a case-study page at
+ * /projects/<id>, and links around the site point there instead of at the
+ * repo. An empty body means the project is a card only.
+ */
 const projects = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/projects' }),
   schema: z.object({
@@ -76,6 +81,9 @@ const projects = defineCollection({
     role: z.string(),
     description: z.string(),
     url: z.string().url(),
+    year: z.string().optional(),
+    status: z.string().optional(),
+    stack: z.array(z.string()).default([]),
     order: z.number().default(0),
   }),
 });

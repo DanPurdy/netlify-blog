@@ -193,14 +193,24 @@ export default config({
           description: 'The small annotation on the card: author, demo, tool…',
         }),
         description: fields.text({ label: 'Description', multiline: true }),
-        url: fields.url({ label: 'URL' }),
+        url: fields.url({ label: 'Repository URL' }),
+        year: fields.text({
+          label: 'Year',
+          description: 'When it started — shown on the projects list.',
+        }),
+        status: fields.text({
+          label: 'Status',
+          description: 'e.g. live, archived, reference.',
+        }),
+        stack: fields.array(fields.text({ label: 'Technology' }), {
+          label: 'Stack',
+          itemLabel: (props) => props.value,
+        }),
         order: fields.integer({
           label: 'Order',
           description: 'Cards sort ascending by this.',
         }),
-        // Unused on the site; Keystatic needs a content field to keep these
-        // as markdown files rather than YAML.
-        body: body('Notes'),
+        body: body('Case study'),
       },
     }),
 

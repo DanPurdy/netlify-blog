@@ -11,10 +11,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
 
-  // Only projects with written case studies get pages; the rest stay cards.
-  return projects
-    .filter((project) => project.body?.trim())
-    .map((project) => ({ params: { slug: project.id }, props: { project } }));
+  // Every project gets a page; the case-study prose appears as it's written.
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
 }
 
 interface Props {
@@ -24,6 +25,7 @@ interface Props {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const { name, description, role, url, year, status, stack } = project.data;
+const hasStudy = Boolean(project.body?.trim());
 ---
 
 <BaseLayout title={name} description={description}>
@@ -64,7 +66,7 @@ const { name, description, role, url, year, status, stack } = project.data;
     </aside>
 
     <article class="prose">
-      <Content />
+      {hasStudy ? <Content /> : <p class="pending">Full write-up to come.</p>}
     </article>
   </div>
 </BaseLayout>
@@ -110,6 +112,11 @@ const { name, description, role, url, year, status, stack } = project.data;
     color: var(--ink-soft);
     font-size: 17px;
     max-width: 60ch;
+  }
+
+  .pending {
+    color: var(--ink-faint);
+    font-style: italic;
   }
 
   .study {

@@ -79,23 +79,14 @@ const personJsonLd = JSON.stringify({
     <div class="sec-h"><h2>Side projects</h2><a href="/projects">All projects →</a></div>
     <div class="projects">
       {
-        projects.map((project) => {
-          // A written case study takes over the card; otherwise the repo.
-          const hasStudy = Boolean(project.body?.trim());
-          return (
-            <a
-              class="proj"
-              href={hasStudy ? `/projects/${project.id}/` : project.data.url}
-              target={hasStudy ? undefined : '_blank'}
-              rel={hasStudy ? undefined : 'noopener noreferrer'}
-            >
-              <h3>
-                {project.data.name} <span>{project.data.role}</span>
-              </h3>
-              <p>{project.data.description}</p>
-            </a>
-          );
-        })
+        projects.map((project) => (
+          <a class="proj" href={`/projects/${project.id}/`}>
+            <h3>
+              {project.data.name} <span>{project.data.role}</span>
+            </h3>
+            <p>{project.data.description}</p>
+          </a>
+        ))
       }
     </div>
   </section>

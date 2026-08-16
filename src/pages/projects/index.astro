@@ -26,27 +26,17 @@ const projects = (await getCollection('projects')).sort(
 
   <section>
     {
-      projects.map((project) => {
-        const hasStudy = Boolean(project.body?.trim());
-        const href = hasStudy ? `/projects/${project.id}/` : project.data.url;
-        return (
-          <a
-            class="row"
-            href={href}
-            target={hasStudy ? undefined : '_blank'}
-            rel={hasStudy ? undefined : 'noopener noreferrer'}
-          >
-            <time>{project.data.year}</time>
-            <h3>{project.data.name}</h3>
-            <span class="tags">
-              {project.data.role}
-              {project.data.status && ` · ${project.data.status}`}
-              {!hasStudy && ' ↗'}
-            </span>
-            <p>{project.data.description}</p>
-          </a>
-        );
-      })
+      projects.map((project) => (
+        <a class="row" href={`/projects/${project.id}/`}>
+          <time>{project.data.year}</time>
+          <h3>{project.data.name}</h3>
+          <span class="tags">
+            {project.data.role}
+            {project.data.status && ` · ${project.data.status}`}
+          </span>
+          <p>{project.data.description}</p>
+        </a>
+      ))
     }
   </section>
 </BaseLayout>

@@ -31,18 +31,20 @@ function formatDateRange(job: (typeof experience)[number]) {
   const endYear = (job.data.endDate ?? job.data.startDate).getUTCFullYear();
   return `${startYear} – ${String(endYear).slice(-2)}`;
 }
+
+const personJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: personal.data.title,
+  jobTitle: personal.data.subtitle,
+  url: Astro.site?.href,
+  sameAs: personal.data.links
+    .filter((link) => !link.url.startsWith('/'))
+    .map((link) => link.url),
+});
 ---
 
-<BaseLayout
-  title="Home"
-  keywords={[
-    'Dan Purdy',
-    'Engineering leader',
-    'JavaScript',
-    'Testing',
-    'Development blog',
-  ]}
->
+<BaseLayout title="Home">
   <div class="hero">
     <h1>
       {personal.data.headline}{' '}
@@ -104,6 +106,8 @@ function formatDateRange(job: (typeof experience)[number]) {
       }
     </div>
   </section>
+
+  <script type="application/ld+json" set:html={personJsonLd} />
 </BaseLayout>
 
 <style>

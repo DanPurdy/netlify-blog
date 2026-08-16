@@ -72,6 +72,24 @@ a {
   color: inherit;
 }
 
+/* Visually hidden until keyboard focus lands on it. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  padding: 10px 16px;
+  background: var(--ground-raise);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 99;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
 .wrap {
   max-width: 880px;
   margin: 0 auto;

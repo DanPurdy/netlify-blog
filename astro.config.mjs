@@ -16,11 +16,17 @@ export default defineConfig({
 
   integrations: [react(), mdx(), sitemap(), keystatic()],
 
+  // Hover-prefetch every internal link. The pages are tiny static HTML, so
+  // the cost is negligible and navigation feels instant.
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
+
   markdown: {
-    // Single dark theme, because the site is dark-only until the redesign.
-    // Shiki's dual-theme mode needs a CSS variable block to switch between
-    // them, so configuring it now would just render light code blocks on a
-    // dark page for anyone whose OS is set to light. Revisit in phase 2.
+    // A single dark code theme in both site themes is the phase 2 design
+    // decision (the mockups keep dark code blocks on the light ground), so
+    // Shiki's dual-theme mode stays unused deliberately.
     shikiConfig: {
       theme: 'github-dark',
     },

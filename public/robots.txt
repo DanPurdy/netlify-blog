@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://dpurdy.me/sitemap-index.xml

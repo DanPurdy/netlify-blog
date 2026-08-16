@@ -11,12 +11,12 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  keywords?: string[];
   width?: 'wide' | 'narrow';
-  author?: string;
+  /** Set on blog posts; forwarded to Seo for article metadata. */
+  publishedTime?: Date;
 }
 
-const { title, description, keywords, width = 'wide', author = 'Dan Purdy' } = Astro.props;
+const { title, description, width = 'wide', publishedTime } = Astro.props;
 
 const wrapClass = width === 'narrow' ? 'wrap wrap-narrow' : 'wrap';
 ---
@@ -30,7 +30,7 @@ const wrapClass = width === 'narrow' ? 'wrap wrap-narrow' : 'wrap';
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <Seo title={title} description={description} keywords={keywords} />
+    <Seo title={title} description={description} publishedTime={publishedTime} />
     <script is:inline>
       // Runs before first paint so the stored theme never flashes the default.
       const t = localStorage.getItem('theme');
@@ -38,9 +38,10 @@ const wrapClass = width === 'narrow' ? 'wrap wrap-narrow' : 'wrap';
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class={wrapClass}>
       <SiteHeader />
-      <main>
+      <main id="main">
         <slot />
       </main>
       <SiteFooter />

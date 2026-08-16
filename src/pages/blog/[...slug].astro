@@ -52,7 +52,6 @@ const titleAfter =
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  width="narrow"
   publishedTime={post.data.date}
 >
   <div class="post-hd">
@@ -132,9 +131,11 @@ const titleAfter =
     margin-bottom: 18px;
   }
 
+  /* Underlined so the link is distinguishable by more than colour alone. */
   .crumb a {
     color: var(--accent);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .post-hd h1 {

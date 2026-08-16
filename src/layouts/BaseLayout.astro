@@ -11,14 +11,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  width?: 'wide' | 'narrow';
   /** Set on blog posts; forwarded to Seo for article metadata. */
   publishedTime?: Date;
 }
 
-const { title, description, width = 'wide', publishedTime } = Astro.props;
-
-const wrapClass = width === 'narrow' ? 'wrap wrap-narrow' : 'wrap';
+const { title, description, publishedTime } = Astro.props;
 ---
 
 <!doctype html>
@@ -39,7 +36,7 @@ const wrapClass = width === 'narrow' ? 'wrap wrap-narrow' : 'wrap';
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class={wrapClass}>
+    <div class="wrap">
       <SiteHeader />
       <main id="main">
         <slot />

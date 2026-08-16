@@ -10,7 +10,7 @@
   --ground-raise: #ffffff;
   --ink: #182338;
   --ink-soft: #4a5a75;
-  --ink-faint: #8494ad;
+  --ink-faint: #60718c;
   --accent: #d6156c;
   --accent-soft: #fbe3ef;
   --line: #dde4ee;
@@ -24,7 +24,7 @@
     --ground-raise: #132034;
     --ink: #e4ebf6;
     --ink-soft: #9fb0c9;
-    --ink-faint: #5f7191;
+    --ink-faint: #7286a6;
     --accent: #ff3d93;
     --accent-soft: #3a1230;
     --line: #22314b;
@@ -38,7 +38,7 @@
   --ground-raise: #132034;
   --ink: #e4ebf6;
   --ink-soft: #9fb0c9;
-  --ink-faint: #5f7191;
+  --ink-faint: #7286a6;
   --accent: #ff3d93;
   --accent-soft: #3a1230;
   --line: #22314b;
@@ -90,13 +90,12 @@ a {
   top: 16px;
 }
 
+/* One width everywhere so the header never shifts between pages; prose
+   passages narrow themselves with their own max-width. */
 .wrap {
   max-width: 880px;
   margin: 0 auto;
   padding: 0 24px;
-}
-.wrap-narrow {
-  max-width: 760px;
 }
 
 /* Prose — copied verbatim from mockups/d-hybrid/post.html's .prose rules. */

@@ -81,6 +81,8 @@ const projects = defineCollection({
     role: z.string(),
     description: z.string(),
     url: z.string().url(),
+    // The live site or product page, when one exists.
+    site: z.string().url().optional(),
     year: z.string().optional(),
     status: z.string().optional(),
     stack: z.array(z.string()).default([]),

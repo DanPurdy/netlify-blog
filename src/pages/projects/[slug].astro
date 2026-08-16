@@ -24,7 +24,7 @@ interface Props {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { name, description, role, url, year, status, stack } = project.data;
+const { name, description, role, url, site, year, status, stack } = project.data;
 const hasStudy = Boolean(project.body?.trim());
 ---
 
@@ -55,6 +55,18 @@ const hasStudy = Boolean(project.body?.trim());
             <>
               <dt>Stack</dt>
               <dd>{stack.join(', ')}</dd>
+            </>
+          )
+        }
+        {
+          site && (
+            <>
+              <dt>Site</dt>
+              <dd>
+                <a href={site} target="_blank" rel="noopener noreferrer">
+                  Visit ↗
+                </a>
+              </dd>
             </>
           )
         }

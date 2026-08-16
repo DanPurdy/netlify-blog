@@ -194,6 +194,10 @@ export default config({
         }),
         description: fields.text({ label: 'Description', multiline: true }),
         url: fields.url({ label: 'Repository URL' }),
+        site: fields.url({
+          label: 'Site URL',
+          description: 'Live site or product page, if there is one.',
+        }),
         year: fields.text({
           label: 'Year',
           description: 'When it started — shown on the projects list.',

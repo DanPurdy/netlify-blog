@@ -1,0 +1,56 @@
+---
+/**
+ * Consolidates the former layout.tsx and ThinLayout.tsx. The two differed only
+ * in container width and which footer they rendered.
+ *
+ * Note the wide variant does not wrap its slot: the old layout.tsx mapped over
+ * children and gave each its own min-h-screen container, so the home page
+ * supplies those wrappers itself to preserve the existing layout.
+ */
+import Seo from '../components/Seo.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[];
+  variant?: 'wide' | 'thin';
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  variant = 'wide',
+  author = 'Dan Purdy',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <Seo title={title} description={description} keywords={keywords} />
+  </head>
+  <body>
+    {
+      variant === 'thin' ? (
+        <main>
+          <div class="max-w-content-thin min-w-screen-min min-h-[85vh] mx-auto px-4 md:px-8">
+            <slot />
+          </div>
+        </main>
+      ) : (
+        <main>
+          <slot />
+        </main>
+      )
+    }
+    <SiteFooter title={author} variant={variant} />
+  </body>
+</html>

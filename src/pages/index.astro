@@ -1,0 +1,89 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FrontPageHeader from '../components/FrontPageHeader.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import PostCard from '../components/PostCard.astro';
+import portrait from '../../content/assets/me-portrait.png';
+
+const personal = (await getCollection('personal'))[0];
+const { Content: Intro } = await render(personal);
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+);
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+// The former layout.tsx mapped over its children and wrapped each in this
+// container, so the sections carry it themselves.
+const section =
+  'min-h-screen max-w-content min-w-screen-min mx-auto px-8 py-8 md:px-16 2xl:px-32';
+---
+
+<BaseLayout
+  title="Home"
+  keywords={[
+    'Dan Purdy',
+    'Portfolio',
+    'Fullstack Developer',
+    'Senior Fullstack Engineer',
+    'UK based developer',
+    'Lead Frontend Developer',
+    'Development blog',
+  ]}
+>
+  <div class={section}>
+    <section class="min-h-screen flex flex-col justify-center">
+      <div class="px-0 md:px-4">
+        <FrontPageHeader title={personal.data.title} subtitle={personal.data.subtitle} />
+        <div
+          class="flex flex-col text-center max-w-content-lg mx-auto xl:flex-row xl:text-left"
+        >
+          <div
+            class="flex-[1_1_33%] pt-0 px-8 flex justify-center mb-20 xl:mb-16 lg:mb-10 2xl:pt-4 2xl:mb-0"
+          >
+            <Image
+              src={portrait}
+              alt={personal.data.title}
+              height={200}
+              loading="eager"
+              style="max-height: 200px; width: 100%; max-width: 200px; object-fit: contain;"
+            />
+          </div>
+          <div
+            class="flex-[2_2_66%] tracking-tight text-intro text-white [&>p]:mt-0 [&>p]:mb-8 [&>p]:leading-relaxed [&>p:last-child]:mb-0"
+            style="letter-spacing: -1px"
+          >
+            <Intro />
+            <SocialLinks />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class={section}>
+    <section class="mt-40 mb-24 2xl:px-4 md:px-0">
+      <SectionHeader title="Work" />
+      <div class="my-20 mb-12">
+        {experience.map((role) => <ExperienceItem role={role} />)}
+      </div>
+    </section>
+  </div>
+
+  <div class={section}>
+    <section class="mt-40 mb-24 2xl:px-4 md:px-0">
+      <SectionHeader title="Blog" />
+      <div class="my-20 mb-12 px-4 xl:px-0">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

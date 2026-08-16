@@ -1,5 +1,5 @@
 ---
-path: multiple-github-accounts-and-profiles-over-ssh
+tags: [git, github, tooling]
 date: 2022-08-10T18:46:33.797Z
 title: Multiple Github accounts with individual git profiles over SSH
 description: Sometimes you have a need to connect to multiple Github accounts

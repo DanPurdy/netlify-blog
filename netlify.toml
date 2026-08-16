@@ -1,0 +1,9 @@
+# The site was previously detected as Gatsby. Pinning the build explicitly so the
+# framework change does not depend on Netlify's autodetection.
+#
+# Node comes from .nvmrc (22). pnpm is detected from pnpm-lock.yaml, and the
+# build-script approvals it needs live in pnpm-workspace.yaml — sharp will not
+# compile without them, which would break image optimisation at build time.
+[build]
+  command = "pnpm build"
+  publish = "dist"

@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<BaseLayout title="404: Not Found" variant="thin">
+  <PageHeader currentLocation="404" />
+  <section class="flex flex-col items-center justify-center w-full text-center my-[15%]">
+    <h1 class="m-4 md:text-6xl">Not Found</h1>
+    <p class="text-xl">Sorry, can&apos;t find that page...</p>
+  </section>
+</BaseLayout>

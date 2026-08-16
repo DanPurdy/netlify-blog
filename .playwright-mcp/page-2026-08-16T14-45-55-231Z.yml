@@ -1,0 +1,108 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "Dan Purdy" [level=1] [ref=e7]
+        - heading "Senior Fullstack Engineer" [level=2] [ref=e8]
+      - generic [ref=e9]:
+        - img "Dan Purdy" [ref=e11]
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: I’m Dan, a Senior Fullstack Engineer from London, UK. I work with teams to architect, plan and build responsive, accessible, user-focused web applications while mentoring and guiding other developers and stakeholders.
+          - paragraph [ref=e14]: I specialise in JavaScript, more specifically Node and React. You can currently find me working as a Senior Engineering Manager at PrimaryBid
+          - generic [ref=e15]:
+            - link "Find me on Github" [ref=e16] [cursor=pointer]:
+              - /url: https://github.com/danpurdy
+            - link "Find me on LinkedIn" [ref=e19] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/dan-purdy-developer
+    - generic [ref=e23]:
+      - heading "Work" [level=2] [ref=e25]
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - link [ref=e31] [cursor=pointer]:
+            - /url: https://www.wonderbly.com/
+            - img "Wonderbly logo" [ref=e32]
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - generic [ref=e35]:
+                - heading "Employed" [level=4] [ref=e36]
+                - text: Jul 2025 - Now
+              - generic [ref=e37]:
+                - heading "Position" [level=4] [ref=e38]
+                - list [ref=e39]:
+                  - listitem [ref=e40]: Head of Ecommerce Engineering
+            - paragraph [ref=e42]: Wonderbly is a London-based, direct-to-consumer publisher creating personalised gift books for children and adults—blending storytelling, design, and technology to make every customer feel like the hero of the story. Since launching in 2013, the company has grown into a global leader in personalised publishing, and in June 2025 it joined the Penguin Random House group (working closely with DK) while continuing to operate with its own culture and brand. Wonderbly also owns Historic Newspapers (historic-newspapers.com).
+        - generic [ref=e43]:
+          - link [ref=e46] [cursor=pointer]:
+            - /url: https://primarybid.com/
+            - img "PrimaryBid logo" [ref=e47]
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - heading "Employed" [level=4] [ref=e51]
+                - text: Nov 2021 - Jun 2025
+              - generic [ref=e52]:
+                - heading "Position" [level=4] [ref=e53]
+                - list [ref=e54]:
+                  - listitem [ref=e55]: Senior Engineering Manager
+              - generic [ref=e56]:
+                - heading "Previous Positions" [level=4] [ref=e57]
+                - list [ref=e58]:
+                  - listitem [ref=e59]: Engineering Manager
+                  - listitem [ref=e60]: Senior Software Engineer
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: PrimaryBid aims to give everyone fair access to IPOs and public company fundraises, at the same time and price as institutional investors.
+              - paragraph [ref=e63]: As a Senior Engineering Manager, I originally led two of our platform teams while also supporting the wider engineering team. I focused on making sure our teams were working effectively together while also working closely with our product team to ensure that the right work is being delivered. I contributed to the overall design of our system, direction of the platform and still managed to commit the odd bit of code too.
+        - generic [ref=e64]:
+          - link [ref=e67] [cursor=pointer]:
+            - /url: https://urban.co
+            - img "Urban logo" [ref=e68]
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - generic [ref=e71]:
+                - heading "Employed" [level=4] [ref=e72]
+                - text: Nov 2016 - Oct 2021
+              - generic [ref=e73]:
+                - heading "Position" [level=4] [ref=e74]
+                - list [ref=e75]:
+                  - listitem [ref=e76]: Lead Frontend Engineer
+                  - listitem [ref=e77]: Stream Technical Lead
+              - generic [ref=e78]:
+                - heading "Previous Positions" [level=4] [ref=e79]
+                - list [ref=e80]:
+                  - listitem [ref=e81]: Fullstack Engineer
+            - generic [ref=e82]:
+              - paragraph [ref=e83]: Urban is the UK’s leading at home wellness platform, connecting wellness professionals and their customers via a bespoke web platform and apps.
+              - paragraph [ref=e84]: As the Lead Frontend Engineer at Urban I was responsible for developing, overseeing and guiding the team on the development of Urban’s 5 web-based platforms, which included everything from e-commerce to live streaming video platforms. The main frontend stack consisted of Node Express, React, NextJs, Typescript and MobX.
+              - paragraph [ref=e85]: Alongside my role as Lead Frontend, I also acted as a team lead and technical lead for the B2B platform which enables companies to book, enrol and manage their employees access to bespoke in-office wellness treatments from their browser.
+              - paragraph [ref=e86]: As B2B team lead, I worked across the Javascript based stack including their Node microservice backend while also officiating the usual Agile ceremonies, working closely with other stakeholders in the business to plan and architect solutions and features.
+              - paragraph [ref=e87]: The team lead position involves working closely alongside our CTO and other senior team members helping to ensure that the whole product team is working towards a similar goal while directing and advising on how features should be implemented and how as a team we could improve efficiently and scalably.
+    - generic [ref=e89]:
+      - heading "Blog" [level=2] [ref=e91]
+      - generic [ref=e93]:
+        - link "Multiple Github accounts with individual git profiles over SSH Sometimes you have a need to connect to multiple Github accounts from the same machine which means possibly switching your git config and the SSH key you use with git. We can modify our ssh and git config to make this as easy as possible and not have to think about it. Read more" [ref=e94] [cursor=pointer]:
+          - /url: /blog/multiple-github-accounts-with-individual-git-profiles-over-ssh/
+          - heading "Multiple Github accounts with individual git profiles over SSH" [level=3] [ref=e95]
+          - paragraph [ref=e97]: Sometimes you have a need to connect to multiple Github accounts from the same machine which means possibly switching your git config and the SSH key you use with git. We can modify our ssh and git config to make this as easy as possible and not have to think about it.
+          - generic [ref=e98]: Read more
+        - link "Adding state to storybook stories Adding state to your Storybook stories is now exceptionally easy allowing consumers of your library to interact with your components and use them the way they were meant to be used immediately. Read more" [ref=e99] [cursor=pointer]:
+          - /url: /blog/adding-state-to-storybook-stories/
+          - heading "Adding state to storybook stories" [level=3] [ref=e100]
+          - paragraph [ref=e102]: Adding state to your Storybook stories is now exceptionally easy allowing consumers of your library to interact with your components and use them the way they were meant to be used immediately.
+          - generic [ref=e103]: Read more
+        - link "What is the nullish coalescing operator for in JavaScript I'm frequently asked why you would use the nullish coalescing operator rather than a simple OR operator, time to look at the differences Read more" [ref=e104] [cursor=pointer]:
+          - /url: /blog/what-is-the-nullish-coalescing-operator-for-in-javascript/
+          - heading "What is the nullish coalescing operator for in JavaScript" [level=3] [ref=e105]
+          - paragraph [ref=e107]: I'm frequently asked why you would use the nullish coalescing operator rather than a simple OR operator, time to look at the differences
+          - generic [ref=e108]: Read more
+  - generic [ref=e109]:
+    - link [ref=e110] [cursor=pointer]:
+      - /url: /
+      - heading "Dan Purdy" [level=3] [ref=e111]
+    - list [ref=e112]:
+      - listitem [ref=e113]:
+        - link "Blog" [ref=e114] [cursor=pointer]:
+          - /url: /blog
+      - listitem [ref=e115]:
+        - link "Find me on Github" [ref=e116] [cursor=pointer]:
+          - /url: https://github.com/danpurdy
+          - text: Github

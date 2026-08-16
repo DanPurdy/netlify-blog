@@ -1,5 +1,5 @@
 ---
-path: using-private-github-packages-in-github-workflows
+tags: [github, tooling]
 date: 2021-02-01T23:10:45.919Z
 title: Using private Github packages in Github workflows
 description: A quick look at how to use private packages publishd to the Github

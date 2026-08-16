@@ -1,5 +1,5 @@
 ---
-path: javascript-generators-for-testing-mock-responses
+tags: [javascript, testing]
 date: 2020-12-08T19:02:03.979Z
 title: Using generator functions to handle mock responses
 description: A simple use case for javascript generator functions to handle

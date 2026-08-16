@@ -1,5 +1,5 @@
 ---
-path: logging-and-mocking-http-requests-with-testcafe
+tags: [testing, javascript]
 date: 2020-09-16T22:47:50.855Z
 title: Logging and mocking HTTP requests with TestCafe
 description: "A look into how to intercept, log and mock http requests within

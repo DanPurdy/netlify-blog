@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../../content/assets/me-portrait.png';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentLocation?: string;
+}
+
+const { currentLocation } = Astro.props;
+
+const personal = (await getCollection('personal'))[0];
+const title = personal?.data.title;
+
+const isBlog = currentLocation?.toLowerCase() === 'blog';
+---
+
+<header class="py-8 pb-4 flex justify-start items-center">
+  <div
+    class="flex-[1_1_10rem] max-w-[6rem] flex justify-start mr-4 md:max-w-[8rem] xl:max-w-[10rem]"
+  >
+    <a href="/" class="w-[60px] h-[60px] md:w-[80px] md:h-[80px] xl:w-[100px] xl:h-[100px]">
+      <Image
+        src={portrait}
+        alt={title || 'Logo'}
+        height={100}
+        loading="eager"
+        style="max-height: 100px; width: 100%; max-width: 100px; object-fit: contain;"
+      />
+    </a>
+  </div>
+  <div
+    class="flex items-center pt-2 flex-1 flex-wrap justify-between basis-full sm:flex-nowrap sm:basis-auto lg:justify-start"
+  >
+    <a href="/">
+      <h1 class="m-0 text-4xl md:text-5xl xl:text-6xl">{title}</h1>
+    </a>
+    {
+      isBlog ? (
+        <h2 class="text-3xl text-neon-pink m-0 px-6 pr-0 pt-6 self-end flex-auto sm:text-4xl md:text-4xl xl:text-4xl xl:flex-initial xl:pl-4">
+          <a href="/blog" class="no-underline text-inherit">
+            {currentLocation}
+          </a>
+        </h2>
+      ) : (
+        <h2 class="text-3xl text-neon-pink m-0 px-2 pr-0 self-end flex-auto sm:text-4xl md:text-5xl xl:text-6xl xl:flex-initial xl:pl-4">
+          {currentLocation}
+        </h2>
+      )
+    }
+  </div>
+</header>

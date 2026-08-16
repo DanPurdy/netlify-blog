@@ -1,0 +1,6 @@
+# pnpm 11 reads settings from here rather than the "pnpm" field in package.json.
+# Both packages have postinstall steps we genuinely need: sharp powers Astro's
+# image optimisation, esbuild ships a platform-specific binary.
+allowBuilds:
+  esbuild: true
+  sharp: true

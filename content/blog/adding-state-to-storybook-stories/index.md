@@ -1,5 +1,5 @@
 ---
-path: adding-state-to-storybook-stories
+tags: [react, tooling]
 date: 2021-03-10T21:47:51.502Z
 title: Adding state to storybook stories
 description: Adding state to your Storybook stories is now exceptionally easy

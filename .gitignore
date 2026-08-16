@@ -53,9 +53,13 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-# gatsby files
-.cache/
-public
+# astro files
+dist/
+.astro/
+.netlify/
+
+# migration parity snapshots
+.parity/
 
 # Mac files
 .DS_Store

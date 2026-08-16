@@ -22,7 +22,6 @@ const SITE = {
   author: personal.data.title,
   description: personal.data.seoDescription,
   imageAlt: 'danpurdy — the dpurdy.me wordmark on a midnight ground',
-  twitter: 'DanPurdy0',
 };
 
 const { title, description, publishedTime } = Astro.props;
@@ -53,8 +52,8 @@ const image = new URL('/og-card.png', Astro.site);
   )
 }
 
+{/* Kept for anyone sharing there; the card tags need no account to work. */}
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content={`@${SITE.twitter}`} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={metaDescription} />
 

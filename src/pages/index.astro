@@ -1,0 +1,32 @@
+---
+// Smoke-test page: exercises all three collections so a config error surfaces
+// at build time. Replaced by the real port in the next step.
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const experience = await getCollection('experience');
+const personal = await getCollection('personal');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>dpurdy.me</title>
+  </head>
+  <body>
+    <h1>{personal[0]?.data.title}</h1>
+    <p>{personal[0]?.data.subtitle}</p>
+
+    <h2>Posts ({posts.length})</h2>
+    <ul>
+      {posts.map((post) => <li><a href={`/blog/${post.id}/`}>{post.id}</a></li>)}
+    </ul>
+
+    <h2>Experience ({experience.length})</h2>
+    <ul>
+      {experience.map((role) => <li>{role.data.title}</li>)}
+    </ul>
+  </body>
+</html>

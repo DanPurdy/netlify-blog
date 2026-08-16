@@ -25,11 +25,7 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
   isCurrent ? `${yearFull(startDate)} —` : `${yearFull(startDate)} – ${endDate ? yearShort(endDate) : ''}`;
 ---
 
-<BaseLayout
-  title="Work"
-  description="Where Dan Purdy has worked — full role history."
-  width="wide"
->
+<BaseLayout title="Work" description="Where Dan Purdy has worked — full role history.">
   <header class="page-h">
     <h1>Work<em>.</em></h1>
     <p class="sub">A fuller history than the strip on the front page. Writing lives <a href="/">here</a>.</p>
@@ -47,12 +43,16 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
             </h2>
             <time>{timeLabel(entry.data)}</time>
           </div>
-          <p class="roles-line">
-            {entry.data.position.join(' · ')}
-            {entry.data.previousPosition.length > 0 && (
-              <span class="prev"> (previously {entry.data.previousPosition.join(' · ')})</span>
-            )}
-          </p>
+          {/* Role progression, newest first — earlier titles stay visible
+              as a timeline rather than a parenthetical. */}
+          <ul class="timeline">
+            {entry.data.position.map((role) => (
+              <li class:list={['top', { now: entry.data.isCurrent }]}>{role}</li>
+            ))}
+            {entry.data.previousPosition.map((role) => (
+              <li>{role}</li>
+            ))}
+          </ul>
           <div class="body">
             <Content />
           </div>
@@ -117,13 +117,45 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
     white-space: nowrap;
   }
 
-  .roles-line {
-    margin-top: 10px;
-    color: var(--ink-soft);
-    font-size: 15.5px;
+  .timeline {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
   }
-  .roles-line .prev {
+  .timeline li {
+    position: relative;
+    padding: 0 0 6px 18px;
     color: var(--ink-faint);
+    font-size: 15px;
+  }
+  /* The role(s) held last at each company read stronger; the accent dot is
+     reserved for the job held today. */
+  .timeline li.top {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  /* Dot-and-rule timeline down the left. */
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .timeline li.now::before {
+    background: var(--accent);
+  }
+  .timeline li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 17px;
+    bottom: -4px;
+    width: 1px;
+    background: var(--line);
   }
 
   .body {

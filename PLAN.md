@@ -333,10 +333,22 @@ prose styles in `src/styles/global.css` (light and dark, system default plus a
 persisted toggle), the inverted blog-first home page, the statement post page,
 the new `/work` route (typographic — the employer logos are white-text SVGs and
 would vanish on the light ground), restyled `/blog`, tag pages and 404, and a
-side-projects card row on the home page fed by `src/data/projects.ts`. Tailwind
-was removed in the process: every page was being rewritten anyway, and the
-mockup CSS transfers verbatim into Astro scoped styles, which it could not
-through a utility-class translation. Fonts are self-hosted via Fontsource.
+side-projects surface. Tailwind was removed in the process: every page was
+being rewritten anyway, and the mockup CSS transfers verbatim into Astro
+scoped styles, which it could not through a utility-class translation. Fonts
+are self-hosted via Fontsource.
+
+The side-projects surface grew past the card row during review: projects are
+a content collection with case-study pages at `/projects/<id>` (post-page
+typography, sticky facts rail, optional live-site link) and an index at
+`/projects`; the case-study prose appears as Dan writes it in Keystatic.
+`/work` shows each company's full role progression as a timeline. A
+follow-up pass added the SEO layer (share card, article metadata, JSON-LD,
+sitemap advertisement, CMS-driven feed identity), hover prefetch, immutable
+asset caching, a skip link, AA contrast fixes, and the `dp` favicon. The
+toolchain moved to Node 24 under mise. Still pending after merge: Cloudflare
+Web Analytics (cookieless, no banner) once the beacon token is to hand, and
+the Keystatic GitHub App's production callback URL.
 
 Through the loop, on the new site.
 

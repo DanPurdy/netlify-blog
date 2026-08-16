@@ -2,67 +2,53 @@
   "name": "portfolio",
   "private": true,
   "description": "Portfolio of Dan Purdy",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Dan Purdy <dan@dpurdy.me>",
   "bugs": {
     "url": "https://github.com/danpurdy/netlify-blog"
   },
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "dependencies": {
-    "@mdx-js/react": "^2.3.0",
-    "@svgr/webpack": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.18",
-    "autoprefixer": "^10.4.23",
-    "gatsby": "^5.14.0",
-    "gatsby-plugin-image": "^3.14.0",
-    "gatsby-plugin-manifest": "^5.14.0",
-    "gatsby-plugin-mdx": "^5.14.0",
-    "gatsby-plugin-netlify": "^5.1.1",
-    "gatsby-plugin-postcss": "^6.15.0",
-    "gatsby-plugin-sharp": "^5.14.0",
-    "gatsby-plugin-sitemap": "^6.14.0",
-    "gatsby-remark-copy-linked-files": "^6.14.0",
-    "gatsby-remark-images": "^7.14.0",
-    "gatsby-remark-prismjs": "^7.14.0",
-    "gatsby-remark-responsive-iframe": "^6.14.0",
-    "gatsby-remark-smartypants": "^6.14.0",
-    "gatsby-source-filesystem": "^5.14.0",
-    "gatsby-transformer-sharp": "^5.14.0",
-    "postcss": "^8.5.6",
-    "prismjs": "^1.29.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-helmet": "^6.1.0",
-    "react-markdown": "^10.1.0",
-    "tailwindcss": "^4.1.18"
+    "@astrojs/markdown-satteri": "^0.3.5",
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/netlify": "^8.2.1",
+    "@astrojs/react": "^6.0.2",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@keystatic/astro": "^5.2.0",
+    "@keystatic/core": "^0.6.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "prettier": "^3.4.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "prettier": "^3.9.6",
     "typescript": "^5.7.2"
-  },
-  "overrides": {
-    "cookie": "^0.7.0",
-    "tmp": "^0.2.4"
   },
   "homepage": "https://dpurdy.me",
   "keywords": [
-    "gatsby",
+    "astro",
     "netlify"
   ],
   "license": "MIT",
-  "main": "n/a",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danpurdy/netlify-blog.git"
   },
   "scripts": {
-    "build": "gatsby build",
-    "dev": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
-    "start": "npm run dev",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
-    "clean": "gatsby clean"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write \"src/**/*.{ts,tsx,astro,css}\"",
+    "parity": "node scripts/snapshot-routes.mjs dist .parity/astro && diff -ru .parity/gatsby .parity/astro || true"
   }
 }

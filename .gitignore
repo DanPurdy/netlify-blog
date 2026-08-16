@@ -57,6 +57,13 @@ jspm_packages/
 .cache/
 public
 
+# astro files
+dist/
+.astro/
+
+# migration parity snapshots
+.parity/
+
 # Mac files
 .DS_Store
 

@@ -94,9 +94,21 @@ export default config({
           description:
             'The pink remainder of the sentence. Leave empty for no colour break.',
         }),
-        github: fields.url({ label: 'GitHub URL' }),
-        linkedin: fields.url({ label: 'LinkedIn URL' }),
-        email: fields.text({ label: 'Email address' }),
+        links: fields.array(
+          fields.object({
+            label: fields.text({ label: 'Text' }),
+            url: fields.text({
+              label: 'URL',
+              description: 'Absolute (https://…) or site-relative (/rss.xml).',
+            }),
+          }),
+          {
+            label: 'Links',
+            description:
+              'The link row under the home page bio. Add as many or as few as you like.',
+            itemLabel: (props) => props.fields.label.value,
+          },
+        ),
         seoDescription: fields.text({
           label: 'SEO description',
           multiline: true,

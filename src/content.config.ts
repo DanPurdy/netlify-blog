@@ -59,9 +59,11 @@ const personal = defineCollection({
     // renders the headline with no colour break.
     headline: z.string(),
     headlineAccent: z.string().default(''),
-    github: z.string().url(),
-    linkedin: z.string().url(),
-    email: z.string().email(),
+    // The link row under the hero bio. Any number of entries, including none;
+    // urls may be site-relative (/rss.xml) or absolute.
+    links: z
+      .array(z.object({ label: z.string(), url: z.string() }))
+      .default([]),
     seoDescription: z.string(),
   }),
 });

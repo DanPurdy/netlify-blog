@@ -50,12 +50,21 @@ function formatDateRange(job: (typeof experience)[number]) {
     </h1>
     <div class="sub">
       <Intro />
-      <div class="social">
-        <a href={personal.data.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href={personal.data.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href={`mailto:${personal.data.email}`}>Email</a>
-        <a href="/rss.xml">RSS</a>
-      </div>
+      {
+        personal.data.links.length > 0 && (
+          <div class="social">
+            {personal.data.links.map((link) =>
+              link.url.startsWith('/') ? (
+                <a href={link.url}>{link.label}</a>
+              ) : (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              ),
+            )}
+          </div>
+        )
+      }
     </div>
   </div>
 

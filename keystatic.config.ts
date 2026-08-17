@@ -181,7 +181,7 @@ export default config({
     }),
 
     projects: collection({
-      label: 'Side projects',
+      label: 'Projects',
       slugField: 'name',
       path: 'content/projects/*',
       format: { contentField: 'body' },

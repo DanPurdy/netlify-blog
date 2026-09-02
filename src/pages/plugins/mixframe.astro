@@ -11,9 +11,9 @@ import { Image } from 'astro:assets';
 import review from '../../assets/mixframe/review.png';
 import popup from '../../assets/mixframe/popup.png';
 
-const title = 'mixframe — gds.fm tracks, captured';
+const title = 'mixframe';
 const description =
-  'A Chrome extension that captures what plays on gds.fm while you listen and saves the keepers to Spotify.';
+  'A Chrome extension that logs what plays on gds.fm while you listen and saves the tracks you like to Spotify.';
 ---
 
 <!doctype html>
@@ -23,7 +23,7 @@ const description =
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/mixframe-favicon.png" />
   </head>
   <body>
     <header>
@@ -35,11 +35,10 @@ const description =
 
     <main class="wrap">
       <section class="hero">
-        <h1>Every track you hear on <a href="https://gds.fm">gds.fm</a>. Caught.</h1>
+        <h1>Track what you hear on <a href="https://gds.fm">gds.fm</a></h1>
         <p class="lede">
-          A Chrome extension that logs what the station plays while you listen, matches it on
-          Spotify in the background, and saves the keepers to a playlist — one click, no
-          tab-hopping mid-track.
+          A Chrome extension that logs what the station plays while you listen, matches each track
+          on Spotify, and saves the ones you like to a playlist. No switching tabs mid-track.
         </p>
         <div class="cta-row">
           <a class="btn primary" href="/downloads/mixframe-0.1.0.zip" download>↓ Download v0.1.0</a>
@@ -58,46 +57,45 @@ const description =
 
       <section class="features">
         <div class="feature">
-          <h2>Listens when you do</h2>
+          <h2>Runs while you listen</h2>
           <p>
-            Capture runs only while a gds.fm tab is playing audio. Stop the stream and it stops
-            watching. No account, no server — everything lives in your browser.
+            Capture only runs while a gds.fm tab is playing audio. Stop the stream and it stops.
+            No account, no server. Everything stays in your browser.
           </p>
         </div>
         <div class="feature">
-          <h2>Spotify, one click</h2>
+          <h2>Save to Spotify</h2>
           <p>
-            Tracks are matched as they air. Save straight to a playlist of your choosing
-            (<em>GDS finds</em> by default), or heart a track locally when Spotify doesn't have it.
+            Tracks are matched as they air. Save to a playlist of your choosing
+            (<em>GDS finds</em> by default), or like a track locally if Spotify doesn't have it.
           </p>
         </div>
         <div class="feature">
-          <h2>Knows a DJ set from a song</h2>
+          <h2>Handles DJ sets</h2>
           <p>
-            When the station airs a two-hour set, mixframe logs it as a set instead of pretending
-            it's a track — you keep the breadcrumb without the doomed searches.
+            When the station airs a set, mixframe logs it as a set rather than a track, so you
+            still have a record of it without pointless Spotify searches.
           </p>
         </div>
         <div class="feature">
-          <h2>Honest storage</h2>
+          <h2>Storage</h2>
           <p>
             Tracks you didn't like or save are pruned after a week (configurable, up to never).
-            Liked and saved tracks stay. If storage fills, capture pauses and says so.
+            Liked and saved tracks are kept. If storage fills, capture pauses and tells you.
           </p>
         </div>
       </section>
 
       <section class="split">
         <div class="split-copy">
-          <h2>The popup is the point</h2>
+          <h2>The popup</h2>
           <p>
-            What's playing right now, the last few tracks, a heart and a save button. You never
-            leave the tab you're working in — the whole reason this exists.
+            Shows what's playing now, the last few tracks, and like and save buttons, without
+            leaving the tab you're in.
           </p>
           <p>
             The full page has the history: search, filters, play counts, an embedded player for
-            checking a track before you commit, and delete for the ones you never want to see
-            again.
+            checking a track before saving it, and delete.
           </p>
         </div>
         <div class="split-img">
@@ -115,7 +113,7 @@ const description =
         <ol>
           <li>
             <a href="/downloads/mixframe-0.1.0.zip" download>Download the zip</a> and unpack it
-            somewhere permanent — Chrome reads the folder in place.
+            somewhere permanent. Chrome reads the folder in place.
           </li>
           <li>
             Open <code>chrome://extensions</code>, switch on <strong>Developer mode</strong>, hit{' '}
@@ -124,9 +122,8 @@ const description =
           <li>Open the extension, connect Spotify, play some radio.</li>
         </ol>
         <p class="note">
-          Not on the Chrome Web Store, and staying small on purpose: Spotify's development-mode
-          quota caps the shared app at 25 listeners. Want in? Get in touch and I'll add you to the
-          allowlist.
+          Not on the Chrome Web Store. Spotify's development-mode quota caps the shared app at 25
+          users, so if you'd like access, get in touch and I'll add you to the allowlist.
         </p>
       </section>
     </main>

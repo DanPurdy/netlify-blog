@@ -1,0 +1,390 @@
+---
+/**
+ * Standalone landing page for the mixframe Chrome extension, deliberately
+ * styled in gds.fm's design language (brutalist black/white, Vol-adjacent
+ * Helvetica, the station's yellow) rather than the site's own — it's a
+ * product page for the tool, not a blog post. Self-contained on purpose:
+ * no BaseLayout, no shared styles.
+ */
+import { Image } from 'astro:assets';
+
+import review from '../../assets/mixframe/review.png';
+import popup from '../../assets/mixframe/popup.png';
+
+const title = 'mixframe — gds.fm tracks, captured';
+const description =
+  'A Chrome extension that captures what plays on gds.fm while you listen and saves the keepers to Spotify.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <span class="logo">MIXFRAME</span>
+        <span class="dot" aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Every track you hear on <a href="https://gds.fm">gds.fm</a>. Caught.</h1>
+        <p class="lede">
+          A Chrome extension that logs what the station plays while you listen, matches it on
+          Spotify in the background, and saves the keepers to a playlist — one click, no
+          tab-hopping mid-track.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="/downloads/mixframe-0.1.0.zip" download>↓ Download v0.1.0</a>
+          <a class="btn" href="#install">How to install</a>
+        </div>
+      </section>
+
+      <section class="shot">
+        <Image
+          src={review}
+          alt="The mixframe playlist page: an on-air banner, captured tracks with play counts, and save buttons"
+          widths={[720, 1280, 1600]}
+          sizes="(max-width: 900px) 100vw, 880px"
+        />
+      </section>
+
+      <section class="features">
+        <div class="feature">
+          <h2>Listens when you do</h2>
+          <p>
+            Capture runs only while a gds.fm tab is playing audio. Stop the stream and it stops
+            watching. No account, no server — everything lives in your browser.
+          </p>
+        </div>
+        <div class="feature">
+          <h2>Spotify, one click</h2>
+          <p>
+            Tracks are matched as they air. Save straight to a playlist of your choosing
+            (<em>GDS finds</em> by default), or heart a track locally when Spotify doesn't have it.
+          </p>
+        </div>
+        <div class="feature">
+          <h2>Knows a DJ set from a song</h2>
+          <p>
+            When the station airs a two-hour set, mixframe logs it as a set instead of pretending
+            it's a track — you keep the breadcrumb without the doomed searches.
+          </p>
+        </div>
+        <div class="feature">
+          <h2>Honest storage</h2>
+          <p>
+            Tracks you didn't like or save are pruned after a week (configurable, up to never).
+            Liked and saved tracks stay. If storage fills, capture pauses and says so.
+          </p>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="split-copy">
+          <h2>The popup is the point</h2>
+          <p>
+            What's playing right now, the last few tracks, a heart and a save button. You never
+            leave the tab you're working in — the whole reason this exists.
+          </p>
+          <p>
+            The full page has the history: search, filters, play counts, an embedded player for
+            checking a track before you commit, and delete for the ones you never want to see
+            again.
+          </p>
+        </div>
+        <div class="split-img">
+          <Image
+            src={popup}
+            alt="The mixframe popup: now playing, recent tracks, heart and save buttons"
+            widths={[340, 680]}
+            sizes="340px"
+          />
+        </div>
+      </section>
+
+      <section class="install" id="install">
+        <h2>Install</h2>
+        <ol>
+          <li>
+            <a href="/downloads/mixframe-0.1.0.zip" download>Download the zip</a> and unpack it
+            somewhere permanent — Chrome reads the folder in place.
+          </li>
+          <li>
+            Open <code>chrome://extensions</code>, switch on <strong>Developer mode</strong>, hit{' '}
+            <strong>Load unpacked</strong> and pick the folder.
+          </li>
+          <li>Open the extension, connect Spotify, play some radio.</li>
+        </ol>
+        <p class="note">
+          Not on the Chrome Web Store, and staying small on purpose: Spotify's development-mode
+          quota caps the shared app at 25 listeners. Want in? Get in touch and I'll add you to the
+          allowlist.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>Built for listening to <a href="https://gds.fm">gds.fm</a></span>
+        <a href="/">dpurdy.me</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :root {
+    color-scheme: light;
+    --black: #000;
+    --white: #fff;
+    --yellow: #ecfe54;
+    --red: #ff4802;
+    --grey: #ccc;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.16;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  header {
+    border-bottom: 3px solid var(--black);
+  }
+
+  header .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 1.6s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+  }
+
+  .hero {
+    padding: 56px 0 40px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+    max-width: 16ch;
+  }
+
+  h1 a {
+    color: inherit;
+    background: var(--yellow);
+    text-decoration: none;
+  }
+
+  h1 a:hover {
+    background: var(--black);
+    color: var(--yellow);
+  }
+
+  .lede {
+    font-size: clamp(17px, 2vw, 21px);
+    max-width: 56ch;
+    margin: 22px 0 0;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    background: var(--white);
+    border: 3px solid var(--black);
+    padding: 12px 22px;
+  }
+
+  .btn:hover {
+    background: var(--yellow);
+  }
+
+  .btn.primary {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .btn.primary:hover {
+    background: var(--yellow);
+    color: var(--black);
+  }
+
+  .shot {
+    margin: 24px 0 56px;
+  }
+
+  .shot img,
+  .split-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 3px solid var(--black);
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 3px solid var(--black);
+    border-left: 3px solid var(--black);
+    margin-bottom: 64px;
+  }
+
+  .feature {
+    border-right: 3px solid var(--black);
+    border-bottom: 3px solid var(--black);
+    padding: 24px;
+  }
+
+  .feature:hover {
+    background: var(--yellow);
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+  }
+
+  .feature p,
+  .split-copy p,
+  .install li,
+  .note {
+    font-size: 16px;
+    line-height: 1.45;
+    margin: 0 0 12px;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    align-items: start;
+    margin-bottom: 64px;
+  }
+
+  .install {
+    border: 3px solid var(--black);
+    background: var(--yellow);
+    padding: 28px;
+    margin-bottom: 64px;
+  }
+
+  .install ol {
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .install code {
+    font-family: monospace;
+    background: var(--white);
+    padding: 1px 5px;
+  }
+
+  .install a,
+  .note a,
+  .split-copy a {
+    color: inherit;
+    font-weight: 700;
+  }
+
+  .note {
+    margin: 16px 0 0;
+    border-top: 2px solid var(--black);
+    padding-top: 14px;
+  }
+
+  footer {
+    border-top: 3px solid var(--black);
+  }
+
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  footer a {
+    color: inherit;
+  }
+
+  @media (max-width: 720px) {
+    .features {
+      grid-template-columns: 1fr;
+    }
+
+    .split {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .split-img {
+      max-width: 340px;
+    }
+  }
+</style>

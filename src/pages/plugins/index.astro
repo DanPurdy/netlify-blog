@@ -1,14 +1,26 @@
 ---
 /**
- * The plugins index. Rows follow the projects list's shape for consistency,
- * but each entry links to its own standalone landing page — plugins carry
- * their own design language (mixframe is styled after gds.fm), so they don't
- * live in the projects collection.
- *
- * Hardcoded while there's one entry; convert to a content collection when a
- * second plugin shows up.
+ * The plugins index. Rows follow the projects list's shape for consistency.
+ * mixframe has its own standalone landing page (it carries gds.fm's design
+ * language, so it doesn't live in the projects collection); the older plugins
+ * are pulled from the projects collection and link to their project pages.
  */
+import { getCollection } from 'astro:content';
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const PROJECT_PLUGINS = ['gridslide', 'takecounter'];
+
+const fromProjects = (await getCollection('projects'))
+  .filter((p) => PROJECT_PLUGINS.includes(p.id))
+  .map((p) => ({
+    href: `/projects/${p.id}/`,
+    year: p.data.year,
+    name: p.data.name,
+    role: p.data.role,
+    status: p.data.status,
+    description: p.data.description,
+  }));
 
 const plugins = [
   {
@@ -18,8 +30,9 @@ const plugins = [
     role: 'chrome extension',
     status: 'live',
     description:
-      'Captures what plays on gds.fm while you listen and saves the keepers to Spotify.',
+      'Logs what plays on gds.fm while you listen and saves the tracks you like to Spotify.',
   },
+  ...fromProjects.sort((a, b) => (b.year ?? '').localeCompare(a.year ?? '')),
 ];
 ---
 
@@ -30,7 +43,7 @@ const plugins = [
   <header class="page-h">
     <h1>Plugins<em>.</em></h1>
     <p class="sub">
-      Browser extensions and plugins, each with its own page. Other projects live
+      Browser extensions and plugins. Other projects live{' '}
       <a href="/projects">here</a>.
     </p>
   </header>

@@ -11,11 +11,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
 
-  // Every project gets a page; the case-study prose appears as it's written.
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project },
-  }));
+  // Every project gets a page except those whose index row links elsewhere
+  // (they have their own landing page); the case-study prose appears as it's
+  // written.
+  return projects
+    .filter((project) => !project.data.link)
+    .map((project) => ({
+      params: { slug: project.id },
+      props: { project },
+    }));
 }
 
 interface Props {
@@ -70,10 +74,18 @@ const hasStudy = Boolean(project.body?.trim());
             </>
           )
         }
-        <dt>Source</dt>
-        <dd>
-          <a href={url} target="_blank" rel="noopener noreferrer">Repository ↗</a>
-        </dd>
+        {
+          url && (
+            <>
+              <dt>Source</dt>
+              <dd>
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  Repository ↗
+                </a>
+              </dd>
+            </>
+          )
+        }
       </dl>
     </aside>
 

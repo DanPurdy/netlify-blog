@@ -27,7 +27,7 @@ const projects = (await getCollection('projects')).sort(
   <section>
     {
       projects.map((project) => (
-        <a class="row" href={`/projects/${project.id}/`}>
+        <a class="row" href={project.data.link ?? `/projects/${project.id}/`}>
           <time>{project.data.year}</time>
           <h3>{project.data.name}</h3>
           <span class="tags">

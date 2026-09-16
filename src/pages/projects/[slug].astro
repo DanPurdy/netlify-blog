@@ -11,15 +11,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
 
-  // Every project gets a page except those whose index row links elsewhere
-  // (they have their own landing page); the case-study prose appears as it's
-  // written.
-  return projects
-    .filter((project) => !project.data.link)
-    .map((project) => ({
-      params: { slug: project.id },
-      props: { project },
-    }));
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
 }
 
 interface Props {

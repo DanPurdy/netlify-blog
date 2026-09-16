@@ -2,7 +2,7 @@
 /**
  * The side-projects index. Rows follow the writing list's shape: year in the
  * date column, name as the title, role and status as the mono annotation.
- * Projects with a written case study link to it; the rest go to their repo.
+ * Every row links to the project's case-study page.
  */
 import { getCollection } from 'astro:content';
 
@@ -27,7 +27,7 @@ const projects = (await getCollection('projects')).sort(
   <section>
     {
       projects.map((project) => (
-        <a class="row" href={project.data.link ?? `/projects/${project.id}/`}>
+        <a class="row" href={`/projects/${project.id}/`}>
           <time>{project.data.year}</time>
           <h3>{project.data.name}</h3>
           <span class="tags">

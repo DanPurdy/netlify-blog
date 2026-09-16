@@ -82,9 +82,6 @@ const projects = defineCollection({
     description: z.string(),
     // Optional: some entries (e.g. the mixframe extension) have no public repo.
     url: z.string().url().optional(),
-    // Overrides the row's link target on the index. An entry with a link has
-    // its own landing page elsewhere and gets no /projects/<id> page.
-    link: z.string().optional(),
     // The live site or product page, when one exists.
     site: z.string().url().optional(),
     year: z.string().optional(),

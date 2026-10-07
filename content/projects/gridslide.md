@@ -6,5 +6,5 @@ url: https://github.com/DanPurdy/gridSlide
 site: https://gridslide.dpurdy.dev
 year: "2014"
 status: archived
-order: 2
+order: 3
 ---

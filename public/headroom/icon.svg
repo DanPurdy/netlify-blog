@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34343A"/>
+      <stop offset="1" stop-color="#1A1A1E"/>
+    </linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFA041"/>
+      <stop offset="1" stop-color="#E8590C"/>
+    </linearGradient>
+    <!-- Head in profile, facing right -->
+    <path id="head" d="
+      M 215 940
+      C 235 868, 325 836, 398 812
+      L 405 722
+      C 360 692, 300 622, 290 522
+      C 280 382, 370 250, 510 240
+      C 630 232, 705 300, 712 400
+      C 716 430, 726 446, 726 458
+      C 726 468, 720 474, 722 486
+      C 732 512, 752 536, 762 556
+      C 768 566, 760 574, 746 574
+      L 726 576
+      C 732 586, 734 598, 726 604
+      C 722 607, 722 610, 726 613
+      C 732 620, 728 634, 716 638
+      C 714 650, 722 666, 716 684
+      C 708 704, 680 712, 650 712
+      C 630 714, 618 730, 616 760
+      L 620 808
+      C 692 834, 788 866, 808 940
+      Z"/>
+    <!-- The level: everything below this wave is orange -->
+    <path id="wave" d="M 100 548 C 170 524, 250 572, 330 548 S 490 524, 570 548 S 730 572, 924 548 L 924 960 L 100 960 Z"/>
+    <clipPath id="headClip"><use href="#head"/></clipPath>
+    <!-- Cream stops just under the wave, so no cream is ever drawn beneath the orange's outer
+         edge (stacking the two leaves a light fringe once anti-aliased at small sizes) -->
+    <mask id="aboveWave">
+      <rect width="1024" height="1024" fill="white"/>
+      <use href="#wave" fill="black" transform="translate(0 6)"/>
+    </mask>
+    <clipPath id="tile"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>
+  </defs>
+
+  <!-- macOS icon tile: 824pt square on the 1024 grid -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+
+  <!-- Exported on its own (rsvg-convert -i glyph) for the dropdown header -->
+  <g id="glyph" clip-path="url(#tile)">
+    <use href="#head" fill="#ECE7E0" mask="url(#aboveWave)"/>
+    <g clip-path="url(#headClip)">
+      <use href="#wave" fill="url(#fill)"/>
+    </g>
+  </g>
+</svg>

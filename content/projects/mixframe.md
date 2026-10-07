@@ -6,7 +6,7 @@ url: https://github.com/DanPurdy/mixframe
 site: https://dpurdy.me/plugins/mixframe/
 year: "2026"
 status: live
-order: 0
+order: 1
 ---
 
 For years GDS has been on in the background while I work. Their player used

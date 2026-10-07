@@ -1,21 +1,18 @@
 ---
 /**
- * Standalone landing page for Headroom, the macOS menu bar app. Like the
- * mixframe page it is a product page, not a blog post, so it is deliberately
- * self-contained: no BaseLayout, no shared styles. The look borrows Claude's
- * warm cream-and-terracotta palette and serif display type, with Headroom's
- * own twist on top: the head-in-profile glyph and its amber-to-flame level.
+ * Standalone page for Headroom, the macOS menu bar app. A product page, not a
+ * blog post, so like the mixframe page it is self-contained: no BaseLayout,
+ * no shared styles.
  *
- * The hero "scene" (menu bar + dropdown) is drawn in CSS with illustrative
- * numbers, so it stays crisp at any size and never shows a real account.
- * The gallery further down shows real renders of the Usage and History
- * pages, captured from the app running against a fabricated data directory
- * (see the headroom repo's README for the HEADROOM_HOME override), so the
- * figures are genuine app output without being anyone's real usage.
+ * Set in the manner of anthropic.com: cream ground, a regular-weight serif
+ * headline, a grotesque for everything else, pill buttons, and a lot of air.
+ * Headroom's own glyph and its amber-to-flame level are the only colour.
+ *
+ * The two dropdown images are real renders of the app, captured from a
+ * second instance pointed at a fabricated data directory (HEADROOM_HOME plus
+ * a fake home), so they are genuine app output without being anyone's usage.
  */
 import { Image } from 'astro:assets';
-import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/600.css';
 
 import usage from '../../assets/headroom/usage.png';
 import history from '../../assets/headroom/history.png';
@@ -35,12 +32,12 @@ const description =
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} · Claude plan limits in your menu bar</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/headroom/icon.svg" />
     <link rel="icon" type="image/png" sizes="64x64" href="/headroom/favicon-64.png" />
     <link rel="apple-touch-icon" href="/headroom/apple-touch-icon.png" />
-    <meta property="og:title" content={`${title} · Claude plan limits in your menu bar`} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dpurdy.me/apps/headroom/" />
@@ -50,339 +47,133 @@ const description =
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <!-- The app icon's head, drawn once and reused; the level wave is what fills it. -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <defs>
-        <linearGradient id="hr-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#FFA041"></stop>
-          <stop offset="1" stop-color="#E8590C"></stop>
-        </linearGradient>
-        <path
-          id="hr-head"
-          d="M 215 940 C 235 868, 325 836, 398 812 L 405 722 C 360 692, 300 622, 290 522 C 280 382, 370 250, 510 240 C 630 232, 705 300, 712 400 C 716 430, 726 446, 726 458 C 726 468, 720 474, 722 486 C 732 512, 752 536, 762 556 C 768 566, 760 574, 746 574 L 726 576 C 732 586, 734 598, 726 604 C 722 607, 722 610, 726 613 C 732 620, 728 634, 716 638 C 714 650, 722 666, 716 684 C 708 704, 680 712, 650 712 C 630 714, 618 730, 616 760 L 620 808 C 692 834, 788 866, 808 940 Z"
-        ></path>
-        <path
-          id="hr-wave"
-          d="M 100 548 C 170 524, 250 572, 330 548 S 490 524, 570 548 S 730 572, 924 548 L 924 960 L 100 960 Z"
-        ></path>
-        <clipPath id="hr-head-clip"><use href="#hr-head"></use></clipPath>
-        <mask id="hr-above-wave">
-          <rect width="1024" height="1024" fill="white"></rect>
-          <use href="#hr-wave" fill="black" transform="translate(0 6)"></use>
-        </mask>
-        <g id="hr-glyph">
-          <use href="#hr-head" fill="#1A1A1E" mask="url(#hr-above-wave)"></use>
-          <g clip-path="url(#hr-head-clip)">
-            <use href="#hr-wave" fill="url(#hr-fill)"></use>
-          </g>
-        </g>
-        <g id="hr-glyph-cream">
-          <use href="#hr-head" fill="#ECE7E0" mask="url(#hr-above-wave)"></use>
-          <g clip-path="url(#hr-head-clip)">
-            <use href="#hr-wave" fill="url(#hr-fill)"></use>
-          </g>
-        </g>
-      </defs>
-    </svg>
-
-    <header class="top">
-      <div class="wrap">
-        <a class="brand" href="#top">
-          <svg class="glyph" viewBox="205 235 610 710" aria-hidden="true">
-            <use href="#hr-glyph"></use>
-          </svg>
-          <span>Headroom</span>
-        </a>
-        <nav>
-          <a href="#how" class="nav-how">How it works</a>
-          <a href="#install">Install</a>
-          <a href={repo} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        </nav>
-      </div>
+    <header class="wrap">
+      <a class="brand" href="/apps/headroom/">
+        <img src="/headroom/icon.svg" alt="" width="30" height="30" />
+        Headroom
+      </a>
+      <nav>
+        <a href="#install">Install</a>
+        <a href={repo}>GitHub</a>
+      </nav>
     </header>
 
-    <main id="top">
+    <main>
       <section class="hero wrap">
-        <p class="eyebrow">macOS menu bar app · open source · reads, never writes</p>
-        <h1>Know how much Claude you have <em>left</em>.</h1>
-        <p class="lede">
-          Headroom sits in the menu bar and shows your 5-hour and weekly plan limits for every
-          Claude Code account on your Mac at once, with reset countdowns, open sessions and
-          today's cost. No tokens, no API calls, no login: by default it only reads what Claude
-          Code already hands to your status line.
+        <h1>See how much Claude you have left.</h1>
+        <p>
+          A menu bar gauge of your 5-hour and weekly limits, for every Claude Code account on
+          your Mac. It reads what Claude Code already tells your status line. No login, no API
+          calls.
         </p>
-        <div class="cta-row">
-          <a class="btn primary" href="#install">Install</a>
-          <a class="btn" href={`${repo}/releases/latest`} target="_blank" rel="noopener noreferrer">
-            Download v{version}
-          </a>
-          <span class="req">macOS 14+ · Pro, Max or Team plan</span>
+        <div class="buttons">
+          <a class="pill solid" href={`${repo}/releases/latest`}>Download for macOS</a>
+          <a class="pill" href="#install">Install from the terminal</a>
         </div>
       </section>
 
-      <section class="scene" aria-label="Headroom in the macOS menu bar">
-        <div class="wrap">
-          <div class="desktop">
-            <div class="menubar" aria-hidden="true">
-              <span class="apple"></span>
-              <span class="app">Finder</span>
-              <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span
-              ><span>Help</span>
-              <span class="spacer"></span>
-              <span class="gauge">
-                <span class="col">
-                  <span class="lbl">Main</span>
-                  <span class="rows">
-                    <span class="r"><i style="--v:38%"></i><b>38%</b></span>
-                    <span class="r"><i style="--v:61%"></i><b>61%</b></span>
-                  </span>
-                </span>
-                <span class="col">
-                  <span class="lbl">Personal</span>
-                  <span class="rows">
-                    <span class="r"><i style="--v:4%"></i><b>4%</b></span>
-                    <span class="r"><i style="--v:23%"></i><b>23%</b></span>
-                  </span>
+      <figure class="desktop wrap" aria-label="Headroom's gauge in the macOS menu bar, with its dropdown open">
+        <div class="scene">
+          <div class="menubar" aria-hidden="true">
+            <span class="apple"></span>
+            <span class="app">Finder</span>
+            <span class="menu">File</span>
+            <span class="menu">Edit</span>
+            <span class="menu">View</span>
+            <span class="menu">Go</span>
+            <span class="menu">Window</span>
+            <span class="menu">Help</span>
+            <span class="gap"></span>
+            <span class="gauge">
+              <span class="col">
+                <span class="lbl">Main</span>
+                <span class="rows">
+                  <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
+                  <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
                 </span>
               </span>
-              <span class="sys">
-                <span class="wifi"></span>
-                <span class="batt"></span>
-                <span class="clock">Tue 09:41</span>
+              <span class="col">
+                <span class="lbl">Personal</span>
+                <span class="rows">
+                  <span class="r"><i style="--v: 4%"></i><b>4%</b></span>
+                  <span class="r"><i style="--v: 23%"></i><b>23%</b></span>
+                </span>
               </span>
-            </div>
-
-            <div class="under">
-              <div class="watermark" aria-hidden="true">
-                <svg viewBox="205 235 610 710">
-                  <use href="#hr-glyph"></use>
-                </svg>
-                <p>
-                  One column per account. Five-hour on top, weekly below. It dims when a reading
-                  is out of date.
-                </p>
-              </div>
-
-              <div class="panel" aria-hidden="true">
-                <div class="p-head">
-                  <svg class="glyph" viewBox="205 235 610 710"><use href="#hr-glyph-cream"></use></svg>
-                  <b>Headroom</b>
-                  <span class="seg"><span class="on">Usage</span><span>History</span></span>
-                  <span class="gear"></span>
-                </div>
-
-                <div class="card">
-                  <div class="c-head">
-                    <b>Main</b>
-                    <span class="when">updated just now</span>
-                    <span class="refresh"></span>
-                  </div>
-                  <div class="limit">
-                    <span>5-hour</span><span>38% · resets in 2h 41m</span>
-                    <i style="--v:38%"></i>
-                  </div>
-                  <div class="limit">
-                    <span>Weekly</span><span>61% · resets in 3d 4h</span>
-                    <i style="--v:61%"></i>
-                  </div>
-                  <div class="meta"><span>3 open sessions</span><span>$41.20 today</span></div>
-                  <div class="sess"><i class="live"></i><span>Checkout retry logic</span><em>Fable 5.1</em><em>42% ctx</em></div>
-                  <div class="sess"><i class="live"></i><span>Release notes for 2.4</span><em>Opus 5.5</em><em>17% ctx</em></div>
-                  <div class="sess"><i></i><span>Flaky integration tests</span><em>Sonnet 5.5</em><em>63% ctx</em></div>
-                </div>
-
-                <div class="card">
-                  <div class="c-head">
-                    <b>Personal</b>
-                    <span class="when">updated 4m ago</span>
-                    <span class="refresh"></span>
-                  </div>
-                  <div class="limit">
-                    <span>5-hour</span><span>4% · resets in 4h 12m</span>
-                    <i style="--v:4%"></i>
-                  </div>
-                  <div class="limit">
-                    <span>Weekly</span><span>23% · resets in 5d 2h</span>
-                    <i style="--v:23%"></i>
-                  </div>
-                  <div class="meta"><span>1 open session</span><span>$2.61 today</span></div>
-                  <div class="sess"><i class="live"></i><span>Headroom project page</span><em>Fable 5.1</em><em>9% ctx</em></div>
-                </div>
-
-                <div class="p-foot">Quit</div>
-              </div>
-            </div>
+            </span>
+            <span class="clock">Tue 09:41</span>
           </div>
+          <Image
+            class="dropdown"
+            src={usage}
+            alt="The dropdown: one card per account with 5-hour and weekly bars, reset countdowns, today's cost and the open sessions"
+            width={340}
+            loading="eager"
+          />
         </div>
-      </section>
+      </figure>
 
-      <section class="why wrap">
-        <div class="why-copy">
-          <h2>Why</h2>
+      <section class="rows wrap">
+        <div class="row">
+          <h2>Every account at once</h2>
           <p>
-            The limits are the thing you only find out about mid-task. Claude Code will tell you
-            where you stand, but only when you stop and ask, and only for the account you are in.
-            If you keep a work login and a personal one, you have no idea which is about to run
-            dry until it does.
-          </p>
-          <p>
-            Headroom was built on least privilege. It never asks for your login and never calls
-            an API on your behalf. Claude Code already passes your plan usage to its status line
-            after every reply, so Headroom simply listens there and puts the numbers where you
-            will see them. The one network feature, Live usage, is opt-in per account and only
-            touches your Keychain when you press the button.
+            One column per account in the menu bar. Open it for reset countdowns, the sessions
+            you have running, and today's cost.
           </p>
         </div>
-        <ul class="facts">
-          <li><b>0</b><span>tokens used. The status line runs locally.</span></li>
-          <li><b>0</b><span>network calls unless you switch Live on.</span></li>
-          <li><b>∞</b><span>accounts. One column each in the menu bar.</span></li>
-        </ul>
-      </section>
-
-      <section class="features wrap">
-        <div class="feature">
-          <h3>Every account at once</h3>
+        <div class="row">
+          <h2>What used it</h2>
           <p>
-            Each Claude Code folder is one account. The menu bar shows its label beside two small
-            bars, 5-hour on top and weekly below, with the percentages. The dropdown adds reset
-            countdowns.
+            History shows which conversations took the most from your limits in the last hour,
+            12 hours or day.
+          </p>
+          <Image
+            src={history}
+            alt="The History page: totals per account, then each conversation's share of the limits"
+            width={340}
+          />
+        </div>
+        <div class="row">
+          <h2>Reads, never writes</h2>
+          <p>
+            Claude Code passes your usage to its status line after every reply. Headroom listens
+            there and leaves your status line working as before. Nothing polls and nothing
+            phones home.
           </p>
         </div>
-        <div class="feature">
-          <h3>Open sessions</h3>
+        <div class="row">
+          <h2>Live, if you want it</h2>
           <p>
-            Every open Claude Code session per account, with the model it is on and how much of
-            its context it has used. Sessions quiet for 15 minutes are marked idle.
+            Switch it on per account to count use from claude.ai and your other devices. It
+            reads your saved login only when you ask, and keeps it in memory.
           </p>
         </div>
-        <div class="feature">
-          <h3>Today's cost</h3>
-          <p>
-            The API-equivalent cost of today's sessions, as Claude Code estimates it. Not what
-            your subscription bills, but a good sense of how heavy the day has been.
-          </p>
-        </div>
-        <div class="feature">
-          <h3>History</h3>
-          <p>
-            Conversations with replies in the last 1, 12 or 24 hours, and how much of the 5-hour
-            and weekly limits each one took in that time, with totals per account.
-          </p>
-        </div>
-        <div class="feature">
-          <h3>Reads, never writes</h3>
-          <p>
-            Install wraps your status line command and leaves it working exactly as before. The
-            original setting is backed up, and Remove puts it back. Nothing else is touched.
-          </p>
-        </div>
-        <div class="feature">
-          <h3>Live usage, if you want it</h3>
-          <p>
-            Optional, per account. Checks once an hour and on demand, so use from claude.ai, the
-            desktop app and other devices shows up too. The login stays in memory, never on disk.
-          </p>
-        </div>
-      </section>
-
-      <section class="gallery wrap">
-        <h2>The dropdown</h2>
-        <div class="shots">
-          <figure>
-            <Image src={usage} alt="The Usage page: one card per account with 5-hour and weekly bars, reset countdowns, today's cost and the open sessions" width={340} />
-            <figcaption>Usage. One card per account, with its open sessions, the model each is on and how full its context is.</figcaption>
-          </figure>
-          <figure>
-            <Image src={history} alt="The History page: a per-account table of 5-hour, weekly and cost totals, then each conversation's share of the limits" width={340} />
-            <figcaption>History. What each conversation took from the limits in the last 1, 12 or 24 hours, and what it cost.</figcaption>
-          </figure>
-          <figure class="shot-note">
-            <figcaption>
-              <b>Settings</b> lists every Claude Code folder on the Mac. Give each a label, press
-              Install, and optionally switch on Live usage or Launch at login. Remove puts your
-              original status line back.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="how wrap" id="how">
-        <h2>How it works</h2>
-        <ol class="steps">
-          <li>
-            <b>Claude Code reports.</b> After every reply, Claude Code passes your plan usage to
-            whatever command is set as its <code>statusLine</code>. That happens locally and
-            costs nothing.
-          </li>
-          <li>
-            <b>Headroom listens.</b> Install points the status line at a tiny
-            <code>headroom</code> command that saves the figures to JSON files in Application
-            Support, then runs your original status line with the same input.
-          </li>
-          <li>
-            <b>The gauge redraws.</b> The app watches those files and open Claude Code processes
-            with kqueue. It otherwise wakes only for moments it has worked out in advance: a limit
-            resetting, a reading going stale, midnight. No polling.
-          </li>
-        </ol>
-        <p class="note">
-          Without Live, an account updates only when Claude Code replies on it. Readings older
-          than 30 minutes are dimmed with an "as of" age so you can tell.
-        </p>
       </section>
 
       <section class="install wrap" id="install">
-        <div class="install-card">
-          <h2>Install</h2>
-          <p>
-            One command downloads the latest release into Applications and opens it. Or grab
-            <a href={`${repo}/releases/latest`} target="_blank" rel="noopener noreferrer"
-              >Headroom-{version}.zip</a
-            > from the releases page and move it there yourself.
-          </p>
-          <div class="cmd">
-            <pre><code>{installCommand}</code></pre>
-            <button type="button" class="copy" data-copy={installCommand}>Copy</button>
-          </div>
-          <p class="small">
-            Releases aren't signed with an Apple Developer ID yet, so a browser download is
-            blocked the first time you open it. Approve it under System Settings → Privacy
-            &amp; Security → Open Anyway, or run
-            <code>xattr -dr com.apple.quarantine /Applications/Headroom.app</code>.
-          </p>
-
-          <h3>Then</h3>
-          <ol>
-            <li>Click the gauge in the menu bar, then the gear to open Settings.</li>
-            <li>
-              Headroom lists <code>~/.claude</code> and every <code>~/.claude-*</code> folder.
-              Give each a label and press <strong>Install</strong>.
-            </li>
-            <li>Send a message in Claude Code on that account. Its usage appears straight away.</li>
-            <li>Optionally switch on <strong>Live usage</strong> and <strong>Launch at login</strong>.</li>
-          </ol>
-          <p class="small">
-            Needs macOS 14 or later and Claude Code logged in with a Pro, Max or Team plan. To
-            uninstall, press <strong>Remove</strong> on each account first so your original status
-            line goes back, then delete the app.
-          </p>
+        <h2>Install</h2>
+        <p>Needs macOS 14 and Claude Code signed in with a Pro, Max or Team plan.</p>
+        <div class="command">
+          <pre><code>{installCommand}</code></pre>
+          <button type="button" class="copy" data-copy={installCommand}>Copy</button>
         </div>
+        <p class="small">
+          Or <a href={`${repo}/releases/latest`}>download Headroom {version}</a> and move it
+          to Applications. It isn't notarised yet, so allow it under Privacy &amp; Security the
+          first time.
+        </p>
+        <ol>
+          <li>Click the gauge, then the gear.</li>
+          <li>Label each Claude Code folder and press Install.</li>
+          <li>Send a message in Claude Code. Its usage appears.</li>
+        </ol>
       </section>
     </main>
 
-    <footer>
-      <div class="wrap">
-        <p>
-          Headroom is an independent open-source project (MIT) by
-          <a href="/">Dan Purdy</a>. It is not affiliated with or endorsed by Anthropic.
-        </p>
-        <p>
-          <a href={repo} target="_blank" rel="noopener noreferrer">GitHub</a> ·
-          <a href={`${repo}/releases`} target="_blank" rel="noopener noreferrer">Releases</a> ·
-          <a href="/projects/headroom/">Project page</a>
-        </p>
-      </div>
+    <footer class="wrap">
+      <p>
+        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with Anthropic.
+        <a href="/projects/headroom/">Project notes</a>.
+      </p>
     </footer>
 
     <script>
@@ -392,7 +183,7 @@ const description =
             await navigator.clipboard.writeText(button.dataset.copy ?? '');
             button.textContent = 'Copied';
           } catch {
-            button.textContent = 'Select & copy';
+            button.textContent = 'Select and copy';
           }
           setTimeout(() => (button.textContent = 'Copy'), 1800);
         });
@@ -404,23 +195,14 @@ const description =
 <style>
   :root {
     color-scheme: light;
-    --cream: #f0eee6;
-    --cream-2: #faf9f5;
+    --bg: #f0eee6;
+    --bg-raise: #faf9f5;
     --ink: #141413;
-    --ink-2: #5e5d59;
-    --ink-3: #87857f;
-    --line: #dcd8cc;
-    --clay: #d97757;
-    --amber: #ffa041;
-    --flame: #e8590c;
-    --panel: #262625;
-    --panel-2: #363634;
-    --panel-3: #4a4a47;
-    --panel-ink: #ece7e0;
-    --panel-ink-2: #a9a7a1;
-    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-    --sans: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --ink-soft: #5e5d59;
+    --line: #dedad0;
+    --serif: 'Iowan Old Style', 'Tiempos Text', 'Palatino Linotype', Palatino, Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   }
 
   * {
@@ -433,191 +215,150 @@ const description =
 
   body {
     margin: 0;
-    background: var(--cream);
+    background: var(--bg);
     color: var(--ink);
-    font: 400 17px/1.55 var(--sans);
+    font: 400 17px/1.5 var(--sans);
     -webkit-font-smoothing: antialiased;
   }
 
-  ::selection {
-    background: #f8d8c6;
-  }
-
   .wrap {
-    max-width: 1000px;
+    max-width: 1040px;
     margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  h1,
-  h2,
-  h3 {
-    font-family: var(--serif);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    margin: 0;
-  }
-
-  h2 {
-    font-size: clamp(30px, 3.6vw, 40px);
-    line-height: 1.1;
-    margin-bottom: 22px;
+    padding: 0 32px;
   }
 
   a {
     color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
-  code {
-    font: 400 0.88em var(--mono);
-    background: var(--cream-2);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 1px 6px;
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
   }
 
-  /* header */
-  .top .wrap {
+  h1,
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  header.wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 22px;
-    padding-bottom: 22px;
+    padding-top: 28px;
+    padding-bottom: 96px;
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    text-decoration: none;
-    font: 500 22px var(--serif);
-    letter-spacing: -0.01em;
-  }
-
-  .glyph {
-    width: 26px;
-    height: 30px;
-    display: block;
-  }
-
-  .top nav {
-    display: flex;
-    gap: 26px;
-    font-size: 15px;
     font-weight: 500;
-  }
-
-  .top nav a {
+    font-size: 18px;
     text-decoration: none;
-    color: var(--ink-2);
   }
 
-  .top nav a:hover {
-    color: var(--clay);
+  .brand img {
+    display: block;
+    border-radius: 7px;
   }
 
-  /* hero */
+  nav {
+    display: flex;
+    gap: 28px;
+    font-size: 15px;
+  }
+
+  nav a {
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    text-decoration: underline;
+  }
+
   .hero {
-    padding-top: 56px;
-    padding-bottom: 36px;
-  }
-
-  .eyebrow {
-    font: 600 12px var(--mono);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--clay);
-    margin: 0 0 20px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 
   h1 {
-    font-size: clamp(42px, 6.4vw, 76px);
-    line-height: 1.02;
-    max-width: 14ch;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.08;
   }
 
-  h1 em {
-    font-style: italic;
-    color: var(--clay);
-  }
-
-  .lede {
-    font-size: clamp(17px, 1.9vw, 20px);
+  .hero p {
+    font-size: 19px;
     line-height: 1.5;
-    color: var(--ink-2);
-    max-width: 62ch;
-    margin: 26px 0 0;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 24px auto 0;
   }
 
-  .cta-row {
+  .buttons {
     display: flex;
-    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 30px;
+    margin-top: 32px;
   }
 
-  .btn {
+  .pill {
     display: inline-block;
     padding: 12px 22px;
     border-radius: 999px;
-    border: 1.5px solid var(--ink);
-    font-weight: 600;
+    border: 1px solid var(--ink);
     font-size: 15px;
+    font-weight: 500;
     text-decoration: none;
-    transition:
-      background 0.15s,
-      color 0.15s;
   }
 
-  .btn:hover {
-    background: var(--cream-2);
+  .pill:hover {
+    background: var(--bg-raise);
   }
 
-  .btn.primary {
+  .pill.solid {
     background: var(--ink);
-    color: var(--cream);
+    color: var(--bg);
   }
 
-  .btn.primary:hover {
-    background: var(--clay);
-    border-color: var(--clay);
-    color: #fff;
+  .pill.solid:hover {
+    background: #000;
   }
 
-  .req {
-    font: 500 13px var(--mono);
-    color: var(--ink-3);
-    margin-left: 6px;
-  }
-
-  /* the scene: a fake menu bar with the dropdown hanging from it */
-  .scene {
-    padding: 20px 0 10px;
-  }
-
+  /* A corner of a desktop: the menu bar, and the dropdown hanging from the gauge. */
   .desktop {
-    border-radius: 18px;
-    overflow: hidden;
+    margin: 72px auto 120px;
+  }
+
+  .scene {
+    position: relative;
+    background: #e6e2d8;
     border: 1px solid var(--line);
-    background:
-      radial-gradient(1200px 500px at 20% 100%, #f7d9c4 0%, transparent 60%),
-      radial-gradient(900px 420px at 95% 0%, #ffe3c2 0%, transparent 55%),
-      linear-gradient(180deg, #ebe6da, #e6dfd1);
-    box-shadow: 0 30px 60px -40px rgba(20, 20, 19, 0.35);
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 30px 0 32px;
   }
 
   .menubar {
+    position: absolute;
+    inset: 0 0 auto 0;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 17px;
     height: 30px;
-    padding: 0 14px 0 18px;
-    background: rgba(250, 249, 245, 0.78);
-    backdrop-filter: blur(20px);
+    padding: 0 12px 0 18px;
+    background: rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(20, 20, 19, 0.08);
-    font: 500 13px var(--sans);
-    color: var(--ink);
+    font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -626,7 +367,7 @@ const description =
     font-weight: 700;
   }
 
-  .menubar .spacer {
+  .menubar .gap {
     flex: 1;
   }
 
@@ -634,21 +375,19 @@ const description =
     width: 13px;
     height: 15px;
     background: var(--ink);
-    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 170'><path d='M150 130c-3 7-6 13-11 19-6 8-12 14-21 14-8 0-11-5-21-5s-13 5-21 5c-9 0-16-7-22-15-13-19-23-53-10-77 7-12 18-19 31-19 9 0 17 6 22 6 6 0 15-7 26-6 4 0 17 2 25 13-1 1-15 9-15 26 0 21 18 28 18 28zM110 25c4-6 8-14 7-22-7 1-15 5-20 10-4 5-8 13-7 21 7 0 15-4 20-9z'/></svg>")
-      center / contain no-repeat;
     mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 170'><path d='M150 130c-3 7-6 13-11 19-6 8-12 14-21 14-8 0-11-5-21-5s-13 5-21 5c-9 0-16-7-22-15-13-19-23-53-10-77 7-12 18-19 31-19 9 0 17 6 22 6 6 0 15-7 26-6 4 0 17 2 25 13-1 1-15 9-15 26 0 21 18 28 18 28zM110 25c4-6 8-14 7-22-7 1-15 5-20 10-4 5-8 13-7 21 7 0 15-4 20-9z'/></svg>")
       center / contain no-repeat;
   }
 
-  /* the gauge, drawn to the real app's dimensions */
+  /* Drawn to the app's dimensions: 11pt label, two 28×4 bars, 8pt percentages. */
   .gauge {
     display: inline-flex;
-    gap: 10px;
-    padding: 0 6px;
-    height: 24px;
     align-items: center;
-    border-radius: 5px;
-    background: rgba(20, 20, 19, 0.08);
+    gap: 10px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: rgba(20, 20, 19, 0.1);
   }
 
   .gauge .col {
@@ -658,7 +397,8 @@ const description =
   }
 
   .gauge .lbl {
-    font: 500 11px var(--sans);
+    font-size: 11px;
+    font-weight: 500;
   }
 
   .gauge .rows {
@@ -675,7 +415,6 @@ const description =
   }
 
   .gauge .r i {
-    display: block;
     width: 28px;
     height: 4px;
     border-radius: 1.5px;
@@ -683,547 +422,157 @@ const description =
   }
 
   .gauge .r b {
-    font: 500 8px var(--sans);
+    font-size: 8px;
+    font-weight: 500;
     width: 20px;
     font-variant-numeric: tabular-nums;
   }
 
-  .sys {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin-left: 4px;
-  }
-
-  .wifi {
-    width: 15px;
-    height: 11px;
-    border-radius: 50% 50% 0 0;
-    background: radial-gradient(circle at 50% 100%, var(--ink) 20%, transparent 22%, transparent 45%, var(--ink) 47%, var(--ink) 55%, transparent 57%, transparent 78%, var(--ink) 80%);
-  }
-
-  .batt {
-    width: 24px;
-    height: 11px;
-    border: 1.5px solid var(--ink);
-    border-radius: 3px;
-    position: relative;
-  }
-
-  .batt::before {
-    content: '';
-    position: absolute;
-    inset: 1.5px;
-    width: 60%;
-    background: var(--ink);
-    border-radius: 1px;
-  }
-
-  .batt::after {
-    content: '';
-    position: absolute;
-    right: -4px;
-    top: 2.5px;
-    width: 2px;
-    height: 4px;
-    background: var(--ink);
-    border-radius: 0 1px 1px 0;
-  }
-
-  .under {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 40px;
-    padding: 0 48px 0 48px;
-    min-height: 560px;
-    align-items: start;
-  }
-
-  .watermark {
-    align-self: center;
-    padding: 40px 0;
-    max-width: 380px;
-  }
-
-  .watermark svg {
-    width: 150px;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 20px 30px rgba(232, 89, 12, 0.18));
-  }
-
-  .watermark p {
-    font: 500 18px/1.45 var(--serif);
-    color: var(--ink-2);
-    margin: 22px 0 0;
-  }
-
-  .panel {
-    width: 340px;
-    justify-self: end;
-    margin-right: 6px;
-    background: var(--panel);
-    color: var(--panel-ink);
-    border-radius: 0 0 12px 12px;
-    padding: 14px;
-    font: 400 12px/1.3 var(--sans);
-    box-shadow:
-      0 0 0 0.5px rgba(0, 0, 0, 0.35),
-      0 24px 50px -10px rgba(20, 20, 19, 0.55);
-  }
-
-  .p-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .p-head .glyph {
-    width: 17px;
-    height: 20px;
-  }
-
-  .p-head b {
+  .clock {
     font-size: 13px;
-    flex: 1;
-  }
-
-  .seg {
-    display: inline-flex;
-    background: var(--panel-3);
-    border-radius: 6px;
-    padding: 1px;
     font-weight: 500;
   }
 
-  .seg span {
-    padding: 3px 9px;
-    border-radius: 5px;
-    color: var(--panel-ink-2);
-  }
-
-  .seg .on {
-    background: #6b6a66;
-    color: #fff;
-  }
-
-  .gear {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 3px dotted var(--panel-ink-2);
-  }
-
-  .card {
-    background: var(--panel-2);
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  .c-head {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .c-head b {
-    font-size: 13px;
-  }
-
-  .when {
-    margin-left: auto;
-    color: var(--panel-ink-2);
-    font-size: 11px;
-  }
-
-  .refresh {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1.5px solid var(--panel-ink-2);
-    border-right-color: transparent;
-    align-self: center;
-  }
-
-  .limit {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    row-gap: 4px;
-    font-size: 11px;
-    margin-bottom: 8px;
-  }
-
-  .limit span:last-of-type {
-    font-variant-numeric: tabular-nums;
-  }
-
-  .limit i {
-    grid-column: 1 / -1;
+  .dropdown {
     display: block;
-    height: 6px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--amber), var(--flame)) 0 0 / var(--v) 100% no-repeat,
-      var(--panel-3);
+    width: 340px;
+    max-width: calc(100% - 24px);
+    height: auto;
+    margin: 4px 100px 0 auto;
+    border-radius: 11px;
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.35),
+      0 18px 36px -12px rgba(20, 20, 19, 0.45);
   }
 
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    color: var(--panel-ink-2);
-    font-size: 11px;
-    margin: 4px 0 6px;
-  }
-
-  .sess {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    padding: 3px 0;
-  }
-
-  .sess i {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--panel-ink-2);
-    flex: none;
-  }
-
-  .sess i.live {
-    background: #30d158;
-  }
-
-  .sess span {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .sess em {
-    font-style: normal;
-    color: var(--panel-ink-2);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .p-foot {
-    text-align: right;
-    color: var(--panel-ink-2);
-    font-size: 11px;
-    padding-top: 2px;
-  }
-
-  /* why */
-  .why {
+  /* Quiet rows: serif heading on the left, a sentence or two on the right. */
+  .rows {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 56px;
-    padding-top: 80px;
-    padding-bottom: 40px;
+    gap: 64px;
   }
 
-  .why p {
-    margin: 0 0 1em;
-    color: var(--ink-2);
-    font-size: 17.5px;
-  }
-
-  .facts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    align-self: start;
-    border-top: 1px solid var(--line);
-  }
-
-  .facts li {
+  .row {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 14px;
-    align-items: baseline;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 15px;
-    color: var(--ink-2);
-  }
-
-  .facts b {
-    font: 500 40px/1 var(--serif);
-    color: var(--clay);
-  }
-
-  /* features */
-  .features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    padding-top: 40px;
-    padding-bottom: 60px;
-  }
-
-  .feature {
-    background: var(--cream-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px 24px 20px;
-  }
-
-  .feature h3 {
-    font-size: 21px;
-    margin-bottom: 10px;
-  }
-
-  .feature p {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--ink-2);
-  }
-
-  /* gallery */
-  .gallery {
-    padding-top: 30px;
-    padding-bottom: 50px;
-  }
-
-  .shots {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
     align-items: start;
+    max-width: 880px;
   }
 
-  .shots figure {
-    margin: 0;
+  .row h2 {
+    font-size: 34px;
+    line-height: 1.15;
   }
 
-  .shots img {
-    display: block;
+  .row p {
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+    font-size: 18px;
+  }
+
+  .row img {
+    grid-column: 2;
     width: 100%;
     max-width: 340px;
     height: auto;
-    border-radius: 12px;
+    margin-top: 24px;
+    border-radius: 11px;
     box-shadow:
-      0 0 0 0.5px rgba(0, 0, 0, 0.3),
-      0 20px 40px -18px rgba(20, 20, 19, 0.5);
+      0 0 0 0.5px rgba(0, 0, 0, 0.35),
+      0 14px 28px -12px rgba(20, 20, 19, 0.4);
   }
 
-  .shots figcaption {
-    margin-top: 12px;
-    font-size: 14px;
-    color: var(--ink-2);
-    max-width: 340px;
-  }
-
-  .shot-note {
-    align-self: center;
-    background: var(--cream-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 22px 24px;
-  }
-
-  .shot-note figcaption {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  .shot-note b {
-    display: block;
-    font: 500 21px var(--serif);
-    color: var(--ink);
-    margin-bottom: 8px;
-  }
-
-  /* how */
-  .how {
-    padding-top: 50px;
-    padding-bottom: 60px;
-    border-top: 1px solid var(--line);
-  }
-
-  .steps {
-    counter-reset: step;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  }
-
-  .steps li {
-    counter-increment: step;
-    font-size: 15.5px;
-    color: var(--ink-2);
-    line-height: 1.5;
-  }
-
-  .steps li::before {
-    content: counter(step, decimal-leading-zero);
-    display: block;
-    font: 500 14px var(--mono);
-    color: var(--clay);
-    margin-bottom: 10px;
-  }
-
-  .steps b {
-    display: block;
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  .how .note {
-    margin: 32px 0 0;
-    font-size: 15px;
-    color: var(--ink-3);
-    max-width: 70ch;
-  }
-
-  /* install */
   .install {
-    padding-bottom: 80px;
+    max-width: 720px;
+    margin: 128px auto 0;
+    padding-bottom: 96px;
   }
 
-  .install-card {
-    background: var(--panel);
-    color: var(--panel-ink);
-    border-radius: 22px;
-    padding: 44px 48px;
+  .install h2 {
+    font-size: 34px;
+    line-height: 1.15;
+    margin-bottom: 12px;
   }
 
-  .install-card h2 {
-    color: #fff;
+  .install p {
+    margin: 0 0 20px;
+    color: var(--ink-soft);
   }
 
-  .install-card h3 {
-    font-size: 24px;
-    margin: 34px 0 12px;
-    color: #fff;
+  .install .small {
+    font-size: 15px;
   }
 
-  .install-card p,
-  .install-card li {
-    color: var(--panel-ink-2);
-    font-size: 16px;
-    margin: 0 0 12px;
-  }
-
-  .install-card ol {
-    padding-left: 22px;
-    margin: 0;
-  }
-
-  .install-card li {
-    margin-bottom: 8px;
-  }
-
-  .install-card strong {
-    color: var(--panel-ink);
-  }
-
-  .install-card a {
-    color: var(--amber);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255, 160, 65, 0.4);
-  }
-
-  .install-card a:hover {
-    border-bottom-color: var(--amber);
-  }
-
-  .install-card code {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: var(--panel-ink);
-  }
-
-  .cmd {
+  .command {
     display: flex;
     align-items: stretch;
-    gap: 10px;
-    background: #141413;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 8px;
+    background: var(--bg-raise);
+    border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 6px 6px 6px 18px;
-    margin: 18px 0;
+    padding: 6px 6px 6px 16px;
+    margin: 0 0 16px;
   }
 
-  .cmd pre {
-    margin: 0;
+  .command pre {
     flex: 1;
     min-width: 0;
+    margin: 0;
     overflow-x: auto;
     display: flex;
     align-items: center;
-    font: 400 14px/1.5 var(--mono);
-    color: var(--panel-ink);
-  }
-
-  .cmd code {
-    background: none;
-    border: 0;
-    padding: 0;
-    font: inherit;
-    color: inherit;
+    font: 400 13.5px/1.6 var(--mono);
   }
 
   .copy {
     flex: none;
-    border: 0;
-    border-radius: 8px;
-    padding: 0 16px;
-    font: 600 13px var(--sans);
-    background: linear-gradient(180deg, var(--amber), var(--flame));
-    color: #1a1a1e;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 0 14px;
+    min-width: 64px;
+    background: var(--ink);
+    color: var(--bg);
+    font: 500 13px var(--sans);
     cursor: pointer;
-    min-width: 92px;
   }
 
   .copy:hover {
-    filter: brightness(1.08);
+    background: #000;
   }
 
-  .install-card .small {
+  .install ol {
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .install li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+
+  footer.wrap {
+    padding-top: 28px;
+    padding-bottom: 48px;
     font-size: 14px;
-  }
-
-  /* footer */
-  footer {
-    border-top: 1px solid var(--line);
-    padding: 28px 0 40px;
-    font-size: 14px;
-    color: var(--ink-3);
-  }
-
-  footer .wrap {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
+    color: var(--ink-soft);
   }
 
   footer p {
     margin: 0;
-    max-width: 60ch;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
   }
 
-  footer a {
-    color: var(--ink-2);
-  }
-
+  /* The one piece of motion: the gauge fills when the page loads. */
   @media (prefers-reduced-motion: no-preference) {
-    .gauge .r i,
-    .limit i {
-      animation: fill 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    @property --v {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: 0%;
+    }
+
+    .gauge .r i {
+      animation: fill 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
     }
 
     @keyframes fill {
@@ -1233,67 +582,62 @@ const description =
     }
   }
 
-  @media (max-width: 900px) {
-    .under {
-      grid-template-columns: 1fr;
-      padding: 0 24px;
-      min-height: 0;
+  @media (max-width: 760px) {
+    .wrap {
+      padding: 0 20px;
     }
 
-    .watermark {
-      padding: 32px 0 8px;
+    header.wrap {
+      padding-bottom: 56px;
     }
 
-    .panel {
-      justify-self: center;
-      margin: 0 0 40px;
-      border-radius: 12px;
+    .hero {
+      text-align: left;
     }
 
-    .menubar span:not(.app):not(.spacer):not(.gauge):not(.gauge *):not(.sys):not(.sys *) {
+    .hero p,
+    .buttons {
+      margin-left: 0;
+      justify-content: flex-start;
+    }
+
+    .desktop {
+      margin: 48px auto 80px;
+    }
+
+    .menubar .menu {
       display: none;
     }
 
-    .why {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      padding-top: 56px;
+    .dropdown {
+      margin: 4px auto 0;
     }
 
-    .features,
-    .shots,
-    .steps {
-      grid-template-columns: 1fr 1fr;
+    .rows {
+      gap: 48px;
+    }
+
+    .row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .row h2 {
+      font-size: 28px;
+    }
+
+    .row img {
+      grid-column: 1;
+    }
+
+    .install {
+      margin-top: 88px;
+      padding-bottom: 64px;
     }
   }
 
-  @media (max-width: 600px) {
-    .features,
-    .shots,
-    .steps {
-      grid-template-columns: 1fr;
-    }
-
-    .top nav {
-      gap: 16px;
-      font-size: 14px;
-    }
-
-    .nav-how {
-      display: none;
-    }
-
-    .install-card {
-      padding: 30px 22px;
-      border-radius: 16px;
-    }
-
-    .panel {
-      width: 100%;
-      max-width: 340px;
-    }
-
-    .menubar .sys {
+  @media (max-width: 420px) {
+    .clock {
       display: none;
     }
   }

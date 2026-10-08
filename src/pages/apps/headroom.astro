@@ -8,16 +8,19 @@
  * headline, a grotesque for everything else, pill buttons, and a lot of air.
  * Headroom's own glyph and its amber-to-flame level are the only colour.
  *
- * The two dropdown images are real renders of the app, captured from a
- * second instance pointed at a fabricated data directory (HEADROOM_HOME plus
- * a fake home), so they are genuine app output without being anyone's usage.
+ * The dropdown images are real renders of the app, captured from a demo build
+ * pointed at a fabricated data directory (HEADROOM_HOME plus a fake home), so
+ * they are genuine app output without being anyone's usage. The two small ones
+ * are unscaled crops of the Usage render.
  */
 import { Image } from 'astro:assets';
 
 import usage from '../../assets/headroom/usage.png';
 import history from '../../assets/headroom/history.png';
+import pace from '../../assets/headroom/pace.png';
+import cache from '../../assets/headroom/cache.png';
 
-const version = '0.3.0';
+const version = '0.5.2';
 const repo = 'https://github.com/DanPurdy/headroom';
 const installCommand =
   'curl -fsSL https://raw.githubusercontent.com/DanPurdy/headroom/main/scripts/install.sh | bash';
@@ -54,6 +57,7 @@ const description =
       </a>
       <nav>
         <a href="#install">Install</a>
+        <a href={`${repo}/releases`}>What's new</a>
         <a href={repo}>GitHub</a>
       </nav>
     </header>
@@ -63,8 +67,9 @@ const description =
         <h1>See how much Claude you have left.</h1>
         <p>
           A menu bar gauge of your 5-hour and weekly limits, for every Claude Code account on
-          your Mac. It reads what Claude Code already tells your status line. No login, no API
-          calls.
+          your Mac, with the pace you're burning them at and how long each conversation's
+          prompt cache has left. It reads what Claude Code already tells your status line. No
+          login, no API calls.
         </p>
         <div class="buttons">
           <a class="pill solid" href={`${repo}/releases/latest`}>Download for macOS</a>
@@ -105,7 +110,7 @@ const description =
           <Image
             class="dropdown"
             src={usage}
-            alt="The dropdown: one card per account with 5-hour and weekly bars, reset countdowns, today's cost and the open sessions"
+            alt="The dropdown: one card per account with 5-hour and weekly bars, a pace line on each, reset countdowns, today's cost and the open sessions with their prompt cache countdowns"
             width={340}
             loading="eager"
           />
@@ -121,14 +126,43 @@ const description =
           </p>
         </div>
         <div class="row">
+          <h2>Know your pace</h2>
+          <p>
+            A line on each bar marks how much of the window has passed. If your usage is ahead
+            of it, Headroom says when you'd run out at this rate. Turn on alerts and it also
+            tells you when a limit passes 80% or 90%, and when it resets.
+          </p>
+          <Image
+            class="detail"
+            src={pace}
+            alt="The Main account's bars: 5-hour at 38% with the pace line ahead of it, Weekly at 61% with the line behind it and the note 'On course to run out in 2d 10h'"
+            width={312}
+          />
+        </div>
+        <div class="row">
+          <h2>Mind the cache</h2>
+          <p>
+            Every open conversation shows how long until its prompt cache goes cold, after
+            which the next message re-reads the whole thing at full price. Click the flame to
+            be told five minutes before. A warning marks a cache that missed in the last hour,
+            with Claude Code's guess at why.
+          </p>
+          <Image
+            class="detail"
+            src={cache}
+            alt="Three open sessions: one with 47 minutes of cache left and a warning, one being watched with 4 minutes left, and one whose cache has gone cold"
+            width={312}
+          />
+        </div>
+        <div class="row">
           <h2>What used it</h2>
           <p>
-            History shows which conversations took the most from your limits in the last hour,
-            12 hours or day.
+            History charts each account's 5-hour and weekly usage over the last hour, 12 hours,
+            day or week, then lists the conversations that took the most from your limits.
           </p>
           <Image
             src={history}
-            alt="The History page: totals per account, then each conversation's share of the limits"
+            alt="The History page over 7 days: a chart per account of 5-hour and weekly usage, totals, then each conversation's share of the limits"
             width={340}
           />
         </div>
@@ -136,8 +170,8 @@ const description =
           <h2>Reads, never writes</h2>
           <p>
             Claude Code passes your usage to its status line after every reply. Headroom listens
-            there and leaves your status line working as before. Nothing polls and nothing
-            phones home.
+            there and leaves your status line working as before. It never touches your login
+            and never calls Anthropic.
           </p>
         </div>
         <div class="row">
@@ -145,6 +179,14 @@ const description =
           <p>
             Switch it on per account to count use from claude.ai and your other devices. It
             reads your saved login only when you ask, and keeps it in memory.
+          </p>
+        </div>
+        <div class="row">
+          <h2>Keeps itself current</h2>
+          <p>
+            Once a day Headroom asks GitHub for a new release and offers to install it from the
+            menu. Or press Check now in Settings. Switch the check off and Headroom makes no
+            network requests at all.
           </p>
         </div>
       </section>
@@ -482,6 +524,13 @@ const description =
       0 14px 28px -12px rgba(20, 20, 19, 0.4);
   }
 
+  /* Unscaled crops from inside a card, shown at their natural size so they stay sharp. */
+  .row img.detail {
+    width: auto;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
   .install {
     max-width: 720px;
     margin: 128px auto 0;
@@ -589,6 +638,12 @@ const description =
 
     header.wrap {
       padding-bottom: 56px;
+    }
+
+    nav {
+      gap: 18px;
+      font-size: 14px;
+      white-space: nowrap;
     }
 
     .hero {

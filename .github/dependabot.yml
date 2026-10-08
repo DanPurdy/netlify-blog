@@ -1,0 +1,18 @@
+# Version updates for the pnpm lockfile. Security alerts are on regardless of
+# this file; this only adds the scheduled version PRs.
+#
+# One PR a month, with minors and patches grouped so a routine month is a single
+# PR to review. Majors arrive one PR each, since they need their changelog read
+# and the Keystatic admin exercised on the deploy preview.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch

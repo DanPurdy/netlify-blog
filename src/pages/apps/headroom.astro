@@ -1,0 +1,699 @@
+---
+/**
+ * Standalone page for Headroom, the macOS menu bar app. A product page, not a
+ * blog post, so like the mixframe page it is self-contained: no BaseLayout,
+ * no shared styles.
+ *
+ * Set in the manner of anthropic.com: cream ground, a regular-weight serif
+ * headline, a grotesque for everything else, pill buttons, and a lot of air.
+ * Headroom's own glyph and its amber-to-flame level are the only colour.
+ *
+ * The dropdown images are real renders of the app, captured from a demo build
+ * pointed at a fabricated data directory (HEADROOM_HOME plus a fake home), so
+ * they are genuine app output without being anyone's usage. The two small ones
+ * are unscaled crops of the Usage render.
+ */
+import { Image } from 'astro:assets';
+
+import usage from '../../assets/headroom/usage.png';
+import history from '../../assets/headroom/history.png';
+import pace from '../../assets/headroom/pace.png';
+import cache from '../../assets/headroom/cache.png';
+
+const version = '0.5.2';
+const repo = 'https://github.com/DanPurdy/headroom';
+const installCommand =
+  'curl -fsSL https://raw.githubusercontent.com/DanPurdy/headroom/main/scripts/install.sh | bash';
+
+const title = 'Headroom';
+const description =
+  'A macOS menu bar app that shows how much of your Claude plan limits you have used, for every Claude Code account on your Mac at once.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/headroom/icon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/headroom/favicon-64.png" />
+    <link rel="apple-touch-icon" href="/headroom/apple-touch-icon.png" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dpurdy.me/apps/headroom/" />
+    <meta property="og:image" content="https://dpurdy.me/headroom/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <header class="wrap">
+      <a class="brand" href="/apps/headroom/">
+        <img src="/headroom/icon.svg" alt="" width="30" height="30" />
+        Headroom
+      </a>
+      <nav>
+        <a href="#install">Install</a>
+        <a href={`${repo}/releases`}>What's new</a>
+        <a href={repo}>GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <h1>See how much Claude you have left.</h1>
+        <p>
+          A menu bar gauge of your 5-hour and weekly limits, for every Claude Code account on
+          your Mac, with the pace you're burning them at and how long each conversation's
+          prompt cache has left. It reads what Claude Code already tells your status line. No
+          login, no API calls.
+        </p>
+        <div class="buttons">
+          <a class="pill solid" href={`${repo}/releases/latest`}>Download for macOS</a>
+          <a class="pill" href="#install">Install from the terminal</a>
+        </div>
+      </section>
+
+      <figure class="desktop wrap" aria-label="Headroom's gauge in the macOS menu bar, with its dropdown open">
+        <div class="scene">
+          <div class="menubar" aria-hidden="true">
+            <span class="apple"></span>
+            <span class="app">Finder</span>
+            <span class="menu">File</span>
+            <span class="menu">Edit</span>
+            <span class="menu">View</span>
+            <span class="menu">Go</span>
+            <span class="menu">Window</span>
+            <span class="menu">Help</span>
+            <span class="gap"></span>
+            <span class="gauge">
+              <span class="col">
+                <span class="lbl">Main</span>
+                <span class="rows">
+                  <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
+                  <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
+                </span>
+              </span>
+              <span class="col">
+                <span class="lbl">Personal</span>
+                <span class="rows">
+                  <span class="r"><i style="--v: 4%"></i><b>4%</b></span>
+                  <span class="r"><i style="--v: 23%"></i><b>23%</b></span>
+                </span>
+              </span>
+            </span>
+            <span class="clock">Tue 09:41</span>
+          </div>
+          <Image
+            class="dropdown"
+            src={usage}
+            alt="The dropdown: one card per account with 5-hour and weekly bars, a pace line on each, reset countdowns, today's cost and the open sessions with their prompt cache countdowns"
+            width={340}
+            loading="eager"
+          />
+        </div>
+      </figure>
+
+      <section class="rows wrap">
+        <div class="row">
+          <h2>Every account at once</h2>
+          <p>
+            One column per account in the menu bar. Open it for reset countdowns, the sessions
+            you have running, and today's cost.
+          </p>
+        </div>
+        <div class="row">
+          <h2>Know your pace</h2>
+          <p>
+            A line on each bar marks how much of the window has passed. If your usage is ahead
+            of it, Headroom says when you'd run out at this rate. Turn on alerts and it also
+            tells you when a limit passes 80% or 90%, and when it resets.
+          </p>
+          <Image
+            class="detail"
+            src={pace}
+            alt="The Main account's bars: 5-hour at 38% with the pace line ahead of it, Weekly at 61% with the line behind it and the note 'On course to run out in 2d 10h'"
+            width={312}
+          />
+        </div>
+        <div class="row">
+          <h2>Mind the cache</h2>
+          <p>
+            Every open conversation shows how long until its prompt cache goes cold, after
+            which the next message re-reads the whole thing at full price. Click the flame to
+            be told five minutes before. A warning marks a cache that missed in the last hour,
+            with Claude Code's guess at why.
+          </p>
+          <Image
+            class="detail"
+            src={cache}
+            alt="Three open sessions: one with 47 minutes of cache left and a warning, one being watched with 4 minutes left, and one whose cache has gone cold"
+            width={312}
+          />
+        </div>
+        <div class="row">
+          <h2>What used it</h2>
+          <p>
+            History charts each account's 5-hour and weekly usage over the last hour, 12 hours,
+            day or week, then lists the conversations that took the most from your limits.
+          </p>
+          <Image
+            src={history}
+            alt="The History page over 7 days: a chart per account of 5-hour and weekly usage, totals, then each conversation's share of the limits"
+            width={340}
+          />
+        </div>
+        <div class="row">
+          <h2>Reads, never writes</h2>
+          <p>
+            Claude Code passes your usage to its status line after every reply. Headroom listens
+            there and leaves your status line working as before. It never touches your login
+            and never calls Anthropic.
+          </p>
+        </div>
+        <div class="row">
+          <h2>Live, if you want it</h2>
+          <p>
+            Switch it on per account to count use from claude.ai and your other devices. It
+            reads your saved login only when you ask, and keeps it in memory.
+          </p>
+        </div>
+        <div class="row">
+          <h2>Keeps itself current</h2>
+          <p>
+            Once a day Headroom asks GitHub for a new release and offers to install it from the
+            menu. Or press Check now in Settings. Switch the check off and Headroom makes no
+            network requests at all.
+          </p>
+        </div>
+      </section>
+
+      <section class="install wrap" id="install">
+        <h2>Install</h2>
+        <p>Needs macOS 14 and Claude Code signed in with a Pro, Max or Team plan.</p>
+        <div class="command">
+          <pre><code>{installCommand}</code></pre>
+          <button type="button" class="copy" data-copy={installCommand}>Copy</button>
+        </div>
+        <p class="small">
+          Or <a href={`${repo}/releases/latest`}>download Headroom {version}</a> and move it
+          to Applications. It isn't notarised yet, so allow it under Privacy &amp; Security the
+          first time.
+        </p>
+        <ol>
+          <li>Click the gauge, then the gear.</li>
+          <li>Label each Claude Code folder and press Install.</li>
+          <li>Send a message in Claude Code. Its usage appears.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <p>
+        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with Anthropic.
+        <a href="/projects/headroom/">Project notes</a>.
+      </p>
+    </footer>
+
+    <script>
+      for (const button of document.querySelectorAll<HTMLButtonElement>('.copy')) {
+        button.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(button.dataset.copy ?? '');
+            button.textContent = 'Copied';
+          } catch {
+            button.textContent = 'Select and copy';
+          }
+          setTimeout(() => (button.textContent = 'Copy'), 1800);
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f0eee6;
+    --bg-raise: #faf9f5;
+    --ink: #141413;
+    --ink-soft: #5e5d59;
+    --line: #dedad0;
+    --serif: 'Iowan Old Style', 'Tiempos Text', 'Palatino Linotype', Palatino, Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 17px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  header.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 28px;
+    padding-bottom: 96px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+  .brand img {
+    display: block;
+    border-radius: 7px;
+  }
+
+  nav {
+    display: flex;
+    gap: 28px;
+    font-size: 15px;
+  }
+
+  nav a {
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  .hero {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.08;
+  }
+
+  .hero p {
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 24px auto 0;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .pill:hover {
+    background: var(--bg-raise);
+  }
+
+  .pill.solid {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .pill.solid:hover {
+    background: #000;
+  }
+
+  /* A corner of a desktop: the menu bar, and the dropdown hanging from the gauge. */
+  .desktop {
+    margin: 72px auto 120px;
+  }
+
+  .scene {
+    position: relative;
+    background: #e6e2d8;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 30px 0 32px;
+  }
+
+  .menubar {
+    position: absolute;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    height: 30px;
+    padding: 0 12px 0 18px;
+    background: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(20, 20, 19, 0.08);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .menubar .app {
+    font-weight: 700;
+  }
+
+  .menubar .gap {
+    flex: 1;
+  }
+
+  .apple {
+    width: 13px;
+    height: 15px;
+    background: var(--ink);
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 170'><path d='M150 130c-3 7-6 13-11 19-6 8-12 14-21 14-8 0-11-5-21-5s-13 5-21 5c-9 0-16-7-22-15-13-19-23-53-10-77 7-12 18-19 31-19 9 0 17 6 22 6 6 0 15-7 26-6 4 0 17 2 25 13-1 1-15 9-15 26 0 21 18 28 18 28zM110 25c4-6 8-14 7-22-7 1-15 5-20 10-4 5-8 13-7 21 7 0 15-4 20-9z'/></svg>")
+      center / contain no-repeat;
+  }
+
+  /* Drawn to the app's dimensions: 11pt label, two 28×4 bars, 8pt percentages. */
+  .gauge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: rgba(20, 20, 19, 0.1);
+  }
+
+  .gauge .col {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .gauge .lbl {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .gauge .rows {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .gauge .r {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 8px;
+  }
+
+  .gauge .r i {
+    width: 28px;
+    height: 4px;
+    border-radius: 1.5px;
+    background: linear-gradient(90deg, var(--ink) var(--v), rgba(20, 20, 19, 0.3) var(--v));
+  }
+
+  .gauge .r b {
+    font-size: 8px;
+    font-weight: 500;
+    width: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .clock {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .dropdown {
+    display: block;
+    width: 340px;
+    max-width: calc(100% - 24px);
+    height: auto;
+    margin: 4px 100px 0 auto;
+    border-radius: 11px;
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.35),
+      0 18px 36px -12px rgba(20, 20, 19, 0.45);
+  }
+
+  /* Quiet rows: serif heading on the left, a sentence or two on the right. */
+  .rows {
+    display: grid;
+    gap: 64px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    max-width: 880px;
+  }
+
+  .row h2 {
+    font-size: 34px;
+    line-height: 1.15;
+  }
+
+  .row p {
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+    font-size: 18px;
+  }
+
+  .row img {
+    grid-column: 2;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    margin-top: 24px;
+    border-radius: 11px;
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.35),
+      0 14px 28px -12px rgba(20, 20, 19, 0.4);
+  }
+
+  /* Unscaled crops from inside a card, shown at their natural size so they stay sharp. */
+  .row img.detail {
+    width: auto;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .install {
+    max-width: 720px;
+    margin: 128px auto 0;
+    padding-bottom: 96px;
+  }
+
+  .install h2 {
+    font-size: 34px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .install p {
+    margin: 0 0 20px;
+    color: var(--ink-soft);
+  }
+
+  .install .small {
+    font-size: 15px;
+  }
+
+  .command {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    background: var(--bg-raise);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 6px 6px 6px 16px;
+    margin: 0 0 16px;
+  }
+
+  .command pre {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    font: 400 13.5px/1.6 var(--mono);
+  }
+
+  .copy {
+    flex: none;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 0 14px;
+    min-width: 64px;
+    background: var(--ink);
+    color: var(--bg);
+    font: 500 13px var(--sans);
+    cursor: pointer;
+  }
+
+  .copy:hover {
+    background: #000;
+  }
+
+  .install ol {
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .install li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+
+  footer.wrap {
+    padding-top: 28px;
+    padding-bottom: 48px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  footer p {
+    margin: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+
+  /* The one piece of motion: the gauge fills when the page loads. */
+  @media (prefers-reduced-motion: no-preference) {
+    @property --v {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: 0%;
+    }
+
+    .gauge .r i {
+      animation: fill 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    @keyframes fill {
+      from {
+        --v: 0%;
+      }
+    }
+  }
+
+  @media (max-width: 760px) {
+    .wrap {
+      padding: 0 20px;
+    }
+
+    header.wrap {
+      padding-bottom: 56px;
+    }
+
+    nav {
+      gap: 18px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      text-align: left;
+    }
+
+    .hero p,
+    .buttons {
+      margin-left: 0;
+      justify-content: flex-start;
+    }
+
+    .desktop {
+      margin: 48px auto 80px;
+    }
+
+    .menubar .menu {
+      display: none;
+    }
+
+    .dropdown {
+      margin: 4px auto 0;
+    }
+
+    .rows {
+      gap: 48px;
+    }
+
+    .row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .row h2 {
+      font-size: 28px;
+    }
+
+    .row img {
+      grid-column: 1;
+    }
+
+    .install {
+      margin-top: 88px;
+      padding-bottom: 64px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .clock {
+      display: none;
+    }
+  }
+</style>

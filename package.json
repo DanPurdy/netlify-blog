@@ -17,19 +17,19 @@
     "@astrojs/netlify": "^8.2.7",
     "@astrojs/react": "^6.0.2",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/figtree": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@keystatic/astro": "^5.2.0",
-    "@keystatic/core": "^0.6.5",
-    "astro": "^7.3.2",
+    "@keystatic/core": "^0.6.9",
+    "astro": "^7.3.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.9",
     "typescript": "^5.7.2"
   },
   "homepage": "https://dpurdy.me",

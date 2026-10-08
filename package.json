@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.3.5",
     "@astrojs/mdx": "^7.0.5",
-    "@astrojs/netlify": "^8.2.1",
+    "@astrojs/netlify": "^8.2.7",
     "@astrojs/react": "^6.0.2",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",

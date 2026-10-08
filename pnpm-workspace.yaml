@@ -6,8 +6,7 @@ allowBuilds:
   sharp: true
 
 # Force the patched sharp for its Dependabot high (GHSA, fixed in 0.35).
-# The image-size and extract-zip highs have no published fix yet — their
-# advisories name 2.0.3 and 2.0.2 as patched, but npm's latest are 2.0.2 and
-# 2.0.1. Revisit when upstream releases land.
+# image-size and extract-zip, which had highs with no published fix, left the
+# tree with @astrojs/netlify 8.2.7, so they need no override.
 overrides:
   sharp: '>=0.35.0'

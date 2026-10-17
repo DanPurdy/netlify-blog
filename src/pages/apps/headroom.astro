@@ -4,14 +4,15 @@
  * blog post, so like the mixframe page it is self-contained: no BaseLayout,
  * no shared styles.
  *
- * Set in the manner of anthropic.com: cream ground, a regular-weight serif
- * headline, a grotesque for everything else, pill buttons, and a lot of air.
- * Headroom's own glyph and its amber-to-flame level are the only colour.
+ * A neutral ground, a regular-weight serif headline, a grotesque for
+ * everything else, pill buttons, and a lot of air. The only colour is the
+ * app's own: its amber glyph, and the two tool tints it gives each account,
+ * Claude's terracotta and Codex's blue.
  *
  * The dropdown images are real renders of the app, captured from a demo build
  * pointed at a fabricated data directory (HEADROOM_HOME plus a fake home), so
- * they are genuine app output without being anyone's usage. The two small ones
- * are unscaled crops of the Usage render.
+ * they are genuine app output without being anyone's usage. The small ones
+ * are unscaled crops of the Usage render; the guide is the app's own window.
  */
 import { Image } from 'astro:assets';
 
@@ -19,15 +20,17 @@ import usage from '../../assets/headroom/usage.png';
 import history from '../../assets/headroom/history.png';
 import pace from '../../assets/headroom/pace.png';
 import cache from '../../assets/headroom/cache.png';
+import live from '../../assets/headroom/live.png';
+import guide from '../../assets/headroom/guide.png';
 
-const version = '0.5.2';
+const version = '0.7.0';
 const repo = 'https://github.com/DanPurdy/headroom';
 const installCommand =
   'curl -fsSL https://raw.githubusercontent.com/DanPurdy/headroom/main/scripts/install.sh | bash';
 
 const title = 'Headroom';
 const description =
-  'A macOS menu bar app that shows how much of your Claude plan limits you have used, for every Claude Code account on your Mac at once.';
+  'A macOS menu bar app that shows how much of your coding agent plan limits you have used, for every account on your Mac at once. Works with Claude Code and Codex.';
 ---
 
 <!doctype html>
@@ -64,12 +67,12 @@ const description =
 
     <main>
       <section class="hero wrap">
-        <h1>See how much Claude you have left.</h1>
+        <h1>See how much of your plan you have left.</h1>
         <p>
-          A menu bar gauge of your 5-hour and weekly limits, for every Claude Code account on
-          your Mac, with the pace you're burning them at and how long each conversation's
-          prompt cache has left. It reads what Claude Code already tells your status line. No
-          login, no API calls.
+          A menu bar gauge of your 5-hour and weekly limits, and the pace you're burning them at,
+          for every Claude Code and Codex account on your Mac. Out of the box it reads what each
+          tool already writes down: no login, no API calls. Switch on Live and it checks your
+          account directly too.
         </p>
         <div class="buttons">
           <a class="pill solid" href={`${repo}/releases/latest`}>Download for macOS</a>
@@ -91,17 +94,17 @@ const description =
             <span class="gap"></span>
             <span class="gauge">
               <span class="col">
-                <span class="lbl">Main</span>
+                <span class="lbl">Claude</span>
                 <span class="rows">
                   <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
                   <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
                 </span>
               </span>
               <span class="col">
-                <span class="lbl">Personal</span>
+                <span class="lbl">Codex</span>
                 <span class="rows">
-                  <span class="r"><i style="--v: 4%"></i><b>4%</b></span>
-                  <span class="r"><i style="--v: 23%"></i><b>23%</b></span>
+                  <span class="r"><i style="--v: 17%"></i><b>17%</b></span>
+                  <span class="r"><i style="--v: 42%"></i><b>42%</b></span>
                 </span>
               </span>
             </span>
@@ -110,42 +113,66 @@ const description =
           <Image
             class="dropdown"
             src={usage}
-            alt="The dropdown: one card per account with 5-hour and weekly bars, a pace line on each, reset countdowns, today's cost and the open sessions with their prompt cache countdowns"
+            alt="The dropdown: a Claude card in terracotta and a Codex card in blue, each with 5-hour and weekly bars, a pace line on each and reset countdowns; the Claude card adds a model's own weekly limit, extra usage, today's cost and the open sessions with their prompt cache countdowns"
             width={340}
             loading="eager"
           />
         </div>
       </figure>
 
-      <section class="rows wrap">
-        <div class="row">
-          <h2>Every account at once</h2>
-          <p>
-            One column per account in the menu bar. Open it for reset countdowns, the sessions
-            you have running, and today's cost.
-          </p>
+      <section class="split wrap">
+        <h2>Every account at once</h2>
+        <p class="lede">
+          One column per account in the menu bar. Open it for reset countdowns, the sessions you
+          have running, and how fast you're going. Each tool keeps its own colour.
+        </p>
+        <div class="tools">
+          <div class="tool claude">
+            <!-- Drawn in CSS to the card's look; numbers match the renders. -->
+            <div class="bars" aria-hidden="true">
+              <span>5-hour <em>38%</em></span><i style="--v: 38%; --p: 46%"></i>
+              <span>Weekly <em>61%</em></span><i style="--v: 61%; --p: 54%"></i>
+            </div>
+            <h3>Claude Code</h3>
+            <p>
+              Connect a folder and Headroom hears every reply through its status line, which keeps
+              working as before. You also get today's cost and each conversation's prompt cache.
+            </p>
+          </div>
+          <div class="tool codex">
+            <div class="bars" aria-hidden="true">
+              <span>5-hour <em>17%</em></span><i style="--v: 17%; --p: 30%"></i>
+              <span>Weekly <em>42%</em></span><i style="--v: 42%; --p: 47%"></i>
+            </div>
+            <h3>Codex</h3>
+            <p>
+              Track a folder and Headroom reads the logs Codex already keeps, from the CLI, IDE
+              extension and app. No login, nothing changed, plus any model's own limit while
+              you're using it.
+            </p>
+          </div>
         </div>
-        <div class="row">
-          <h2>Know your pace</h2>
+      </section>
+
+      <section class="trio wrap">
+        <div>
+          <h3>Know your pace</h3>
           <p>
-            A line on each bar marks how much of the window has passed. If your usage is ahead
-            of it, Headroom says when you'd run out at this rate. Turn on alerts and it also
-            tells you when a limit passes 80% or 90%, and when it resets.
+            A line on each bar marks how much of the window has passed. Ahead of it, Headroom says
+            when you'd run out at this rate.
           </p>
           <Image
             class="detail"
             src={pace}
-            alt="The Main account's bars: 5-hour at 38% with the pace line ahead of it, Weekly at 61% with the line behind it and the note 'On course to run out in 2d 10h'"
+            alt="The Claude account's bars: 5-hour at 38% with the pace line ahead of it, Weekly at 61% with the line behind it and the note 'On course to run out in 2d 10h'"
             width={312}
           />
         </div>
-        <div class="row">
-          <h2>Mind the cache</h2>
+        <div>
+          <h3>Mind the cache</h3>
           <p>
-            Every open conversation shows how long until its prompt cache goes cold, after
-            which the next message re-reads the whole thing at full price. Click the flame to
-            be told five minutes before. A warning marks a cache that missed in the last hour,
-            with Claude Code's guess at why.
+            Each Claude Code conversation shows how long until its prompt cache goes cold and the
+            next message costs full price. A warning marks one that missed.
           </p>
           <Image
             class="detail"
@@ -154,48 +181,108 @@ const description =
             width={312}
           />
         </div>
-        <div class="row">
-          <h2>What used it</h2>
+        <div>
+          <h3>Warned in time</h3>
           <p>
-            History charts each account's 5-hour and weekly usage over the last hour, 12 hours,
-            day or week, then lists the conversations that took the most from your limits.
+            Alerts at 80% or 90% of any limit, and when it resets. Click a flame for a nudge five
+            minutes before that cache goes cold.
           </p>
+          <!-- Drawn in CSS, worded exactly as the app words its notifications. -->
+          <div class="notes" aria-label="Two Headroom notifications">
+            <div class="note">
+              <img src="/headroom/icon.svg" alt="" width="34" height="34" />
+              <div>
+                <b>Codex: 5-hour 90%</b>
+                <span>5-hour resets in 1h 12m</span>
+              </div>
+              <time>now</time>
+            </div>
+            <div class="note">
+              <img src="/headroom/icon.svg" alt="" width="34" height="34" />
+              <div>
+                <b>Release notes for 2.4: cache goes cold in 5 minutes</b>
+                <span>After that, the next message re-reads the conversation at full price.</span>
+              </div>
+              <time>2m ago</time>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature">
+        <div class="wrap">
           <Image
             src={history}
             alt="The History page over 7 days: a chart per account of 5-hour and weekly usage, totals, then each conversation's share of the limits"
             width={340}
           />
+          <div>
+            <h2>What used it</h2>
+            <p>
+              History charts each account's 5-hour and weekly usage over the last hour, 12 hours,
+              day or week, then lists the conversations that took the most from your limits.
+            </p>
+            <p>
+              With Live on, readings from claude.ai and your other devices land here too, so use
+              from elsewhere isn't pinned on your next Claude Code conversation.
+            </p>
+          </div>
         </div>
-        <div class="row">
-          <h2>Reads, never writes</h2>
-          <p>
-            Claude Code passes your usage to its status line after every reply. Headroom listens
-            there and leaves your status line working as before. It never touches your login
-            and never calls Anthropic.
-          </p>
+      </section>
+
+      <section class="quiet wrap">
+        <h2>Private by default</h2>
+        <div class="cols">
+          <div>
+            <h3>Reads, never writes</h3>
+            <p>
+              Headroom reads what Claude Code and Codex already write down. Unless you switch on
+              Live, it never touches your login or calls Anthropic or OpenAI.
+            </p>
+          </div>
+          <div>
+            <h3>Live, if you want it</h3>
+            <p>
+              Switch it on for a Claude account to count use from claude.ai and other devices, and
+              to see a model's own weekly limit and your extra usage. It reads your login only when
+              you ask, and keeps it in memory.
+            </p>
+            <Image
+              class="detail live"
+              src={live}
+              alt="A Fable weekly bar at 44%, and the line 'Extra usage $12.40 of $50.00 this month'"
+              width={312}
+            />
+          </div>
+          <div>
+            <h3>Keeps itself current</h3>
+            <p>
+              Once a day it asks GitHub for a new release and offers to install it. Switch that off
+              and leave Live off, and Headroom makes no network requests at all.
+            </p>
+          </div>
         </div>
-        <div class="row">
-          <h2>Live, if you want it</h2>
-          <p>
-            Switch it on per account to count use from claude.ai and your other devices. It
-            reads your saved login only when you ask, and keeps it in memory.
-          </p>
-        </div>
-        <div class="row">
-          <h2>Keeps itself current</h2>
-          <p>
-            Once a day Headroom asks GitHub for a new release and offers to install it from the
-            menu. Or press Check now in Settings. Switch the check off and Headroom makes no
-            network requests at all.
-          </p>
-        </div>
+      </section>
+
+      <section class="guide wrap">
+        <h2>Set up in a minute</h2>
+        <p class="lede">
+          The first time it opens, a guide finds your Claude Code and Codex folders, connects the
+          ones you pick, and explains every bar, line and icon on a card.
+        </p>
+        <Image
+          src={guide}
+          alt="The setup guide's 'Reading a card' step: a key to every symbol on the left, two sample account cards on the right"
+          width={760}
+        />
       </section>
 
       <section class="install wrap" id="install">
         <h2>Install</h2>
         <p>
-          Needs macOS 14 and Claude Code signed in with a Pro, Max or Team plan. The prompt
-          cache countdown needs Claude Code 2.1.251 or later.
+          Needs macOS 14, and Claude Code signed in with a Pro, Max or Team plan, Codex signed
+          in with ChatGPT, or both. The prompt cache countdown needs Claude Code 2.1.251 or
+          later.
         </p>
         <div class="command">
           <pre><code>{installCommand}</code></pre>
@@ -207,16 +294,19 @@ const description =
           first time.
         </p>
         <ol>
-          <li>Click the gauge, then the gear.</li>
-          <li>Label each Claude Code folder and press Install.</li>
-          <li>Send a message in Claude Code. Its usage appears.</li>
+          <li>Open Headroom. A setup guide lists the accounts it found.</li>
+          <li>Label each one, then Connect a Claude Code folder or Track a Codex one.</li>
+          <li>Send a message in either. Its usage appears.</li>
         </ol>
+        <p class="small">
+          Skipped the guide? Click the gauge, then the gear. It's under Setup guide… there.
+        </p>
       </section>
     </main>
 
     <footer class="wrap">
       <p>
-        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with Anthropic.
+        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with Anthropic or OpenAI.{' '}
         <a href="/projects/headroom/">Project notes</a>.
       </p>
     </footer>
@@ -240,11 +330,14 @@ const description =
 <style>
   :root {
     color-scheme: light;
-    --bg: #f0eee6;
-    --bg-raise: #faf9f5;
-    --ink: #141413;
-    --ink-soft: #5e5d59;
-    --line: #dedad0;
+    --bg: #f4f4f2;
+    --bg-raise: #fbfbfa;
+    --ink: #141414;
+    --ink-soft: #5c5c5a;
+    --line: #dfdfdb;
+    /* The app's tool tints (Brand in UsageView.swift). */
+    --claude: #d97757;
+    --codex: #5869f7;
     --serif: 'Iowan Old Style', 'Tiempos Text', 'Palatino Linotype', Palatino, Georgia, serif;
     --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -386,7 +479,7 @@ const description =
 
   .scene {
     position: relative;
-    background: #e6e2d8;
+    background: #e8e8e5;
     border: 1px solid var(--line);
     border-radius: 16px;
     overflow: hidden;
@@ -490,48 +583,221 @@ const description =
       0 18px 36px -12px rgba(20, 20, 19, 0.45);
   }
 
-  /* Quiet rows: serif heading on the left, a sentence or two on the right. */
-  .rows {
-    display: grid;
-    gap: 64px;
+  /* Section rhythm: a split pair, a trio of details, a full-bleed feature, a quiet strip. */
+  main h2 {
+    font-size: 40px;
+    line-height: 1.12;
   }
 
-  .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: start;
-    max-width: 880px;
+  main h3 {
+    font: 500 19px/1.3 var(--sans);
+    margin: 0 0 8px;
   }
 
-  .row h2 {
-    font-size: 34px;
-    line-height: 1.15;
-  }
-
-  .row p {
-    margin: 6px 0 0;
+  main section p {
     color: var(--ink-soft);
-    font-size: 18px;
   }
 
-  .row img {
-    grid-column: 2;
-    width: 100%;
-    max-width: 340px;
+  /* Screenshots and crops of the app. */
+  main section img:not(.note img) {
+    display: block;
     height: auto;
-    margin-top: 24px;
+    max-width: 100%;
     border-radius: 11px;
     box-shadow:
       0 0 0 0.5px rgba(0, 0, 0, 0.35),
-      0 14px 28px -12px rgba(20, 20, 19, 0.4);
+      0 14px 28px -12px rgba(20, 20, 20, 0.4);
   }
 
   /* Unscaled crops from inside a card, shown at their natural size so they stay sharp. */
-  .row img.detail {
-    width: auto;
-    max-width: 100%;
+  img.detail {
     border-radius: 8px;
+  }
+
+  .split {
+    text-align: center;
+  }
+
+  .lede {
+    max-width: 560px;
+    margin: 16px auto 0;
+    font-size: 19px;
+  }
+
+  .tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+    text-align: left;
+  }
+
+  .tool {
+    padding: 28px;
+    border-radius: 16px;
+    background: var(--bg-raise);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--tint);
+  }
+
+  .tool.claude {
+    --tint: var(--claude);
+  }
+
+  .tool.codex {
+    --tint: var(--codex);
+  }
+
+  .tool p {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  /* A card's two bars, with the pace line as a tick. */
+  .bars {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 28px;
+    font-size: 13px;
+  }
+
+  .bars span {
+    display: flex;
+    justify-content: space-between;
+    color: var(--ink-soft);
+  }
+
+  .bars em {
+    font-style: normal;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bars i {
+    position: relative;
+    height: 6px;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--tint) var(--v), rgba(20, 20, 20, 0.1) var(--v));
+  }
+
+  .bars i::after {
+    content: '';
+    position: absolute;
+    left: var(--p);
+    top: -2px;
+    width: 2px;
+    height: 10px;
+    border-radius: 1px;
+    background: var(--ink);
+    opacity: 0.55;
+  }
+
+  .trio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 120px;
+  }
+
+  .trio p {
+    margin: 0 0 24px;
+    font-size: 16px;
+  }
+
+  /* macOS notification banners, at their real size. */
+  .notes {
+    display: grid;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .note {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: var(--bg-raise);
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.18),
+      0 10px 24px -14px rgba(20, 20, 20, 0.45);
+  }
+
+  .note img {
+    display: block;
+    border-radius: 8px;
+  }
+
+  .note b {
+    display: block;
+    font-weight: 600;
+  }
+
+  .note span {
+    display: block;
+    color: var(--ink-soft);
+  }
+
+  .note time {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .feature {
+    margin-top: 120px;
+    padding: 96px 0;
+    background: var(--bg-raise);
+    border-block: 1px solid var(--line);
+  }
+
+  .feature .wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 920px;
+  }
+
+  .feature p {
+    margin: 16px 0 0;
+    font-size: 18px;
+    max-width: 420px;
+  }
+
+  .quiet {
+    margin-top: 120px;
+  }
+
+  .quiet .cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 32px;
+  }
+
+  .quiet .cols > div {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .quiet p {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .quiet .live {
+    margin-top: 20px;
+  }
+
+  .guide {
+    margin-top: 120px;
+    text-align: center;
+  }
+
+  .guide img {
+    margin: 48px auto 0;
   }
 
   .install {
@@ -671,26 +937,63 @@ const description =
       margin: 4px auto 0;
     }
 
-    .rows {
-      gap: 48px;
+    main h2 {
+      font-size: 30px;
     }
 
-    .row {
+    .split,
+    .guide {
+      text-align: left;
+    }
+
+    .guide img {
+      margin-top: 32px;
+    }
+
+    .lede {
+      margin-left: 0;
+    }
+
+    .tools,
+    .feature .wrap {
       grid-template-columns: 1fr;
-      gap: 12px;
     }
 
-    .row h2 {
-      font-size: 28px;
+    .tool {
+      padding: 22px;
     }
 
-    .row img {
-      grid-column: 1;
+    .trio,
+    .feature,
+    .quiet,
+    .guide {
+      margin-top: 88px;
+    }
+
+    .feature {
+      padding: 64px 0;
+    }
+
+    .feature .wrap {
+      gap: 40px;
+    }
+
+    /* Text first, then the screenshot. */
+    .feature img {
+      order: 1;
     }
 
     .install {
       margin-top: 88px;
       padding-bottom: 64px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .trio,
+    .quiet .cols {
+      grid-template-columns: 1fr;
+      max-width: 520px;
     }
   }
 

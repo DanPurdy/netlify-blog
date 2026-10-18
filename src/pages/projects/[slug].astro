@@ -23,16 +23,21 @@ interface Props {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { name, description, role, url, site, year, status, stack } = project.data;
+const { name, description, role, url, site, year, status, stack } =
+  project.data;
 const hasStudy = Boolean(project.body?.trim());
 ---
 
 <BaseLayout title={name} description={description}>
   <div class="proj-hd">
     <div class="crumb">
-      <a href="/projects">Projects</a>{year && <> · {year}</>}
+      <a href="/projects">Projects</a>
+      {year && <> · {year}</>}
     </div>
-    <h1>{name}<em>.</em></h1>
+    <h1>
+      {name}
+      <em>.</em>
+    </h1>
     <p class="lede">{description}</p>
   </div>
 
@@ -41,46 +46,38 @@ const hasStudy = Boolean(project.body?.trim());
       <dl>
         <dt>Role</dt>
         <dd>{role}</dd>
-        {
-          status && (
-            <>
-              <dt>Status</dt>
-              <dd>{status}</dd>
-            </>
-          )
-        }
-        {
-          stack.length > 0 && (
-            <>
-              <dt>Stack</dt>
-              <dd>{stack.join(', ')}</dd>
-            </>
-          )
-        }
-        {
-          site && (
-            <>
-              <dt>Site</dt>
-              <dd>
-                <a href={site} target="_blank" rel="noopener noreferrer">
-                  Visit ↗
-                </a>
-              </dd>
-            </>
-          )
-        }
-        {
-          url && (
-            <>
-              <dt>Source</dt>
-              <dd>
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                  Repository ↗
-                </a>
-              </dd>
-            </>
-          )
-        }
+        {status && (
+          <>
+            <dt>Status</dt>
+            <dd>{status}</dd>
+          </>
+        )}
+        {stack.length > 0 && (
+          <>
+            <dt>Stack</dt>
+            <dd>{stack.join(', ')}</dd>
+          </>
+        )}
+        {site && (
+          <>
+            <dt>Site</dt>
+            <dd>
+              <a href={site} target="_blank" rel="noopener noreferrer">
+                Visit ↗
+              </a>
+            </dd>
+          </>
+        )}
+        {url && (
+          <>
+            <dt>Source</dt>
+            <dd>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                Repository ↗
+              </a>
+            </dd>
+          </>
+        )}
       </dl>
     </aside>
 

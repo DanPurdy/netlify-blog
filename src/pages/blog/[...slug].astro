@@ -6,7 +6,7 @@ import { readingTime } from '../../lib/reading-time';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
 
   return posts.map((post, index) => ({
@@ -46,7 +46,9 @@ const dashIndex = post.data.title.indexOf(DASH_SPLIT);
 const titleBefore =
   dashIndex === -1 ? post.data.title : post.data.title.slice(0, dashIndex);
 const titleAfter =
-  dashIndex === -1 ? null : post.data.title.slice(dashIndex + DASH_SPLIT.length);
+  dashIndex === -1
+    ? null
+    : post.data.title.slice(dashIndex + DASH_SPLIT.length);
 ---
 
 <BaseLayout
@@ -56,48 +58,53 @@ const titleAfter =
 >
   <div class="post-hd">
     <div class="crumb">
-      <a href="/">Writing</a> · {formatDate(post.data.date)} · {readingTime(post.body)}
+      <a href="/">Writing</a> · {formatDate(post.data.date)} ·{' '}
+      {readingTime(post.body)}
     </div>
     <h1>
-      {titleAfter === null ? titleBefore : <>{titleBefore} - <em>{titleAfter}</em></>}
+      {titleAfter === null ? (
+        titleBefore
+      ) : (
+        <>
+          {titleBefore} - <em>{titleAfter}</em>
+        </>
+      )}
     </h1>
-    {
-      post.data.tags.length > 0 && (
-        <div class="meta">
-          <span class="tags">
-            {post.data.tags.map((tag) => <a href={`/tags/${tag}/`}>#{tag}</a>)}
-          </span>
-        </div>
-      )
-    }
+    {post.data.tags.length > 0 && (
+      <div class="meta">
+        <span class="tags">
+          {post.data.tags.map((tag) => (
+            <a href={`/tags/${tag}/`}>#{tag}</a>
+          ))}
+        </span>
+      </div>
+    )}
   </div>
 
   <article class="prose">
     <Content />
   </article>
 
-  {
-    (previous || next) && (
-      <div class="pn">
-        {previous ? (
-          <a href={`/blog/${previous.id}/`}>
-            <small>← Older</small>
-            <b>{previous.data.title}</b>
-          </a>
-        ) : (
-          <span />
-        )}
-        {next ? (
-          <a class="next" href={`/blog/${next.id}/`}>
-            <small>Newer →</small>
-            <b>{next.data.title}</b>
-          </a>
-        ) : (
-          <span />
-        )}
-      </div>
-    )
-  }
+  {(previous || next) && (
+    <div class="pn">
+      {previous ? (
+        <a href={`/blog/${previous.id}/`}>
+          <small>← Older</small>
+          <b>{previous.data.title}</b>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <a class="next" href={`/blog/${next.id}/`}>
+          <small>Newer →</small>
+          <b>{next.data.title}</b>
+        </a>
+      ) : (
+        <span />
+      )}
+    </div>
+  )}
 
   <script
     type="application/ld+json"

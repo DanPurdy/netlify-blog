@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostRow from '../../components/PostRow.astro';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
 
@@ -18,13 +18,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
         <a href="/rss.xml">RSS →</a>
       </p>
     </header>
-    {
-      posts.length ? (
-        posts.map((post) => <PostRow post={post} />)
-      ) : (
-        <h2>No posts yet</h2>
-      )
-    }
+    {posts.length ? (
+      posts.map((post) => <PostRow post={post} />)
+    ) : (
+      <h2>No posts yet</h2>
+    )}
   </section>
 </BaseLayout>
 

@@ -27,7 +27,11 @@ const { title, description, publishedTime } = Astro.props;
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <Seo title={title} description={description} publishedTime={publishedTime} />
+    <Seo
+      title={title}
+      description={description}
+      publishedTime={publishedTime}
+    />
     <script is:inline>
       // Runs before first paint so the stored theme never flashes the default.
       const t = localStorage.getItem('theme');
@@ -35,7 +39,9 @@ const { title, description, publishedTime } = Astro.props;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
     <div class="wrap">
       <SiteHeader />
       <main id="main">

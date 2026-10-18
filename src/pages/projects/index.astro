@@ -9,7 +9,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
+  (a, b) => a.data.order - b.data.order
 );
 ---
 
@@ -18,26 +18,27 @@ const projects = (await getCollection('projects')).sort(
   description="Projects and open source work by Dan Purdy."
 >
   <header class="page-h">
-    <h1>Projects<em>.</em></h1>
+    <h1>
+      Projects<em>.</em>
+    </h1>
     <p class="sub">
-      Open source and tools built outside work. Writing lives <a href="/">here</a>.
+      Open source and tools built outside work. Writing lives{' '}
+      <a href="/">here</a>.
     </p>
   </header>
 
   <section>
-    {
-      projects.map((project) => (
-        <a class="row" href={`/projects/${project.id}/`}>
-          <time>{project.data.year}</time>
-          <h3>{project.data.name}</h3>
-          <span class="tags">
-            {project.data.role}
-            {project.data.status && ` · ${project.data.status}`}
-          </span>
-          <p>{project.data.description}</p>
-        </a>
-      ))
-    }
+    {projects.map((project) => (
+      <a class="row" href={`/projects/${project.id}/`}>
+        <time>{project.data.year}</time>
+        <h3>{project.data.name}</h3>
+        <span class="tags">
+          {project.data.role}
+          {project.data.status && ` · ${project.data.status}`}
+        </span>
+        <p>{project.data.description}</p>
+      </a>
+    ))}
   </section>
 </BaseLayout>
 

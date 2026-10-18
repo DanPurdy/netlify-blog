@@ -39,19 +39,25 @@ const tagList = post.data.tags.map((tag) => `#${tag}`).join(' ');
     border-bottom: 0;
   }
   .post time {
-    font: 500 13px 'JetBrains Mono', monospace;
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
     color: var(--ink-faint);
     white-space: nowrap;
   }
   .post h3 {
-    font: 800 clamp(21px, 2.3vw, 27px) / 1.15 'Figtree Variable', sans-serif;
+    font:
+      800 clamp(21px, 2.3vw, 27px) / 1.15 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.025em;
   }
   .post:hover h3 {
     color: var(--accent);
   }
   .post .tags {
-    font: 500 13px 'JetBrains Mono', monospace;
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
     color: var(--accent);
     white-space: nowrap;
   }

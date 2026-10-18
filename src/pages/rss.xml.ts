@@ -8,7 +8,7 @@ import type { APIContext } from 'astro';
  */
 export async function GET(context: APIContext) {
   const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
 
   // Feed identity comes from the same editable entry as the rest of the site.

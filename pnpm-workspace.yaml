@@ -5,8 +5,13 @@ allowBuilds:
   esbuild: true
   sharp: true
 
-# Force the patched sharp for its Dependabot high (GHSA, fixed in 0.35).
-# image-size and extract-zip, which had highs with no published fix, left the
-# tree with @astrojs/netlify 8.2.7, so they need no override.
+# Transitive deps pinned to the version that fixes a Dependabot alert, where the
+# parent package's own range already allows it but pnpm won't bump it unprompted.
+# sharp:           librsvg CVE-2026-96889, fixed in 0.35.5 (via astro and ipx).
+# @fastify/busboy: CRLF injection in multipart names, fixed in 3.2.2
+#                  (via @whatwg-node/node-fetch under the Netlify dev tooling).
+# braces and node-forge also have open advisories but no published fix yet, so
+# they are left alone; both only reach the tree through @netlify/dev.
 overrides:
-  sharp: '>=0.35.0'
+  sharp: '>=0.35.5'
+  '@fastify/busboy': '>=3.2.3'

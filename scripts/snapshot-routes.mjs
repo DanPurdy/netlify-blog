@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 /**
- * Parity snapshot tool for the Gatsby -> Astro migration.
+ * Snapshots a build so two builds can be diffed.
  *
  * Walks a build output directory, records every generated route, and extracts
- * the readable text of each page. Run it against the Gatsby build first to
- * capture a baseline, then against the Astro build, then diff the two.
+ * the readable text and internal links of each page. Snapshot a build of main,
+ * then a build of the branch, then diff the two: the check for any change that
+ * should leave the rendered site alone, such as a dependency upgrade that
+ * touches markdown, or a reformat.
  *
- *   node scripts/snapshot-routes.mjs public  .parity/gatsby
- *   node scripts/snapshot-routes.mjs dist    .parity/astro
- *   diff -ru .parity/gatsby .parity/astro
+ *   node scripts/snapshot-routes.mjs dist .parity/before
+ *   node scripts/snapshot-routes.mjs dist .parity/after
+ *   diff -ru .parity/before .parity/after
  *
- * Markup is expected to differ (layouts are being consolidated), so this
- * deliberately compares text content and the route set, not HTML.
+ * Markup is allowed to differ, so this deliberately compares text content and
+ * the route set, not HTML.
  */
 
 import { readdir, readFile, mkdir, writeFile, rm } from 'node:fs/promises';
@@ -29,8 +31,6 @@ async function findHtml(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) {
-      // Gatsby emits per-page JSON and webpack chunks we do not care about.
-      if (entry.name === 'static' || entry.name === 'page-data') continue;
       found.push(...(await findHtml(path)));
     } else if (entry.name.endsWith('.html')) {
       found.push(path);

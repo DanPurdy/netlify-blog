@@ -50,6 +50,6 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write \"src/**/*.{ts,tsx,astro,css}\"",
-    "parity": "node scripts/snapshot-routes.mjs dist .parity/astro && diff -ru .parity/gatsby .parity/astro || true"
+    "typecheck": "tsc --noEmit"
   }
 }

@@ -296,10 +296,9 @@ in pounds, so the prose needs a line on that against the dollar list prices. The
   request 6 on each TTL. For "What is the prompt cache doing".
 - `cache-miss-cost.svg`: the first request after a break, light (100k) vs deep (400k),
   same scale, with costs. For "What does a miss actually cost?".
-- Both draw their own background card in the site palette (`--ground-raise`, `--line`),
-  light or dark by the reader's OS setting. An `<img>` can't see the site's theme
-  toggle, so when the toggle and the OS disagree the card won't match the page, but
-  it stays readable. Checked all four page/card combinations.
+- Both are always dark (site dark palette: `--ground-raise` card, `--ink` text,
+  `--accent` for writes). They don't react to the theme toggle or the OS setting, on
+  purpose: one look that reads on either page background.
 - Embed as `![alt](cache-requests.svg "title")`, like the other posts' images.
 
 ### Diagram ideas

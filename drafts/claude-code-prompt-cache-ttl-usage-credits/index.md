@@ -281,6 +281,15 @@ running.
 - Same machine, same evening, same kind of work. The only difference is which side
   of the weekly limit the account is on.
 
+### Opening screenshot
+
+`headroom-on-credits.png`: Headroom with both accounts, 2026-10-18 23:19. Session names
+blurred. The work account is at 100% weekly and spending extra usage, and its session's
+cache shows 3m left. The personal account is well inside its limits, and its sessions
+show 59m, 59m and 50m. Same app, same moment: the two TTLs side by side. Spend is shown
+in pounds, so the prose needs a line on that against the dollar list prices. The file is
+340px wide, so the page shows it at that size rather than stretching it.
+
 ### Diagrams (drawn)
 
 - `cache-requests.svg`: requests as growing bars, read vs written, then a break and

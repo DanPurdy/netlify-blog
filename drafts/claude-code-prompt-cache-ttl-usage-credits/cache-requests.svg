@@ -1,21 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 448" width="768" height="448" role="img" aria-labelledby="t d">
   <title id="t">How a Claude Code session uses the prompt cache</title>
   <desc id="d">Five requests shown as growing bars. The first request writes everything to the cache. Each later request reads everything before it from the cache and writes only a thin new slice on the end. After a break longer than five minutes, a request on the 5-minute cache writes the entire conversation again, while the same request on the 1-hour cache still reads it and writes only the new slice.</desc>
   <style>
     text { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; fill: #182338; }
     .soft { fill: #4a5a75; }
     .small { font-size: 12.5px; }
+    .card { fill: #ffffff; stroke: #dde4ee; }
     .read { fill: #c9d4e4; }
     .write { fill: #d6156c; }
     .rule { stroke: #9aa8bd; stroke-width: 1.5; stroke-dasharray: 5 5; }
     @media (prefers-color-scheme: dark) {
       text { fill: #e4ebf6; }
       .soft { fill: #9fb0c9; }
-      .read { fill: #2e4061; }
+      .card { fill: #132034; stroke: #2a3b58; }
+      .read { fill: #3a4f75; }
       .write { fill: #ff3d93; }
       .rule { stroke: #4b5d7c; }
     }
   </style>
+  <rect class="card" x="0.5" y="0.5" width="767" height="447" rx="12"/>
+  <g transform="translate(24 24)">
 
   <!-- legend -->
   <rect class="read" x="0" y="6" width="16" height="16" rx="3"/>
@@ -58,4 +62,5 @@
   <rect class="read" x="110" y="364" width="328" height="22" rx="3"/>
   <rect class="write" x="440" y="364" width="28" height="22" rx="3"/>
   <text class="soft small" x="478" y="380">still a read, plus the new slice</text>
+  </g>
 </svg>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 378" width="768" height="378" role="img" aria-labelledby="t d">
   <title id="t">The first request after a break, light session versus deep session</title>
   <desc id="d">Bars drawn to the same scale. In a light session at 100k tokens, the first request after a break costs about 2 cents on the 1-hour cache, where it is a read, and about 50 cents on the 5-minute cache, where everything is written again. In a deep session at 400k tokens the bars are four times longer: about 8 cents on the 1-hour cache and about 2 dollars on the 5-minute cache. Opus 5.5 list prices.</desc>
   <style>
@@ -7,17 +7,21 @@
     .small { font-size: 12.5px; }
     .head { font-weight: 600; }
     .cost { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .card { fill: #ffffff; stroke: #dde4ee; }
     .read { fill: #c9d4e4; }
     .write { fill: #d6156c; }
     .rule { stroke: #dde4ee; stroke-width: 1; }
     @media (prefers-color-scheme: dark) {
       text { fill: #e4ebf6; }
       .soft { fill: #9fb0c9; }
-      .read { fill: #2e4061; }
+      .card { fill: #132034; stroke: #2a3b58; }
+      .read { fill: #3a4f75; }
       .write { fill: #ff3d93; }
       .rule { stroke: #22314b; }
     }
   </style>
+  <rect class="card" x="0.5" y="0.5" width="767" height="377" rx="12"/>
+  <g transform="translate(24 24)">
 
   <!-- legend -->
   <rect class="read" x="0" y="6" width="16" height="16" rx="3"/>
@@ -46,4 +50,5 @@
   <text class="cost" x="622" y="266">$2.00</text>
 
   <text class="soft small" x="0" y="316">The first request after a break. Opus 5.5 list prices: cache read $0.20, 5-minute cache write $5 per million tokens.</text>
+  </g>
 </svg>

@@ -9,6 +9,7 @@ import json, sys
 from datetime import datetime
 
 W5, W1, READ, OUT = 5, 8, 0.20, 20
+ttl_writes = {'5m': 0, '1h': 0}
 PING_IN, PING_OUT = 50, 150
 
 def main_requests(path):
@@ -22,6 +23,9 @@ def main_requests(path):
         seen.add(m['id'])
         u = m['usage']
         ctx = u.get('cache_read_input_tokens', 0) + u.get('cache_creation_input_tokens', 0) + u.get('input_tokens', 0)
+        cc = u.get('cache_creation') or {}
+        ttl_writes['5m'] += cc.get('ephemeral_5m_input_tokens', 0)
+        ttl_writes['1h'] += cc.get('ephemeral_1h_input_tokens', 0)
         out.append((datetime.fromisoformat(d['timestamp'].replace('Z', '+00:00')), ctx, u.get('output_tokens', 0)))
     return sorted(out)
 
@@ -49,7 +53,9 @@ def cost(reqs, ttl_min, write, ping_every=None):
 reqs = main_requests(sys.argv[1])
 print(f"{len(reqs)} main-conversation requests, {(reqs[-1][0] - reqs[0][0]).total_seconds() / 60:.0f} minutes, "
       f"context {reqs[0][1]:,} -> {reqs[-1][1]:,}")
-for label, args in (("5m (what happened)", (5, W5)), ("1h", (60, W1)),
+actual = max(ttl_writes, key=ttl_writes.get)
+print(f"cache writes: 5m {ttl_writes['5m']:,}, 1h {ttl_writes['1h']:,}, so this session ran on {actual}")
+for label, args in (("5m", (5, W5)), ("1h", (60, W1)),
                     ("5m + ping after 4 min idle", (5, W5, 4)), ("5m + ping every 2 min idle", (5, W5, 2))):
     c, m, p = cost(reqs, *args)
     print(f"  {label:28} ${c:6.2f}  misses {m}  pings {p}")

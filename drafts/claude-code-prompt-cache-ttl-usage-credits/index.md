@@ -256,11 +256,30 @@ one break of each length, extra cost compared with no break:
   miss anyway. The 1h cache has no moving parts.
 - A ping is a real turn: it sits in the conversation and the model replies to it.
 
-### Contrast: the same day, the other account
+### Contrast: my personal account, same evening
 
-The session drafting this post ran on my personal account, inside plan usage: every
-cache write was 1h (294,550 tokens, zero at 5m). The work account on usage credits:
-every write 5m. No TTL setting in either account's settings, so both are defaults.
+The session drafting this post ran on my personal account, inside plan usage. Every
+cache write was 1h; the work account on usage credits wrote every one at 5m. Neither
+account sets a TTL, so both are Claude Code's defaults. Snapshot at ~22:00 UTC, still
+running.
+
+- ~44 minutes, 40 main-conversation requests, context grew 58k → 158k.
+- Two breaks: 8.4 and 18.1 minutes (me reading and answering). On 1h, the request
+  after each one read ~140k from the cache and wrote a few hundred tokens. On 5m both
+  would have been full rewrites.
+
+| Strategy | Cost (list price equivalent) | Misses | Pings |
+| --- | --- | --- | --- |
+| 1h, what actually happened | $3.09 | 0 | 0 |
+| 5m, what credits would have given me | $3.97 | 2 | 0 |
+| 5m + ping after 4 min idle | $2.81 | 0 | 6 |
+| 5m + ping every 2 min idle | $3.09 | 0 | 15 |
+
+- On the subscription this isn't billed in dollars; it comes out of plan usage. The
+  dollar figures are what the same tokens cost at list price, i.e. what they'd cost
+  on credits.
+- Same machine, same evening, same kind of work. The only difference is which side
+  of the weekly limit the account is on.
 
 ### Diagrams (drawn)
 

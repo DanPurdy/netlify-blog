@@ -12,7 +12,8 @@
  * The dropdown images are real renders of the app, captured from a demo build
  * pointed at a fabricated data directory (HEADROOM_HOME plus a fake home), so
  * they are genuine app output without being anyone's usage. The small ones
- * are unscaled crops of the Usage render; the guide is the app's own window.
+ * are unscaled crops of the Usage render; the guide is the app's own window. The
+ * menu bar picture is the app's own gauge rendering, set in a mock menu bar.
  */
 import { Image } from 'astro:assets';
 
@@ -22,8 +23,9 @@ import pace from '../../assets/headroom/pace.png';
 import cache from '../../assets/headroom/cache.png';
 import live from '../../assets/headroom/live.png';
 import guide from '../../assets/headroom/guide.png';
+import menuBar from '../../assets/headroom/menu-bar.png';
 
-const version = '0.7.1';
+const version = '0.8.1';
 const repo = 'https://github.com/DanPurdy/headroom';
 const installCommand =
   'curl -fsSL https://raw.githubusercontent.com/DanPurdy/headroom/main/scripts/install.sh | bash';
@@ -123,9 +125,16 @@ const description =
       <section class="split wrap">
         <h2>Every account at once</h2>
         <p class="lede">
-          One column per account in the menu bar. Open it for reset countdowns, the sessions you
-          have running, and how fast you're going. Each tool keeps its own colour.
+          One column per account in the menu bar, or only the accounts you choose, or just the
+          icon. Open it for reset countdowns, the sessions you have running, and how fast you're
+          going. Each tool keeps its own colour.
         </p>
+        <Image
+          class="menubar"
+          src={menuBar}
+          alt="Three menu bars: Claude and Codex columns with bars and percentages, the same with bars only, and Headroom's icon on its own"
+          width={556}
+        />
         <div class="tools">
           <div class="tool claude">
             <!-- Drawn in CSS to the card's look; numbers match the renders. -->
@@ -624,6 +633,10 @@ const description =
     font-size: 19px;
   }
 
+  .split .menubar {
+    margin: 28px auto 0;
+  }
+
   .tools {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -950,7 +963,8 @@ const description =
       margin-top: 32px;
     }
 
-    .lede {
+    .lede,
+    .split .menubar {
       margin-left: 0;
     }
 

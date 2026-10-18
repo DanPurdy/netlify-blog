@@ -256,6 +256,22 @@ one break of each length, extra cost compared with no break:
   miss anyway. The 1h cache has no moving parts.
 - A ping is a real turn: it sits in the conversation and the model replies to it.
 
+### Contrast: the same day, the other account
+
+The session drafting this post ran on my personal account, inside plan usage: every
+cache write was 1h (294,550 tokens, zero at 5m). The work account on usage credits:
+every write 5m. No TTL setting in either account's settings, so both are defaults.
+
+### Diagrams (drawn)
+
+- `cache-requests.svg`: requests as growing bars, read vs written, then a break and
+  request 6 on each TTL. For "What is the prompt cache doing".
+- `cache-miss-cost.svg`: the first request after a break, light (100k) vs deep (400k),
+  same scale, with costs. For "What does a miss actually cost?".
+- Both carry their own light/dark colours from the site palette. They follow the
+  reader's OS setting, not the site's theme toggle (an `<img>` can't see page CSS).
+- Embed as `![alt](cache-requests.svg "title")`, like the other posts' images.
+
 ### Diagram ideas
 
 1. A session as a stack of growing bars, one per request: most of each bar is the

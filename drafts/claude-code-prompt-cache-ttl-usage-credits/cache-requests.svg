@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="t d">
+  <title id="t">How a Claude Code session uses the prompt cache</title>
+  <desc id="d">Five requests shown as growing bars. The first request writes everything to the cache. Each later request reads everything before it from the cache and writes only a thin new slice on the end. After a break longer than five minutes, a request on the 5-minute cache writes the entire conversation again, while the same request on the 1-hour cache still reads it and writes only the new slice.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; fill: #182338; }
+    .soft { fill: #4a5a75; }
+    .small { font-size: 12.5px; }
+    .read { fill: #c9d4e4; }
+    .write { fill: #d6156c; }
+    .rule { stroke: #9aa8bd; stroke-width: 1.5; stroke-dasharray: 5 5; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e4ebf6; }
+      .soft { fill: #9fb0c9; }
+      .read { fill: #2e4061; }
+      .write { fill: #ff3d93; }
+      .rule { stroke: #4b5d7c; }
+    }
+  </style>
+
+  <!-- legend -->
+  <rect class="read" x="0" y="6" width="16" height="16" rx="3"/>
+  <text x="24" y="19">Read from the cache</text>
+  <rect class="write" x="200" y="6" width="16" height="16" rx="3"/>
+  <text x="224" y="19">Written to the cache</text>
+
+  <!-- requests -->
+  <text x="0" y="66">Request 1</text>
+  <rect class="write" x="110" y="50" width="120" height="22" rx="3"/>
+  <text class="soft small" x="240" y="66">system prompt, tools, CLAUDE.md</text>
+
+  <text x="0" y="102">Request 2</text>
+  <rect class="read" x="110" y="86" width="120" height="22" rx="3"/>
+  <rect class="write" x="232" y="86" width="40" height="22" rx="3"/>
+
+  <text x="0" y="138">Request 3</text>
+  <rect class="read" x="110" y="122" width="162" height="22" rx="3"/>
+  <rect class="write" x="274" y="122" width="56" height="22" rx="3"/>
+
+  <text x="0" y="174">Request 4</text>
+  <rect class="read" x="110" y="158" width="220" height="22" rx="3"/>
+  <rect class="write" x="332" y="158" width="34" height="22" rx="3"/>
+
+  <text x="0" y="210">Request 5</text>
+  <rect class="read" x="110" y="194" width="256" height="22" rx="3"/>
+  <rect class="write" x="368" y="194" width="70" height="22" rx="3"/>
+
+  <!-- break -->
+  <line class="rule" x1="0" y1="248" x2="720" y2="248"/>
+  <text class="soft" x="360" y="276" text-anchor="middle">a break of more than 5 minutes</text>
+
+  <text x="0" y="322">Request 6</text>
+  <text class="soft small" x="0" y="338">5-minute cache</text>
+  <rect class="write" x="110" y="312" width="358" height="22" rx="3"/>
+  <text class="soft small" x="478" y="328">everything written again</text>
+
+  <text x="0" y="374">Request 6</text>
+  <text class="soft small" x="0" y="390">1-hour cache</text>
+  <rect class="read" x="110" y="364" width="328" height="22" rx="3"/>
+  <rect class="write" x="440" y="364" width="28" height="22" rx="3"/>
+  <text class="soft small" x="478" y="380">still a read, plus the new slice</text>
+</svg>

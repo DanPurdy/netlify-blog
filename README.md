@@ -46,10 +46,13 @@ pnpm dev          # http://localhost:4321, admin at /keystatic
 pnpm build        # dist/, the same build Netlify runs
 pnpm preview
 pnpm format       # Prettier over src/, .astro files included
+pnpm typecheck    # tsc over the .ts files (Astro files are not type-checked, see below)
 ```
 
 There is no test suite. The build is the check, and `scripts/snapshot-routes.mjs` diffs
-the rendered text of two builds when upgrading anything that touches markdown.
+the rendered text of two builds when upgrading anything that touches markdown. `tsc`
+checks the `.ts` files only: `astro check` does not support TypeScript 7, and its
+replacement, `@astrojs/ts-content-mapper`, is still experimental.
 
 ## Deploy
 

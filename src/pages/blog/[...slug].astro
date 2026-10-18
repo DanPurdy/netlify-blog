@@ -13,8 +13,7 @@ export async function getStaticPaths() {
     params: { slug: post.id },
     props: {
       post,
-      // gatsby-node.js computed these into page context and blog-post.tsx never
-      // rendered them. Newest first, so "next" is the newer neighbour.
+      // Newest first, so "next" is the newer neighbour.
       next: index === 0 ? null : posts[index - 1],
       previous: index === posts.length - 1 ? null : posts[index + 1],
     },

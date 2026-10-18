@@ -1,5 +1,5 @@
-# The site was previously detected as Gatsby. Pinning the build explicitly so the
-# framework change does not depend on Netlify's autodetection.
+# The build is pinned explicitly so it does not depend on Netlify's framework
+# autodetection.
 #
 # Node comes from .nvmrc (24, kept in sync with mise.toml). pnpm is detected from pnpm-lock.yaml, and the
 # build-script approvals it needs live in pnpm-workspace.yaml — sharp will not

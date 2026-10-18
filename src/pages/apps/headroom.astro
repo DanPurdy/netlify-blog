@@ -12,7 +12,14 @@
  * The dropdown images are real renders of the app, captured from a demo build
  * pointed at a fabricated data directory (HEADROOM_HOME plus a fake home), so
  * they are genuine app output without being anyone's usage. The small ones
- * are unscaled crops of the Usage render; the guide is the app's own window.
+ * are unscaled crops of the Usage and Settings renders; the guide is the app's
+ * own window. The menu bar itself is drawn in CSS to the app's dimensions.
+ *
+ * The version in the download link comes from the latest GitHub release at
+ * build time, so nothing here is bumped by hand on a release. The page asks
+ * again in the browser, since the site is only rebuilt on push. Either can
+ * fail quietly: the link then says "download Headroom" and still goes to
+ * releases/latest.
  */
 import { Image } from 'astro:assets';
 
@@ -22,9 +29,25 @@ import pace from '../../assets/headroom/pace.png';
 import cache from '../../assets/headroom/cache.png';
 import live from '../../assets/headroom/live.png';
 import guide from '../../assets/headroom/guide.png';
+import menuBar from '../../assets/headroom/menu-bar.png';
 
-const version = '0.7.0';
 const repo = 'https://github.com/DanPurdy/headroom';
+const latestRelease = 'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
+
+async function latestVersion(): Promise<string | null> {
+  try {
+    const response = await fetch(latestRelease, {
+      headers: { Accept: 'application/vnd.github+json' },
+    });
+    if (!response.ok) return null;
+    const release: { tag_name?: unknown } = await response.json();
+    return typeof release.tag_name === 'string' ? release.tag_name.replace(/^v/, '') : null;
+  } catch {
+    return null;
+  }
+}
+
+const version = await latestVersion();
 const installCommand =
   'curl -fsSL https://raw.githubusercontent.com/DanPurdy/headroom/main/scripts/install.sh | bash';
 
@@ -123,8 +146,9 @@ const description =
       <section class="split wrap">
         <h2>Every account at once</h2>
         <p class="lede">
-          One column per account in the menu bar. Open it for reset countdowns, the sessions you
-          have running, and how fast you're going. Each tool keeps its own colour.
+          A column per account in the menu bar, or only the ones you want there. Open it for
+          reset countdowns, the sessions you have running, and how fast you're going. Each tool
+          keeps its own colour.
         </p>
         <div class="tools">
           <div class="tool claude">
@@ -151,6 +175,98 @@ const description =
               you're using it.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section class="styles wrap">
+        <!-- Drawn in CSS like the hero's menu bar. The icon style shows the app's own glyph: the
+             head from icon.svg, in one colour, lighter above the fill line, as the app draws it. -->
+        <div class="strips" aria-label="The menu bar item in its three styles">
+          <figure>
+            <div class="strip">
+              <span class="gauge">
+                <span class="col">
+                  <span class="lbl">Claude</span>
+                  <span class="rows">
+                    <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
+                    <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
+                  </span>
+                </span>
+                <span class="col">
+                  <span class="lbl">Codex</span>
+                  <span class="rows">
+                    <span class="r"><i style="--v: 17%"></i><b>17%</b></span>
+                    <span class="r"><i style="--v: 42%"></i><b>42%</b></span>
+                  </span>
+                </span>
+              </span>
+              <span class="clock">Tue 09:41</span>
+            </div>
+            <figcaption>Bars and percentages</figcaption>
+          </figure>
+          <figure>
+            <div class="strip">
+              <span class="gauge">
+                <span class="col">
+                  <span class="lbl">Claude</span>
+                  <span class="rows">
+                    <span class="r"><i style="--v: 38%"></i></span>
+                    <span class="r"><i style="--v: 61%"></i></span>
+                  </span>
+                </span>
+                <span class="col">
+                  <span class="lbl">Codex</span>
+                  <span class="rows">
+                    <span class="r"><i style="--v: 17%"></i></span>
+                    <span class="r"><i style="--v: 42%"></i></span>
+                  </span>
+                </span>
+              </span>
+              <span class="clock">Tue 09:41</span>
+            </div>
+            <figcaption>Bars only</figcaption>
+          </figure>
+          <figure>
+            <div class="strip">
+              <span class="gauge">
+                <svg class="glyph" width="15.5" height="18" viewBox="205 222 613 712" aria-hidden="true">
+                  <defs>
+                    <path
+                      id="mb-head"
+                      d="M 215 940 C 235 868, 325 836, 398 812 L 405 722 C 360 692, 300 622, 290 522 C 280 382, 370 250, 510 240 C 630 232, 705 300, 712 400 C 716 430, 726 446, 726 458 C 726 468, 720 474, 722 486 C 732 512, 752 536, 762 556 C 768 566, 760 574, 746 574 L 726 576 C 732 586, 734 598, 726 604 C 722 607, 722 610, 726 613 C 732 620, 728 634, 716 638 C 714 650, 722 666, 716 684 C 708 704, 680 712, 650 712 C 630 714, 618 730, 616 760 L 620 808 C 692 834, 788 866, 808 940 Z"
+                    />
+                    <path
+                      id="mb-wave"
+                      d="M 100 548 C 170 524, 250 572, 330 548 S 490 524, 570 548 S 730 572, 924 548 L 924 960 L 100 960 Z"
+                    />
+                    <clipPath id="mb-head-clip"><use href="#mb-head" /></clipPath>
+                    <mask id="mb-above-wave">
+                      <rect width="1024" height="1024" fill="white" />
+                      <use href="#mb-wave" fill="black" transform="translate(0 6)" />
+                    </mask>
+                  </defs>
+                  <use href="#mb-head" fill="currentColor" fill-opacity="0.45" mask="url(#mb-above-wave)" />
+                  <g clip-path="url(#mb-head-clip)"><use href="#mb-wave" fill="currentColor" /></g>
+                </svg>
+              </span>
+              <span class="clock">Tue 09:41</span>
+            </div>
+            <figcaption>Icon only</figcaption>
+          </figure>
+        </div>
+        <div>
+          <h2>As much menu bar as you want</h2>
+          <p>
+            Settings picks which accounts get a column, and how much each one shows. Leave an
+            account out, drop the percentages, or shrink the whole thing to an icon. The dropdown
+            always shows everything.
+          </p>
+          <Image
+            class="detail"
+            src={menuBar}
+            alt="The Menu bar section of Settings: a Show picker reading 'Bars and percentages', then a ticked checkbox for the Claude account and one for Codex, each with its tool's colour"
+            width={340}
+          />
         </div>
       </section>
 
@@ -289,7 +405,7 @@ const description =
           <button type="button" class="copy" data-copy={installCommand}>Copy</button>
         </div>
         <p class="small">
-          Or <a href={`${repo}/releases/latest`}>download Headroom {version}</a> and move it
+          Or <a href={`${repo}/releases/latest`}>download Headroom <span data-version>{version}</span></a> and move it
           to Applications. It isn't notarised yet, so allow it under Privacy &amp; Security the
           first time.
         </p>
@@ -323,6 +439,17 @@ const description =
           setTimeout(() => (button.textContent = 'Copy'), 1800);
         });
       }
+
+      // The build asked GitHub for the latest release; ask again, in case there's a newer one.
+      const latestRelease = 'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
+      fetch(latestRelease, { headers: { Accept: 'application/vnd.github+json' } })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((release: { tag_name?: unknown } | null) => {
+          if (typeof release?.tag_name !== 'string') return;
+          const version = release.tag_name.replace(/^v/, '');
+          for (const el of document.querySelectorAll('[data-version]')) el.textContent = version;
+        })
+        .catch(() => {});
     </script>
   </body>
 </html>
@@ -692,6 +819,67 @@ const description =
     opacity: 0.55;
   }
 
+  /* The three menu bar styles beside the setting that picks them. */
+  .styles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-top: 120px;
+  }
+
+  .styles p {
+    margin: 16px 0 28px;
+    font-size: 18px;
+    max-width: 420px;
+  }
+
+  .strips {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+    justify-self: end;
+  }
+
+  .styles h2 {
+    text-wrap: balance;
+  }
+
+  .strips figure {
+    margin: 0;
+  }
+
+  /* The right-hand end of a menu bar, with the item at rest rather than open. */
+  .strip {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 17px;
+    height: 32px;
+    padding: 0 12px;
+    background: var(--bg-raise);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .strip .gauge {
+    padding: 0;
+    background: none;
+  }
+
+  .strip .glyph {
+    display: block;
+  }
+
+  .strips figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
   .trio {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -955,14 +1143,26 @@ const description =
     }
 
     .tools,
+    .styles,
     .feature .wrap {
       grid-template-columns: 1fr;
+    }
+
+    .styles {
+      gap: 40px;
+    }
+
+    /* Text first, then the strips. */
+    .strips {
+      order: 1;
+      justify-self: start;
     }
 
     .tool {
       padding: 22px;
     }
 
+    .styles,
     .trio,
     .feature,
     .quiet,

@@ -4,8 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="404: Not Found">
   <section class="not-found">
-    <h1>Nothing lives at this address<em>.</em></h1>
-    <p>The page you're looking for has moved, been renamed, or never existed.</p>
+    <h1>
+      Nothing lives at this address<em>.</em>
+    </h1>
+    <p>
+      The page you're looking for has moved, been renamed, or never existed.
+    </p>
     <a href="/">Back to writing →</a>
   </section>
 </BaseLayout>
@@ -15,7 +19,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 64px 0;
   }
   .not-found h1 {
-    font: 800 clamp(36px, 5vw, 58px) / 1.06 'Figtree Variable', sans-serif;
+    font:
+      800 clamp(36px, 5vw, 58px) / 1.06 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.035em;
     max-width: 20ch;
   }

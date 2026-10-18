@@ -26,7 +26,7 @@ const blog = defineCollection({
       .array(z.string())
       .default([])
       .transform((tags) =>
-        tags.map((tag) => tag.trim().toLowerCase().replace(/\s+/g, '-')),
+        tags.map((tag) => tag.trim().toLowerCase().replace(/\s+/g, '-'))
       ),
     draft: z.boolean().default(false),
   }),

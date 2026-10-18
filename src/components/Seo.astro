@@ -43,14 +43,12 @@ const image = new URL('/og-card.png', Astro.site);
 <meta property="og:image:alt" content={SITE.imageAlt} />
 <meta property="og:type" content={publishedTime ? 'article' : 'website'} />
 <meta property="og:url" content={canonical} />
-{
-  publishedTime && (
-    <meta
-      property="article:published_time"
-      content={publishedTime.toISOString()}
-    />
-  )
-}
+{publishedTime && (
+  <meta
+    property="article:published_time"
+    content={publishedTime.toISOString()}
+  />
+)}
 
 {/* Kept for anyone sharing there; the card tags need no account to work. */}
 <meta name="twitter:card" content="summary_large_image" />

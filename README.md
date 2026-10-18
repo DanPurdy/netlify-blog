@@ -45,7 +45,7 @@ pnpm install
 pnpm dev          # http://localhost:4321, admin at /keystatic
 pnpm build        # dist/, the same build Netlify runs
 pnpm preview
-pnpm format       # Prettier over src/
+pnpm format       # Prettier over src/, .astro files included
 ```
 
 There is no test suite. The build is the check, and `scripts/snapshot-routes.mjs` diffs

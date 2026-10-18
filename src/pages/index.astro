@@ -12,15 +12,15 @@ const personal = (await getCollection('personal'))[0];
 const { Content: Intro } = await render(personal);
 
 const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
+  (a, b) => a.data.order - b.data.order
 );
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
 const experience = (await getCollection('experience')).sort(
-  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
 );
 
 // "2025 —" for the current role, "2021 – 25" (full start year, en dash,
@@ -52,58 +52,63 @@ const personJsonLd = JSON.stringify({
     </h1>
     <div class="sub">
       <Intro />
-      {
-        personal.data.links.length > 0 && (
-          <div class="social">
-            {personal.data.links.map((link) =>
-              link.url.startsWith('/') ? (
-                <a href={link.url}>{link.label}</a>
-              ) : (
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.label}
-                </a>
-              ),
-            )}
-          </div>
-        )
-      }
+      {personal.data.links.length > 0 && (
+        <div class="social">
+          {personal.data.links.map((link) =>
+            link.url.startsWith('/') ? (
+              <a href={link.url}>{link.label}</a>
+            ) : (
+              <a href={link.url} target="_blank" rel="noopener noreferrer">
+                {link.label}
+              </a>
+            )
+          )}
+        </div>
+      )}
     </div>
   </div>
 
   <section>
-    <div class="sec-h"><h2>Writing</h2><a href="/rss.xml">RSS →</a></div>
-    {posts.map((post) => <PostRow post={post} />)}
+    <div class="sec-h">
+      <h2>Writing</h2>
+      <a href="/rss.xml">RSS →</a>
+    </div>
+    {posts.map((post) => (
+      <PostRow post={post} />
+    ))}
   </section>
 
   <section>
-    <div class="sec-h"><h2>Projects</h2><a href="/projects">All projects →</a></div>
+    <div class="sec-h">
+      <h2>Projects</h2>
+      <a href="/projects">All projects →</a>
+    </div>
     <div class="projects">
-      {
-        projects.map((project) => (
-          <a class="proj" href={`/projects/${project.id}/`}>
-            <h3>
-              {project.data.name} <span>{project.data.role}</span>
-            </h3>
-            <p>{project.data.description}</p>
-          </a>
-        ))
-      }
+      {projects.map((project) => (
+        <a class="proj" href={`/projects/${project.id}/`}>
+          <h3>
+            {project.data.name} <span>{project.data.role}</span>
+          </h3>
+          <p>{project.data.description}</p>
+        </a>
+      ))}
     </div>
   </section>
 
   <section id="work">
-    <div class="sec-h"><h2>Work</h2><a href="/work">Full history →</a></div>
+    <div class="sec-h">
+      <h2>Work</h2>
+      <a href="/work">Full history →</a>
+    </div>
     <div class="work">
-      {
-        experience.map((job) => (
-          <a class="job" href="/work">
-            <span>
-              <b>{job.data.title}</b> · {job.data.position[0]}
-            </span>
-            <time>{formatDateRange(job)}</time>
-          </a>
-        ))
-      }
+      {experience.map((job) => (
+        <a class="job" href="/work">
+          <span>
+            <b>{job.data.title}</b> · {job.data.position[0]}
+          </span>
+          <time>{formatDateRange(job)}</time>
+        </a>
+      ))}
     </div>
   </section>
 
@@ -125,12 +130,18 @@ const personJsonLd = JSON.stringify({
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background: radial-gradient(closest-side, var(--accent) 0%, transparent 70%);
+    background: radial-gradient(
+      closest-side,
+      var(--accent) 0%,
+      transparent 70%
+    );
     opacity: 0.1;
     pointer-events: none;
   }
   .hero h1 {
-    font: 800 clamp(36px, 5vw, 58px) / 1.06 'Figtree Variable', sans-serif;
+    font:
+      800 clamp(36px, 5vw, 58px) / 1.06 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.035em;
     text-wrap: balance;
     max-width: 20ch;
@@ -220,7 +231,9 @@ const personJsonLd = JSON.stringify({
     font-weight: 700;
   }
   .proj h3 span {
-    font: 400 13px 'JetBrains Mono', monospace;
+    font:
+      400 13px 'JetBrains Mono',
+      monospace;
     color: var(--ink-faint);
     margin-left: 8px;
   }
@@ -253,7 +266,9 @@ const personJsonLd = JSON.stringify({
     font-size: 15.5px;
   }
   .job time {
-    font: 500 13px 'JetBrains Mono', monospace;
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
     color: var(--ink-faint);
     white-space: nowrap;
   }

@@ -30,16 +30,25 @@ interface Props {
 const { tag, posts } = Astro.props;
 ---
 
-<BaseLayout title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}`} width="wide">
+<BaseLayout
+  title={`Posts tagged ${tag}`}
+  description={`Blog posts tagged ${tag}`}
+  width="wide"
+>
   <section class="listing">
     <header class="page-h">
-      <h1><span class="hash">#</span>{tag}</h1>
+      <h1>
+        <span class="hash">#</span>
+        {tag}
+      </h1>
       <p class="sub">
         {posts.length} {posts.length === 1 ? 'post' : 'posts'} ·{' '}
         <a href="/">all writing →</a>
       </p>
     </header>
-    {posts.map((post) => <PostRow post={post} />)}
+    {posts.map((post) => (
+      <PostRow post={post} />
+    ))}
   </section>
 </BaseLayout>
 
@@ -51,7 +60,9 @@ const { tag, posts } = Astro.props;
     margin-bottom: 16px;
   }
   .page-h h1 {
-    font: 800 clamp(28px, 4vw, 40px) / 1.15 'Figtree Variable', sans-serif;
+    font:
+      800 clamp(28px, 4vw, 40px) / 1.15 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.025em;
   }
   .page-h h1 .hash {

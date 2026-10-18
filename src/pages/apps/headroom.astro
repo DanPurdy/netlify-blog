@@ -32,7 +32,8 @@ import guide from '../../assets/headroom/guide.png';
 import menuBar from '../../assets/headroom/menu-bar.png';
 
 const repo = 'https://github.com/DanPurdy/headroom';
-const latestRelease = 'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
+const latestRelease =
+  'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
 
 async function latestVersion(): Promise<string | null> {
   try {
@@ -41,7 +42,9 @@ async function latestVersion(): Promise<string | null> {
     });
     if (!response.ok) return null;
     const release: { tag_name?: unknown } = await response.json();
-    return typeof release.tag_name === 'string' ? release.tag_name.replace(/^v/, '') : null;
+    return typeof release.tag_name === 'string'
+      ? release.tag_name.replace(/^v/, '')
+      : null;
   } catch {
     return null;
   }
@@ -64,13 +67,21 @@ const description =
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/headroom/icon.svg" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/headroom/favicon-64.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="/headroom/favicon-64.png"
+    />
     <link rel="apple-touch-icon" href="/headroom/apple-touch-icon.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dpurdy.me/apps/headroom/" />
-    <meta property="og:image" content="https://dpurdy.me/headroom/og-card.png" />
+    <meta
+      property="og:image"
+      content="https://dpurdy.me/headroom/og-card.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -92,18 +103,25 @@ const description =
       <section class="hero wrap">
         <h1>See how much of your plan you have left.</h1>
         <p>
-          A menu bar gauge of your 5-hour and weekly limits, and the pace you're burning them at,
-          for every Claude Code and Codex account on your Mac. Out of the box it reads what each
-          tool already writes down: no login, no API calls. Switch on Live and it checks your
-          account directly too.
+          A menu bar gauge of your 5-hour and weekly limits, and the pace you're
+          burning them at, for every Claude Code and Codex account on your Mac.
+          Out of the box it reads what each tool already writes down: no login,
+          no API calls. Switch on Live and it checks your account directly too.
         </p>
         <div class="buttons">
-          <a class="pill solid" href={`${repo}/releases/latest`}>Download for macOS</a>
-          <a class="pill" href="#install">Install from the terminal</a>
+          <a class="pill solid" href={`${repo}/releases/latest`}>
+            Download for macOS
+          </a>
+          <a class="pill" href="#install">
+            Install from the terminal
+          </a>
         </div>
       </section>
 
-      <figure class="desktop wrap" aria-label="Headroom's gauge in the macOS menu bar, with its dropdown open">
+      <figure
+        class="desktop wrap"
+        aria-label="Headroom's gauge in the macOS menu bar, with its dropdown open"
+      >
         <div class="scene">
           <div class="menubar" aria-hidden="true">
             <span class="apple"></span>
@@ -119,15 +137,27 @@ const description =
               <span class="col">
                 <span class="lbl">Claude</span>
                 <span class="rows">
-                  <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
-                  <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
+                  <span class="r">
+                    <i style="--v: 38%"></i>
+                    <b>38%</b>
+                  </span>
+                  <span class="r">
+                    <i style="--v: 61%"></i>
+                    <b>61%</b>
+                  </span>
                 </span>
               </span>
               <span class="col">
                 <span class="lbl">Codex</span>
                 <span class="rows">
-                  <span class="r"><i style="--v: 17%"></i><b>17%</b></span>
-                  <span class="r"><i style="--v: 42%"></i><b>42%</b></span>
+                  <span class="r">
+                    <i style="--v: 17%"></i>
+                    <b>17%</b>
+                  </span>
+                  <span class="r">
+                    <i style="--v: 42%"></i>
+                    <b>42%</b>
+                  </span>
                 </span>
               </span>
             </span>
@@ -146,33 +176,46 @@ const description =
       <section class="split wrap">
         <h2>Every account at once</h2>
         <p class="lede">
-          A column per account in the menu bar, or only the ones you want there. Open it for
-          reset countdowns, the sessions you have running, and how fast you're going. Each tool
-          keeps its own colour.
+          A column per account in the menu bar, or only the ones you want there.
+          Open it for reset countdowns, the sessions you have running, and how
+          fast you're going. Each tool keeps its own colour.
         </p>
         <div class="tools">
           <div class="tool claude">
             <!-- Drawn in CSS to the card's look; numbers match the renders. -->
             <div class="bars" aria-hidden="true">
-              <span>5-hour <em>38%</em></span><i style="--v: 38%; --p: 46%"></i>
-              <span>Weekly <em>61%</em></span><i style="--v: 61%; --p: 54%"></i>
+              <span>
+                5-hour <em>38%</em>
+              </span>
+              <i style="--v: 38%; --p: 46%"></i>
+              <span>
+                Weekly <em>61%</em>
+              </span>
+              <i style="--v: 61%; --p: 54%"></i>
             </div>
             <h3>Claude Code</h3>
             <p>
-              Connect a folder and Headroom hears every reply through its status line, which keeps
-              working as before. You also get today's cost and each conversation's prompt cache.
+              Connect a folder and Headroom hears every reply through its status
+              line, which keeps working as before. You also get today's cost and
+              each conversation's prompt cache.
             </p>
           </div>
           <div class="tool codex">
             <div class="bars" aria-hidden="true">
-              <span>5-hour <em>17%</em></span><i style="--v: 17%; --p: 30%"></i>
-              <span>Weekly <em>42%</em></span><i style="--v: 42%; --p: 47%"></i>
+              <span>
+                5-hour <em>17%</em>
+              </span>
+              <i style="--v: 17%; --p: 30%"></i>
+              <span>
+                Weekly <em>42%</em>
+              </span>
+              <i style="--v: 42%; --p: 47%"></i>
             </div>
             <h3>Codex</h3>
             <p>
-              Track a folder and Headroom reads the logs Codex already keeps, from the CLI, IDE
-              extension and app. No login, nothing changed, plus any model's own limit while
-              you're using it.
+              Track a folder and Headroom reads the logs Codex already keeps,
+              from the CLI, IDE extension and app. No login, nothing changed,
+              plus any model's own limit while you're using it.
             </p>
           </div>
         </div>
@@ -188,15 +231,27 @@ const description =
                 <span class="col">
                   <span class="lbl">Claude</span>
                   <span class="rows">
-                    <span class="r"><i style="--v: 38%"></i><b>38%</b></span>
-                    <span class="r"><i style="--v: 61%"></i><b>61%</b></span>
+                    <span class="r">
+                      <i style="--v: 38%"></i>
+                      <b>38%</b>
+                    </span>
+                    <span class="r">
+                      <i style="--v: 61%"></i>
+                      <b>61%</b>
+                    </span>
                   </span>
                 </span>
                 <span class="col">
                   <span class="lbl">Codex</span>
                   <span class="rows">
-                    <span class="r"><i style="--v: 17%"></i><b>17%</b></span>
-                    <span class="r"><i style="--v: 42%"></i><b>42%</b></span>
+                    <span class="r">
+                      <i style="--v: 17%"></i>
+                      <b>17%</b>
+                    </span>
+                    <span class="r">
+                      <i style="--v: 42%"></i>
+                      <b>42%</b>
+                    </span>
                   </span>
                 </span>
               </span>
@@ -210,15 +265,23 @@ const description =
                 <span class="col">
                   <span class="lbl">Claude</span>
                   <span class="rows">
-                    <span class="r"><i style="--v: 38%"></i></span>
-                    <span class="r"><i style="--v: 61%"></i></span>
+                    <span class="r">
+                      <i style="--v: 38%"></i>
+                    </span>
+                    <span class="r">
+                      <i style="--v: 61%"></i>
+                    </span>
                   </span>
                 </span>
                 <span class="col">
                   <span class="lbl">Codex</span>
                   <span class="rows">
-                    <span class="r"><i style="--v: 17%"></i></span>
-                    <span class="r"><i style="--v: 42%"></i></span>
+                    <span class="r">
+                      <i style="--v: 17%"></i>
+                    </span>
+                    <span class="r">
+                      <i style="--v: 42%"></i>
+                    </span>
                   </span>
                 </span>
               </span>
@@ -229,7 +292,13 @@ const description =
           <figure>
             <div class="strip">
               <span class="gauge">
-                <svg class="glyph" width="15.5" height="18" viewBox="205 222 613 712" aria-hidden="true">
+                <svg
+                  class="glyph"
+                  width="15.5"
+                  height="18"
+                  viewBox="205 222 613 712"
+                  aria-hidden="true"
+                >
                   <defs>
                     <path
                       id="mb-head"
@@ -239,14 +308,27 @@ const description =
                       id="mb-wave"
                       d="M 100 548 C 170 524, 250 572, 330 548 S 490 524, 570 548 S 730 572, 924 548 L 924 960 L 100 960 Z"
                     />
-                    <clipPath id="mb-head-clip"><use href="#mb-head" /></clipPath>
+                    <clipPath id="mb-head-clip">
+                      <use href="#mb-head" />
+                    </clipPath>
                     <mask id="mb-above-wave">
                       <rect width="1024" height="1024" fill="white" />
-                      <use href="#mb-wave" fill="black" transform="translate(0 6)" />
+                      <use
+                        href="#mb-wave"
+                        fill="black"
+                        transform="translate(0 6)"
+                      />
                     </mask>
                   </defs>
-                  <use href="#mb-head" fill="currentColor" fill-opacity="0.45" mask="url(#mb-above-wave)" />
-                  <g clip-path="url(#mb-head-clip)"><use href="#mb-wave" fill="currentColor" /></g>
+                  <use
+                    href="#mb-head"
+                    fill="currentColor"
+                    fill-opacity="0.45"
+                    mask="url(#mb-above-wave)"
+                  />
+                  <g clip-path="url(#mb-head-clip)">
+                    <use href="#mb-wave" fill="currentColor" />
+                  </g>
                 </svg>
               </span>
               <span class="clock">Tue 09:41</span>
@@ -257,9 +339,9 @@ const description =
         <div>
           <h2>As much menu bar as you want</h2>
           <p>
-            Settings picks which accounts get a column, and how much each one shows. Leave an
-            account out, drop the percentages, or shrink the whole thing to an icon. The dropdown
-            always shows everything.
+            Settings picks which accounts get a column, and how much each one
+            shows. Leave an account out, drop the percentages, or shrink the
+            whole thing to an icon. The dropdown always shows everything.
           </p>
           <Image
             class="detail"
@@ -274,8 +356,8 @@ const description =
         <div>
           <h3>Know your pace</h3>
           <p>
-            A line on each bar marks how much of the window has passed. Ahead of it, Headroom says
-            when you'd run out at this rate.
+            A line on each bar marks how much of the window has passed. Ahead of
+            it, Headroom says when you'd run out at this rate.
           </p>
           <Image
             class="detail"
@@ -287,8 +369,9 @@ const description =
         <div>
           <h3>Mind the cache</h3>
           <p>
-            Each Claude Code conversation shows how long until its prompt cache goes cold and the
-            next message costs full price. A warning marks one that missed.
+            Each Claude Code conversation shows how long until its prompt cache
+            goes cold and the next message costs full price. A warning marks one
+            that missed.
           </p>
           <Image
             class="detail"
@@ -300,8 +383,8 @@ const description =
         <div>
           <h3>Warned in time</h3>
           <p>
-            Alerts at 80% or 90% of any limit, and when it resets. Click a flame for a nudge five
-            minutes before that cache goes cold.
+            Alerts at 80% or 90% of any limit, and when it resets. Click a flame
+            for a nudge five minutes before that cache goes cold.
           </p>
           <!-- Drawn in CSS, worded exactly as the app words its notifications. -->
           <div class="notes" aria-label="Two Headroom notifications">
@@ -317,7 +400,10 @@ const description =
               <img src="/headroom/icon.svg" alt="" width="34" height="34" />
               <div>
                 <b>Release notes for 2.4: cache goes cold in 5 minutes</b>
-                <span>After that, the next message re-reads the conversation at full price.</span>
+                <span>
+                  After that, the next message re-reads the conversation at full
+                  price.
+                </span>
               </div>
               <time>2m ago</time>
             </div>
@@ -335,12 +421,14 @@ const description =
           <div>
             <h2>What used it</h2>
             <p>
-              History charts each account's 5-hour and weekly usage over the last hour, 12 hours,
-              day or week, then lists the conversations that took the most from your limits.
+              History charts each account's 5-hour and weekly usage over the
+              last hour, 12 hours, day or week, then lists the conversations
+              that took the most from your limits.
             </p>
             <p>
-              With Live on, readings from claude.ai and your other devices land here too, so use
-              from elsewhere isn't pinned on your next Claude Code conversation.
+              With Live on, readings from claude.ai and your other devices land
+              here too, so use from elsewhere isn't pinned on your next Claude
+              Code conversation.
             </p>
           </div>
         </div>
@@ -352,16 +440,18 @@ const description =
           <div>
             <h3>Reads, never writes</h3>
             <p>
-              Headroom reads what Claude Code and Codex already write down. Unless you switch on
-              Live, it never touches your login or calls Anthropic or OpenAI.
+              Headroom reads what Claude Code and Codex already write down.
+              Unless you switch on Live, it never touches your login or calls
+              Anthropic or OpenAI.
             </p>
           </div>
           <div>
             <h3>Live, if you want it</h3>
             <p>
-              Switch it on for a Claude account to count use from claude.ai and other devices, and
-              to see a model's own weekly limit and your extra usage. It reads your login only when
-              you ask, and keeps it in memory.
+              Switch it on for a Claude account to count use from claude.ai and
+              other devices, and to see a model's own weekly limit and your
+              extra usage. It reads your login only when you ask, and keeps it
+              in memory.
             </p>
             <Image
               class="detail live"
@@ -373,8 +463,9 @@ const description =
           <div>
             <h3>Keeps itself current</h3>
             <p>
-              Once a day it asks GitHub for a new release and offers to install it. Switch that off
-              and leave Live off, and Headroom makes no network requests at all.
+              Once a day it asks GitHub for a new release and offers to install
+              it. Switch that off and leave Live off, and Headroom makes no
+              network requests at all.
             </p>
           </div>
         </div>
@@ -383,8 +474,9 @@ const description =
       <section class="guide wrap">
         <h2>Set up in a minute</h2>
         <p class="lede">
-          The first time it opens, a guide finds your Claude Code and Codex folders, connects the
-          ones you pick, and explains every bar, line and icon on a card.
+          The first time it opens, a guide finds your Claude Code and Codex
+          folders, connects the ones you pick, and explains every bar, line and
+          icon on a card.
         </p>
         <Image
           src={guide}
@@ -396,39 +488,50 @@ const description =
       <section class="install wrap" id="install">
         <h2>Install</h2>
         <p>
-          Needs macOS 14, and Claude Code signed in with a Pro, Max or Team plan, Codex signed
-          in with ChatGPT, or both. The prompt cache countdown needs Claude Code 2.1.251 or
-          later.
+          Needs macOS 14, and Claude Code signed in with a Pro, Max or Team
+          plan, Codex signed in with ChatGPT, or both. The prompt cache
+          countdown needs Claude Code 2.1.251 or later.
         </p>
         <div class="command">
           <pre><code>{installCommand}</code></pre>
-          <button type="button" class="copy" data-copy={installCommand}>Copy</button>
+          <button type="button" class="copy" data-copy={installCommand}>
+            Copy
+          </button>
         </div>
         <p class="small">
-          Or <a href={`${repo}/releases/latest`}>download Headroom <span data-version>{version}</span></a> and move it
-          to Applications. It isn't notarised yet, so allow it under Privacy &amp; Security the
-          first time.
+          Or{' '}
+          <a href={`${repo}/releases/latest`}>
+            download Headroom <span data-version>{version}</span>
+          </a>{' '}
+          and move it to Applications. It isn't notarised yet, so allow it under
+          Privacy &amp; Security the first time.
         </p>
         <ol>
           <li>Open Headroom. A setup guide lists the accounts it found.</li>
-          <li>Label each one, then Connect a Claude Code folder or Track a Codex one.</li>
+          <li>
+            Label each one, then Connect a Claude Code folder or Track a Codex
+            one.
+          </li>
           <li>Send a message in either. Its usage appears.</li>
         </ol>
         <p class="small">
-          Skipped the guide? Click the gauge, then the gear. It's under Setup guide… there.
+          Skipped the guide? Click the gauge, then the gear. It's under Setup
+          guide… there.
         </p>
       </section>
     </main>
 
     <footer class="wrap">
       <p>
-        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with Anthropic or OpenAI.{' '}
-        <a href="/projects/headroom/">Project notes</a>.
+        Open source, MIT. Made by <a href="/">Dan Purdy</a>, not affiliated with
+        Anthropic or OpenAI. <a href="/projects/headroom/">Project notes</a>.
       </p>
     </footer>
 
     <script>
-      for (const button of document.querySelectorAll<HTMLButtonElement>('.copy')) {
+      for (const button of document.querySelectorAll<HTMLButtonElement>(
+        '.copy'
+      )) {
         button.addEventListener('click', async () => {
           try {
             await navigator.clipboard.writeText(button.dataset.copy ?? '');
@@ -441,13 +544,17 @@ const description =
       }
 
       // The build asked GitHub for the latest release; ask again, in case there's a newer one.
-      const latestRelease = 'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
-      fetch(latestRelease, { headers: { Accept: 'application/vnd.github+json' } })
+      const latestRelease =
+        'https://api.github.com/repos/DanPurdy/headroom/releases/latest';
+      fetch(latestRelease, {
+        headers: { Accept: 'application/vnd.github+json' },
+      })
         .then((response) => (response.ok ? response.json() : null))
         .then((release: { tag_name?: unknown } | null) => {
           if (typeof release?.tag_name !== 'string') return;
           const version = release.tag_name.replace(/^v/, '');
-          for (const el of document.querySelectorAll('[data-version]')) el.textContent = version;
+          for (const el of document.querySelectorAll('[data-version]'))
+            el.textContent = version;
         })
         .catch(() => {});
     </script>
@@ -465,8 +572,12 @@ const description =
     /* The app's tool tints (Brand in UsageView.swift). */
     --claude: #d97757;
     --codex: #5869f7;
-    --serif: 'Iowan Old Style', 'Tiempos Text', 'Palatino Linotype', Palatino, Georgia, serif;
-    --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif:
+      'Iowan Old Style', 'Tiempos Text', 'Palatino Linotype', Palatino, Georgia,
+      serif;
+    --sans:
+      -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
     --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   }
 
@@ -683,7 +794,11 @@ const description =
     width: 28px;
     height: 4px;
     border-radius: 1.5px;
-    background: linear-gradient(90deg, var(--ink) var(--v), rgba(20, 20, 19, 0.3) var(--v));
+    background: linear-gradient(
+      90deg,
+      var(--ink) var(--v),
+      rgba(20, 20, 19, 0.3) var(--v)
+    );
   }
 
   .gauge .r b {
@@ -804,7 +919,11 @@ const description =
     height: 6px;
     margin-bottom: 8px;
     border-radius: 3px;
-    background: linear-gradient(90deg, var(--tint) var(--v), rgba(20, 20, 20, 0.1) var(--v));
+    background: linear-gradient(
+      90deg,
+      var(--tint) var(--v),
+      rgba(20, 20, 20, 0.1) var(--v)
+    );
   }
 
   .bars i::after {

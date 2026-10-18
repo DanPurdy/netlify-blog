@@ -64,7 +64,10 @@ html {
 body {
   background: var(--ground);
   color: var(--ink);
-  font: 400 18px/1.6 'Figtree Variable', system-ui, sans-serif;
+  font:
+    400 18px/1.6 'Figtree Variable',
+    system-ui,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -139,7 +142,9 @@ a {
   margin-bottom: 0.35em;
 }
 .prose code {
-  font: 400 15px 'JetBrains Mono', monospace;
+  font:
+    400 15px 'JetBrains Mono',
+    monospace;
   background: var(--ground-raise);
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -162,7 +167,9 @@ a {
   padding: 22px 24px;
   overflow-x: auto;
   margin: 1.5em 0;
-  font: 400 14.5px/1.65 'JetBrains Mono', monospace;
+  font:
+    400 14.5px/1.65 'JetBrains Mono',
+    monospace;
 }
 .prose pre.astro-code code {
   background: none;

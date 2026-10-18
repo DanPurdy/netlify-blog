@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const experience = (await getCollection('experience')).sort(
-  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf(),
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
 );
 
 // render() is async per-entry, so resolve every entry's Content component up
@@ -13,7 +13,7 @@ const roles = await Promise.all(
   experience.map(async (entry) => {
     const { Content } = await render(entry);
     return { entry, Content };
-  }),
+  })
 );
 
 const yearFull = (date: Date) => date.getFullYear();
@@ -21,44 +21,56 @@ const yearShort = (date: Date) => String(date.getFullYear()).slice(-2);
 
 // Mirrors the work strip on the front page: "2025 —" while current, else a
 // full start year through a 2-digit end year, e.g. "2016 – 21".
-const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number]['data']) =>
-  isCurrent ? `${yearFull(startDate)} —` : `${yearFull(startDate)} – ${endDate ? yearShort(endDate) : ''}`;
+const timeLabel = ({
+  startDate,
+  endDate,
+  isCurrent,
+}: (typeof experience)[number]['data']) =>
+  isCurrent
+    ? `${yearFull(startDate)} —`
+    : `${yearFull(startDate)} – ${endDate ? yearShort(endDate) : ''}`;
 ---
 
-<BaseLayout title="Work" description="Where Dan Purdy has worked — full role history.">
+<BaseLayout
+  title="Work"
+  description="Where Dan Purdy has worked — full role history."
+>
   <header class="page-h">
-    <h1>Work<em>.</em></h1>
-    <p class="sub">A fuller history than the strip on the front page. Writing lives <a href="/">here</a>.</p>
+    <h1>
+      Work<em>.</em>
+    </h1>
+    <p class="sub">
+      A fuller history than the strip on the front page. Writing lives{' '}
+      <a href="/">here</a>.
+    </p>
   </header>
 
   <div class="roles">
-    {
-      roles.map(({ entry, Content }) => (
-        <section class="job">
-          <div class="job-h">
-            <h2>
-              <a href={entry.data.url} target="_blank" rel="noopener noreferrer">
-                {entry.data.title}
-              </a>
-            </h2>
-            <time>{timeLabel(entry.data)}</time>
-          </div>
-          {/* Role progression, newest first — earlier titles stay visible
+    {roles.map(({ entry, Content }) => (
+      <section class="job">
+        <div class="job-h">
+          <h2>
+            <a href={entry.data.url} target="_blank" rel="noopener noreferrer">
+              {entry.data.title}
+            </a>
+          </h2>
+          <time>{timeLabel(entry.data)}</time>
+        </div>
+        {/* Role progression, newest first — earlier titles stay visible
               as a timeline rather than a parenthetical. */}
-          <ul class="timeline">
-            {entry.data.position.map((role) => (
-              <li class:list={['top', { now: entry.data.isCurrent }]}>{role}</li>
-            ))}
-            {entry.data.previousPosition.map((role) => (
-              <li>{role}</li>
-            ))}
-          </ul>
-          <div class="body">
-            <Content />
-          </div>
-        </section>
-      ))
-    }
+        <ul class="timeline">
+          {entry.data.position.map((role) => (
+            <li class:list={['top', { now: entry.data.isCurrent }]}>{role}</li>
+          ))}
+          {entry.data.previousPosition.map((role) => (
+            <li>{role}</li>
+          ))}
+        </ul>
+        <div class="body">
+          <Content />
+        </div>
+      </section>
+    ))}
   </div>
 </BaseLayout>
 
@@ -68,7 +80,9 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
     border-bottom: 1px solid var(--line);
   }
   .page-h h1 {
-    font: 800 clamp(32px, 4.5vw, 48px) / 1.06 'Figtree Variable', sans-serif;
+    font:
+      800 clamp(32px, 4.5vw, 48px) / 1.06 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.03em;
   }
   .page-h h1 em {
@@ -101,7 +115,9 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
     gap: 16px;
   }
   .job-h h2 {
-    font: 800 24px 'Figtree Variable', sans-serif;
+    font:
+      800 24px 'Figtree Variable',
+      sans-serif;
     letter-spacing: -0.02em;
   }
   .job-h h2 a {
@@ -112,7 +128,9 @@ const timeLabel = ({ startDate, endDate, isCurrent }: (typeof experience)[number
     color: var(--accent);
   }
   .job-h time {
-    font: 500 13px 'JetBrains Mono', monospace;
+    font:
+      500 13px 'JetBrains Mono',
+      monospace;
     color: var(--ink-faint);
     white-space: nowrap;
   }

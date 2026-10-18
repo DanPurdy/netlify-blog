@@ -299,12 +299,31 @@ running.
    written; on 1h it's still a read with a thin slice. Side by side, light vs deep, so
    the size of that rewritten bar is the thing you see.
 
+### Verified on usage credits
+
+Tested 2026-10-18 ~22:10 UTC on the work account (Max subscription, confirmed on usage
+credits in Headroom), Claude Code `claude -p`, Opus 5.5. Per-request TTL read from each
+run's transcript.
+
+| Run | Request 1 cache write | Request 2 cache write |
+| --- | --- | --- |
+| Default, one request (`-p "hello"`) | 36,297 at **1h** | n/a |
+| Default, two requests (`-p "Run the shell command: echo hi"`) | 34,405 at **1h** | 21,764 at **5m** |
+| `CLAUDE_CODE_PROMPT_CACHE_TTL=1h`, two requests | 36,007 at **1h** | 18,284 at **1h** |
+
+- The drop happens from the second request: Claude Code only learns the account is on
+  credits once the first response comes back. So a one-request `claude -p ... |
+  jq .usage.cache_creation` check (the one the docs suggest) shows 1h either way on
+  credits. Test with something that makes at least two requests.
+- With the setting, the second request stays at 1h. The setting overrides the drop.
+- How to check it yourself: run a two-request `claude -p` and read
+  `cache_creation.ephemeral_1h_input_tokens` / `ephemeral_5m_input_tokens` per request
+  in the session's `.jsonl` under `~/.claude/projects/`.
+
 ### Things to check before claiming
 
-- Does `promptCacheTtl: "1h"` hold while on usage credits on a subscription? The docs
-  imply yes ("To keep the one-hour TTL there, choose the TTL yourself") and only call
-  out subagent frontmatter as ignored. Confirm with the `-p --output-format json`
-  check on the account that's in credits.
+- ~~Does the 1h setting hold on usage credits?~~ Yes. Tested 2026-10-18, see
+  "Verified on usage credits" above.
 - Real numbers from that session would beat my assumed ones: context size, misses
   from `/usage`, and how often you've been pinging.
 - Headroom's cache countdown screenshot could show the 5m switch happening.
